@@ -1,9 +1,10 @@
-// import './App.css'
+import './App.css'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavigationBar from "./navbar/NavigationBar.tsx";
 import Home from "./pages/Home.tsx";
 import Contact from "./pages/Contact.tsx";
 import Market from "./pages/Market.tsx";
+import NoPage from "./pages/NoPage.tsx";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
                 <Route path={"/"} element={<Home/>}/>
                 <Route path={"contact"} element={<Contact/>}/>
                 <Route path={"market"} element={<Market/>}/>
+                <Route path={"*"} element={<NoPage/>}/>
             </Routes>
         </BrowserRouter>
     );
