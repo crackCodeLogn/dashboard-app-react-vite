@@ -1,10 +1,29 @@
 import Chart1, {ChartOneSeriesProps} from "../components/chart/echarts/Chart.tsx";
 import {fetchTickerData, MarketTickerData} from "../services/MarketDataService.tsx";
+import CustomError from "../components/error/CustomError.tsx";
 import {useEffect, useState} from "react";
-import './Shared.css';
+import dayjs, {ManipulateType} from "dayjs";
+
+const TICKER_DATE_FORMAT: string = 'YYYY-MM-DD';
+const TIME_RANGES: TimeRange[] = [
+  {name: '7D', val: 7, unit: 'day'},
+  {name: '15D', val: 15, unit: 'day'},
+  {name: '1M', val: 1, unit: 'month'},
+  {name: '3M', val: 3, unit: 'month'},
+  {name: '6M', val: 6, unit: 'month'},
+  {name: '1Y', val: 1, unit: 'year'},
+  {name: '5Y', val: 5, unit: 'year'},
+  {name: '10Y', val: 10, unit: 'year'},
+]
 
 function YValueFormat(value: number): string {
   return value.toFixed(2);
+}
+
+interface TimeRange {
+  name: string,
+  val: number,
+  unit: string
 }
 
 export interface TickerData {
@@ -13,37 +32,53 @@ export interface TickerData {
 
 const MarketDataAdhoc = () => {
   const [tickerSymbol, setTickerSymbol] = useState('');
+  const [timeRangeIndex, setTimeRangeIndex] = useState(5);
   const [tickerData, setTickerData] = useState<TickerData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [chartData, setChartData] = useState<ChartOneSeriesProps | null>(null);
   const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleTickerSubmit = (event) => {
     event.preventDefault();
+    if (!tickerSymbol) {
+      setError(true);
+      // setErrorMsg('no input...');
+      setIsLoading(false);
+      return;
+    }
+
     setChartData(null);
-    setIsLoading(false);
+    setIsLoading(true);
     setError(false);
 
     fetchMarketData();
   };
 
   const fetchMarketData = () => {
+    const currentDate: string = (dayjs().add(1, 'day').format(TICKER_DATE_FORMAT));
+    const timeRange: TimeRange = TIME_RANGES[timeRangeIndex];
+    const startDate: string = (dayjs().add(-timeRange.val, timeRange.unit as ManipulateType)).format(TICKER_DATE_FORMAT);
+
     const mktData: MarketTickerData = {
       symbol: tickerSymbol,
-      start: '2020-01-01',
-      end: '2025-01-25'
+      start: startDate,
+      end: currentDate
     }
 
-    fetchTickerData(mktData, 1000)
+    fetchTickerData(mktData)
       .then(result => {
         if (!result || !result.data || result.data.length === 0) {
           throw new Error(`no ticker data found for ${tickerSymbol}`);
         }
         setTickerData(result);
-      }).catch(err => {
-      console.error(err);
-      setError(true);
-    });
+      })
+      .catch(err => {
+        console.error(err);
+        setError(true);
+        setIsLoading(false);
+        setErrorMsg(`error encountered => ${err}`);
+      });
   };
 
   useEffect(() => {
@@ -72,15 +107,30 @@ const MarketDataAdhoc = () => {
           <label> Enter ticker: </label>
           <input type={"text"}
                  value={tickerSymbol}
-                 onChange={(e) => setTickerSymbol(e.target.value)}/>
+                 onChange={(e) => {
+                   let val = e.target.value;
+                   if (val) val = e.target.value.toUpperCase();
+                   setTickerSymbol(val);
+                 }}/>
+          <select
+            value={timeRangeIndex}
+            onChange={(e) => setTimeRangeIndex(Number(e.target.value))}>
+            {TIME_RANGES.map((range, index) => (
+              <option key={index} value={index}>
+                {range.name}
+              </option>
+            ))}
+          </select>
           <input type={'submit'}/>
         </form>
       </div>
 
+      {error ? <CustomError errorMsg={errorMsg}/> : ''}
+
       {chartData
         ? <Chart1 {...chartData}/>
-        : (isLoading ? '' :
-          (error ? '*** NO DATA FOUND ***' : ''))}
+        : (error ? <CustomError errorMsg={'*** NO DATA FOUND ***'}/> :
+          (isLoading ? 'loading...' : ''))}
     </div>
   )
 };
