@@ -17,7 +17,7 @@ const NavigationBar = () => {
       <div className={`links ${menuActive ? 'active' : ''}`}>
         <Link to={"/"}>Home</Link>
         <Link to={"/contact"}>Contact</Link>
-        <Link to={"/market"}>Market</Link>
+        <Link to={"/portfolio"}>Portfolio</Link>
         <Link to={"/market/adhoc"}>Market Adhoc</Link>
       </div>
     </nav>

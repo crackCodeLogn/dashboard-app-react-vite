@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavigationBar from "./navbar/NavigationBar.tsx";
 import Home from "./pages/Home.tsx";
 import Contact from "./pages/Contact.tsx";
-import Market from "./pages/Market.tsx";
+import Portfolio from "./pages/Portfolio.tsx";
 import NoPage from "./pages/NoPage.tsx";
 import MarketDataAdhoc from "./pages/MarketDataAdhoc.tsx";
 
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home/>}/>
         <Route path={"contact"} element={<Contact/>}/>
-        <Route path={"market"} element={<Market/>}/>
+        <Route path={"portfolio"} element={<Portfolio/>}/>
         <Route path={"market/adhoc"} element={<MarketDataAdhoc showTable={true}/>}/>
         {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
         <Route path={"*"} element={<NoPage/>}/>
