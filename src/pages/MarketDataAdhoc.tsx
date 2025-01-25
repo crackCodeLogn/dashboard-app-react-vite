@@ -35,7 +35,8 @@ export interface TickerData {
   symbol: string;
 }
 
-const MarketDataAdhoc = () => {
+const MarketDataAdhoc = (params: { showTable: boolean }) => {
+  const showTable: boolean = params.showTable;
   const [tickerSymbol, setTickerSymbol] = useState('');
   const [timeRangeIndex, setTimeRangeIndex] = useState(6);
   const [tickerData, setTickerData] = useState<TickerData | null>(null);
@@ -138,7 +139,7 @@ const MarketDataAdhoc = () => {
         : (error ? <CustomError errorMsg={'*** NO DATA FOUND ***'}/> :
           (isLoading ? 'loading...' : ''))}
 
-      {tickerData
+      {(showTable && tickerData)
         ? <Table striped bordered hover variant={'light'}>
           <tbody>
           <tr>

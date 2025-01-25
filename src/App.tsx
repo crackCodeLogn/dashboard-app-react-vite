@@ -18,7 +18,7 @@ function App() {
         <Route path={"/"} element={<Home/>}/>
         <Route path={"contact"} element={<Contact/>}/>
         <Route path={"market"} element={<Market/>}/>
-        <Route path={"market/adhoc"} element={<MarketDataAdhoc/>}/>
+        <Route path={"market/adhoc"} element={<MarketDataAdhoc showTable={true}/>}/>
         {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
         <Route path={"*"} element={<NoPage/>}/>
       </Routes>
