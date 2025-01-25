@@ -5,6 +5,7 @@ import Home from "./pages/Home.tsx";
 import Contact from "./pages/Contact.tsx";
 import Market from "./pages/Market.tsx";
 import NoPage from "./pages/NoPage.tsx";
+import MarketDataAdhoc from "./pages/MarketDataAdhoc.tsx";
 
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
                 <Route path={"/"} element={<Home/>}/>
                 <Route path={"contact"} element={<Contact/>}/>
                 <Route path={"market"} element={<Market/>}/>
+                <Route path={"market/adhoc"} element={<MarketDataAdhoc/>}/>
+                {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
                 <Route path={"*"} element={<NoPage/>}/>
             </Routes>
         </BrowserRouter>
