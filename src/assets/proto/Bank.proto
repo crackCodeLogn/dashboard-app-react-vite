@@ -1,0 +1,75 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+option java_package = "com.vv.personal.twm.artifactory.generated.bank";
+option java_outer_classname = "BankProto";
+
+message Bank {
+  string name = 1;
+  BankType bankType = 2;
+  string IFSC = 3;
+  string contactNumber = 4;
+  bool isActive = 5;
+  string countryCode = 6;
+}
+
+enum BankType {
+  GOVT = 0;
+  PRIVATE = 1;
+}
+
+message BankList {
+  repeated Bank banks = 1;
+}
+
+message BankAccount {
+  Bank bank = 1;
+  string id = 2; // uuid
+  string number = 3;
+  string name = 4;
+  string transitNumber = 5; // branch, CA specific, but fields are optional by default
+  string institutionNumber = 6; // bank, CA specific
+  double balance = 7;
+  map<string, string> metaData = 8;
+  repeated BankAccountType bankAccountTypes = 9; // act as tagging
+  double overdraftBalance = 10;
+  double interestRate = 11;
+  bool isActive = 12;
+
+  google.protobuf.Timestamp createdAt = 13;
+  google.protobuf.Timestamp lastUpdatedAt = 14;
+
+  CurrencyCode ccy = 15;
+  string note = 16;
+}
+
+enum CurrencyCode {
+  CAD = 0;
+  INR = 1;
+  USD = 2;
+}
+
+enum BankAccountType {
+  CHQ = 0;      // chequing
+  SAV = 1;      // saving
+  TFSA = 2;     // tax-free saving account
+  NR = 3;       // non-registered
+  HISA = 4;     // high interest saving account
+  STD = 5;      // standard
+  CC = 6;       // credit card
+  FHSA = 7;     // first house saving account
+  RRSP = 8;     // registered retirement savings plan
+  MKT = 9;      // market involved
+  GIC = 10;     // guaranteed investment certificate involved
+}
+
+message BankAccounts {
+  repeated BankAccount accounts = 1;
+}
+
+enum FilterBy {
+  ALL = 0;
+  NAME = 1;
+  IFSC = 2;
+  CCY = 3;
+}

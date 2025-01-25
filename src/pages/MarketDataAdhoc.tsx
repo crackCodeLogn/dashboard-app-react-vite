@@ -4,6 +4,7 @@ import CustomError from "../components/error/CustomError.tsx";
 import {useEffect, useState} from "react";
 import dayjs, {ManipulateType} from "dayjs";
 import Table from "react-bootstrap/Table";
+import {InstrumentType, Ticker} from '../assets/proto/generated/MarketData.ts';
 
 const TICKER_DATE_FORMAT: string = 'YYYY-MM-DD';
 const TIME_RANGES: TimeRange[] = [
@@ -17,8 +18,22 @@ const TIME_RANGES: TimeRange[] = [
   {name: '10Y', val: 10, unit: 'year'},
 ]
 
-function YValueFormat(value: number): string {
+function yValueFormat(value: number): string {
   return value.toFixed(2);
+}
+
+function formatDateFromInt(dateInt: number): string {
+  const dateStr = dateInt.toString();
+
+  if (dateStr.length !== 8) {
+    throw new Error('Input date must be an 8-digit integer in the format YYYYMMDD.');
+  }
+
+  const year = dateStr.slice(0, 4);
+  const month = dateStr.slice(4, 6);
+  const day = dateStr.slice(6, 8);
+
+  return `${year}-${month}-${day}`;
 }
 
 interface TimeRange {
@@ -39,7 +54,7 @@ const MarketDataAdhoc = (params: { showTable: boolean }) => {
   const showTable: boolean = params.showTable;
   const [tickerSymbol, setTickerSymbol] = useState('');
   const [timeRangeIndex, setTimeRangeIndex] = useState(6);
-  const [tickerData, setTickerData] = useState<TickerData | null>(null);
+  const [tickerData, setTickerData] = useState<Ticker | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [chartData, setChartData] = useState<ChartOneSeriesProps | null>(null);
   const [error, setError] = useState(false);
@@ -73,12 +88,18 @@ const MarketDataAdhoc = (params: { showTable: boolean }) => {
       end: currentDate
     }
 
-    fetchTickerData(mktData)
+    fetchTickerData(mktData, undefined, true)
       .then(result => {
-        if (!result || !result.data || result.data.length === 0) {
+        /*if (!result || !result.data || result.data.length === 0) {
+          throw new Error(`no ticker data found for ${tickerSymbol}`);
+        }*/
+        if (!result) {
           throw new Error(`no ticker data found for ${tickerSymbol}`);
         }
-        setTickerData(result);
+        // proto deser
+        const binaryData = new Uint8Array(result);
+        const ticker: Ticker = Ticker.deserializeBinary(binaryData);
+        setTickerData(ticker);
       })
       .catch(err => {
         console.error(err);
@@ -90,10 +111,11 @@ const MarketDataAdhoc = (params: { showTable: boolean }) => {
 
   useEffect(() => {
     if (tickerData) {
-      const transformTickerData: TickerData = tickerData as TickerData;
-      const values = transformTickerData.data;
-      const xdata = values.map(v => v.date);
-      const ydata = values.map(v => YValueFormat(v.price));
+      // const transformTickerData: TickerData = tickerData as TickerData;
+      // const values = transformTickerData.data;
+      const values = tickerData.data;
+      const xdata = values.map(v => formatDateFromInt(v.date));
+      const ydata = values.map(v => yValueFormat(v.price));
 
       const chartData: ChartOneSeriesProps = {
         title: `Price chart of ${tickerSymbol}`,
@@ -152,7 +174,7 @@ const MarketDataAdhoc = (params: { showTable: boolean }) => {
           </tr>
           <tr>
             <td>Type</td>
-            <td>{tickerData.type}</td>
+            <td>{InstrumentType[tickerData.type]}</td>
           </tr>
           </tbody>
         </Table>

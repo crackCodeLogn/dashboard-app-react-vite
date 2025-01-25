@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+option java_package = "com.vv.personal.twm.artifactory.generated.deposit";
+option java_outer_classname = "FixedDepositProto";
+
+message FixedDeposit {
+  string user = 1;
+  string fdNumber = 2; //unique per FD
+  string customerId = 3;
+  string bankIFSC = 4; // to match [A-Z]{4}[0-9]{7}
+  double depositAmount = 5;
+  double rateOfInterest = 6;
+  string startDate = 7; //to match YYYYMMDD
+  string endDate = 8; //to match YYYYMMDD
+  int32 months = 9;
+  int32 days = 10;
+  InterestType interestType = 11;
+  string nominee = 12;
+
+  double expectedAmount = 13;
+  double expectedInterest = 14;
+  int32 calculatedDays = 15;
+
+  bool isFdActive = 16;
+  bool isFdBroken = 17; //means fd broken before maturity date.
+  string originalUser = 18;
+
+  AnnualBreakdownList annualBreakdownList = 19;
+  AccountType accountType = 20;
+  int32 freeze = 21;
+  RenewalType renewalType = 22;
+}
+
+enum AccountType {
+  IND = 0;
+  TFSA = 1;
+  NR = 2;
+  FHSA = 3;
+}
+
+enum RenewalType {
+  RENEW_AMOUNT = 0;
+  RENEW_DEPOSIT = 1;
+  DO_NOT_RENEW = 2;
+}
+
+enum InterestType {
+  ON_MATURITY = 0;
+  QUARTERLY = 1;
+  MONTHLY = 2;
+}
+
+enum OrderFDsBy {
+  START_DATE = 0;
+  END_DATE = 1;
+  DEPOSIT_AMOUNT = 2;
+  RATE_OF_INTEREST = 3;
+  MONTHS = 4;
+}
+
+enum FilterBy {
+  ALL = 0;
+  USER = 1;
+  ORIGINAL_USER = 2;
+  KEY = 3;
+  BANK = 4;
+  CCY = 5;
+}
+
+message FixedDepositList {
+  repeated FixedDeposit FixedDeposit = 1;
+}
+
+message AnnualBreakdown {//different than the DateRange.proto
+  string startDate = 1;
+  string endDate = 2;
+  int64  daysInBetween = 3;
+
+  double expectedInterestGained = 4;
+  double expectedAmountAccumulated = 5;
+
+  string financialYear = 6; //2020-2021
+}
+
+message AnnualBreakdownList {
+  repeated AnnualBreakdown annualBreakdown = 1;
+}
