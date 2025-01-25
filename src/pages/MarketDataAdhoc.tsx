@@ -3,6 +3,7 @@ import {fetchTickerData, MarketTickerData} from "../services/MarketDataService.t
 import CustomError from "../components/error/CustomError.tsx";
 import {useEffect, useState} from "react";
 import dayjs, {ManipulateType} from "dayjs";
+import Table from "react-bootstrap/Table";
 
 const TICKER_DATE_FORMAT: string = 'YYYY-MM-DD';
 const TIME_RANGES: TimeRange[] = [
@@ -28,11 +29,15 @@ interface TimeRange {
 
 export interface TickerData {
   data: { date: string, price: number }[];
+  name: string;
+  sector: string;
+  type: string;
+  symbol: string;
 }
 
 const MarketDataAdhoc = () => {
   const [tickerSymbol, setTickerSymbol] = useState('');
-  const [timeRangeIndex, setTimeRangeIndex] = useState(5);
+  const [timeRangeIndex, setTimeRangeIndex] = useState(6);
   const [tickerData, setTickerData] = useState<TickerData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [chartData, setChartData] = useState<ChartOneSeriesProps | null>(null);
@@ -49,6 +54,7 @@ const MarketDataAdhoc = () => {
     }
 
     setChartData(null);
+    setTickerData(null);
     setIsLoading(true);
     setError(false);
 
@@ -100,7 +106,7 @@ const MarketDataAdhoc = () => {
   }, [tickerData]);
 
   return (
-    <div>
+    <div className={'row'}>
       <div className={'row'}>
         <h1> Market Adhoc Inquiry </h1>
         <form className={'row-distance-5'} onSubmit={handleTickerSubmit}>
@@ -131,6 +137,25 @@ const MarketDataAdhoc = () => {
         ? <Chart1 {...chartData}/>
         : (error ? <CustomError errorMsg={'*** NO DATA FOUND ***'}/> :
           (isLoading ? 'loading...' : ''))}
+
+      {tickerData
+        ? <Table striped bordered hover variant={'light'}>
+          <tbody>
+          <tr>
+            <td>Name</td>
+            <td><strong>{tickerData.name}</strong></td>
+          </tr>
+          <tr>
+            <td>Sector</td>
+            <td>{tickerData.sector}</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>{tickerData.type}</td>
+          </tr>
+          </tbody>
+        </Table>
+        : ''}
     </div>
   )
 };
