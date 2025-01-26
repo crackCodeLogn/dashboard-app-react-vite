@@ -1,10 +1,10 @@
 import Chart1, {ChartOneSeriesProps} from "../components/chart/echarts/Chart.tsx";
 import {fetchTickerData, MarketTickerData} from "../services/MarketDataService.tsx";
 import CustomError from "../components/error/CustomError.tsx";
+import {InstrumentType, Ticker} from '../assets/proto/generated/MarketData.ts';
 import {useEffect, useState} from "react";
 import dayjs, {ManipulateType} from "dayjs";
 import Table from "react-bootstrap/Table";
-import {InstrumentType, Ticker} from '../assets/proto/generated/MarketData.ts';
 
 const TICKER_DATE_FORMAT: string = 'YYYY-MM-DD';
 const TIME_RANGES: TimeRange[] = [
