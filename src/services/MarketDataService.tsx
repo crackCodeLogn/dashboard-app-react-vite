@@ -1,7 +1,8 @@
 import axios, {AxiosInstance} from 'axios';
 import {sprintf} from 'sprintf-js';
 
-const MARKET_DATA_BASE: string = "http://localhost:8083"
+const HOST_URL: string = import.meta.env.VITE_HOST;
+const MARKET_DATA_BASE: string = `http://${HOST_URL}:8083`;
 const TICKER_DATA_END_POINT: string = "/mkt?symbol=%s&start=%s&end=%s&original=1";
 
 // http://localhost:8083/mkt?symbol=CM.TO&start=2023-10-01&end=2023-10-09&original=1

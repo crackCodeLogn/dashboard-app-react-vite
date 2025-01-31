@@ -1,6 +1,7 @@
 import axios, {AxiosInstance} from 'axios';
 
-const MARKET_DATA_BASE: string = "http://localhost:5025"
+const HOST_URL: string = import.meta.env.VITE_HOST;
+const MARKET_DATA_BASE: string = `http://${HOST_URL}:5025`;
 const GET_ALL_MODES_END_POINT: string = "/tutor/modes";
 const GET_ALL_SUBJECTS_END_POINT: string = "/tutor/subjects";
 const POST_SESSION_END_POINT: string = "/tutor/session";

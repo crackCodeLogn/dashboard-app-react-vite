@@ -1,6 +1,7 @@
 import axios, {AxiosInstance} from 'axios';
 
-const EXPIRY_DATA_BASE_URL: string = "http://localhost:5025"
+const HOST_URL: string = import.meta.env.VITE_HOST;
+const EXPIRY_DATA_BASE_URL: string = `http://${HOST_URL}:5025`;
 const EXPIRY_DATA_END_POINT: string = "/tutor/expiryData";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {

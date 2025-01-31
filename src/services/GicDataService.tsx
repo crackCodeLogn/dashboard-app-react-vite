@@ -1,6 +1,7 @@
 import axios, {AxiosInstance} from 'axios';
 
-const PORTFOLIO_DATA_BASE_URL: string = "http://localhost:40037"
+const HOST_URL: string = import.meta.env.VITE_HOST;
+const PORTFOLIO_DATA_BASE_URL: string = `http://${HOST_URL}:40037`;
 const PORTFOLIO_GIC_DATA_END_POINT: string = "/portfolio/gic/expiries?ccy=CAD";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {

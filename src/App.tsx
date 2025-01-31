@@ -13,6 +13,7 @@ import Tutor from "./pages/Tutor.tsx";
 
 
 function App() {
+  console.log(import.meta.env.VITE_HOST)
 
   return (
     <BrowserRouter>
