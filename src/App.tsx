@@ -7,6 +7,9 @@ import Contact from "./pages/Contact.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
 import NoPage from "./pages/NoPage.tsx";
 import MarketDataAdhoc from "./pages/MarketDataAdhoc.tsx";
+import Library from "./pages/Library.tsx";
+import Expiry from "./pages/Expiry.tsx";
+import Tutor from "./pages/Tutor.tsx";
 
 
 function App() {
@@ -16,10 +19,13 @@ function App() {
       <NavigationBar/>
       <Routes>
         <Route path={"/"} element={<Home/>}/>
-        <Route path={"contact"} element={<Contact/>}/>
         <Route path={"portfolio"} element={<Portfolio/>}/>
         <Route path={"market/adhoc"} element={<MarketDataAdhoc showTable={true}/>}/>
         {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
+        <Route path={"tutor"} element={<Tutor/>}/>
+        <Route path={"library"} element={<Library/>}/>
+        <Route path={"expiry"} element={<Expiry/>}/>
+        <Route path={"contact"} element={<Contact/>}/>
         <Route path={"*"} element={<NoPage/>}/>
       </Routes>
     </BrowserRouter>

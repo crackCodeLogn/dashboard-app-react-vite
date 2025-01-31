@@ -1,0 +1,27 @@
+.small-input {
+    width: 3ch;
+    text-align: center;
+}
+
+input[type = 'text'], input[type='time'] {
+    width: 200px;
+    text-align: center;
+}
+
+input[type = 'radio'] {
+    margin-right: 5px;
+}
+
+.select-subjects {
+    width: 200px;
+    text-align: center;
+}
+
+.rd-btn-lbl {
+    display: flex;
+    flex-direction: row;
+}
+
+.fix-width-200 {
+    width: 200px;
+}

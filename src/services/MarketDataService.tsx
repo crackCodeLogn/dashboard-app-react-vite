@@ -25,7 +25,7 @@ export interface MarketTickerData {
 }
 
 export const fetchTickerData = async (data: MarketTickerData,
-                                      timeout: number = 3000,
+                                      timeout: number = 10000,
                                       useProto: boolean = false) => {
   let mktEndPoint: string = sprintf(TICKER_DATA_END_POINT, data.symbol, data.start, data.end);
   if (useProto) mktEndPoint = '/proto' + mktEndPoint;

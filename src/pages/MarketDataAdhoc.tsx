@@ -60,7 +60,7 @@ const MarketDataAdhoc = (params: { showTable: boolean }) => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleTickerSubmit = (event) => {
+  const handleTickerSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     if (!tickerSymbol) {
       setError(true);
@@ -132,6 +132,7 @@ const MarketDataAdhoc = (params: { showTable: boolean }) => {
     <div className={'row'}>
       <div className={'row'}>
         <h1> Market Adhoc Inquiry </h1>
+        <hr/>
         <form className={'row-distance-5'} onSubmit={handleTickerSubmit}>
           <label> Enter ticker: </label>
           <input type={"text"}

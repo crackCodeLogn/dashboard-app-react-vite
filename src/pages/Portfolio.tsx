@@ -2,6 +2,7 @@ import GicListings from "../components/gic/GicListings.tsx";
 import {fetchGicData} from "../services/GicDataService.tsx";
 import {FixedDepositList} from '../assets/proto/generated/FixedDeposit.ts';
 import {useEffect, useState} from "react";
+import CustomError from "../components/error/CustomError.tsx";
 
 const Portfolio = () => {
   const [gicData, setGicData] = useState<FixedDepositList | null>(null);
@@ -28,9 +29,11 @@ const Portfolio = () => {
   return (
     <div className={'row'}>
       <h1> Portfolio </h1>
+      <hr/>
       <div className={'row'}>
         {/*<NetWorth />*/}
-        {gicData ? <GicListings title={'Upcoming GIC expiries'} gicData={gicData}/> : <></>}
+        {gicData ? <GicListings title={'Upcoming GIC expiries'} gicData={gicData}/> :
+          <CustomError errorMsg={'No GIC data fetched'}/>}
       </div>
     </div>
   );
