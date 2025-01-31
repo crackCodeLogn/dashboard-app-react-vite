@@ -9,19 +9,23 @@ const NavigationBar = () => {
     setMenuActive(!menuActive);
   }
 
+  const handleClose = () => {
+    setMenuActive(false);
+  }
+
   return (
     <nav className={"navbar"}>
       <div className={`menu-toggle ${menuActive ? 'active' : ''}`} onClick={toggleMenu}>
         ☰
       </div>
       <div className={`links ${menuActive ? 'active' : ''}`}>
-        <Link to={"/"}>Home</Link>
-        <Link to={"/portfolio"}>Portfolio</Link>
-        <Link to={"/market/adhoc"}>Market Adhoc</Link>
-        <Link to={"/tutor"}>Tutor</Link>
-        <Link to={"/library"}>Library</Link>
-        <Link to={"/expiry"}>Expiry</Link>
-        <Link to={"/contact"}>Contact</Link>
+        <Link to={"/"} onClick={handleClose}>Home</Link>
+        <Link to={"/portfolio"} onClick={handleClose}>Portfolio</Link>
+        <Link to={"/market/adhoc"} onClick={handleClose}>Market Adhoc</Link>
+        <Link to={"/tutor"} onClick={handleClose}>Tutor</Link>
+        <Link to={"/library"} onClick={handleClose}>Library</Link>
+        <Link to={"/expiry"} onClick={handleClose}>Expiry</Link>
+        <Link to={"/contact"} onClick={handleClose}>Contact</Link>
       </div>
     </nav>
   )
