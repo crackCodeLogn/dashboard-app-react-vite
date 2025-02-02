@@ -1,6 +1,6 @@
-import TutorSessionGenerator from "../components/tutor/TutorSessionGenerator.tsx";
-import TutorSessionSaveData from "../components/tutor/TutorSessionSaveData.tsx";
-import TutorSessionGetLatestData from "../components/tutor/TutorSessionGetLatestData.tsx";
+import TutorSessionGeneratorComponent from "../components/tutor/TutorSessionGeneratorComponent.tsx";
+import TutorSessionSaveDataComponent from "../components/tutor/TutorSessionSaveDataComponent.tsx";
+import TutorSessionGetLatestDataComponent from "../components/tutor/TutorSessionGetLatestDataComponent.tsx";
 
 
 const Tutor = () => {
@@ -10,11 +10,11 @@ const Tutor = () => {
       <hr/>
       <div className={'vflex'}>
         <div className={'linear'}>
-          <TutorSessionGenerator/>
+          <TutorSessionGeneratorComponent/>
         </div>
         <div className={'linear'}>
-          <TutorSessionSaveData/>
-          <TutorSessionGetLatestData/>
+          <TutorSessionSaveDataComponent/>
+          <TutorSessionGetLatestDataComponent/>
         </div>
       </div>
     </div>

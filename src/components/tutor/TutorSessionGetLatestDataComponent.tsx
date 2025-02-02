@@ -6,7 +6,7 @@ import {getLatestSessionData, GetSessionData} from "../../services/TutorDataServ
 const DEFAULT_STUDENT_INPUT: string = 'Enter student here';
 const DEFAULT_DATA: string = 'Latest student session data goes here...';
 
-const TutorSessionGetLatestData = () => {
+const TutorSessionGetLatestDataComponent = () => {
   const [student, setStudent] = useState('');
   const [data, setData] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -82,4 +82,4 @@ const TutorSessionGetLatestData = () => {
   );
 };
 
-export default TutorSessionGetLatestData;
+export default TutorSessionGetLatestDataComponent;

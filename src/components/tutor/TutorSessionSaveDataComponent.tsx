@@ -2,28 +2,19 @@ import './TutorComponent.css';
 import DatePicker from "react-datepicker";
 import CustomError from "../error/CustomError.tsx";
 import {useEffect, useState} from "react";
-import {getAllModes, getAllSubjects, Mode, postSession, Session, Subject} from "../../services/TutorDataService.tsx";
+import {
+  getAllModes,
+  getAllSubjects,
+  Mode,
+  postSessionData,
+  SessionData,
+  Subject
+} from "../../services/TutorDataService.tsx";
 
 const DEFAULT_STUDENT_INPUT: string = 'Enter student here';
-const DEFAULT_DURATION: string = '01:00';
-const DEFAULT_TIME: string = '19:00';
+const DEFAULT_DATA: string = 'Enter session data here';
 
-const getTimeInNumber = (time: string): number => {
-  if (time.indexOf(':') >= 0) time = time.replace(':', '');
-  return parseInt(time);
-}
-
-const getDurationInNumber = (duration: string): number => {
-  const index: number = duration.indexOf(':');
-  if (index > 0) {
-    const hours: number = parseInt(duration.substring(0, index));
-    const minutes: number = parseInt(duration.substring(index + 1));
-    return hours * 60 + minutes;
-  }
-  return -1;
-}
-
-const TutorSessionGenerator = () => {
+const TutorSessionSaveDataComponent = () => {
   const [modes, setModes] = useState<Mode[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
 
@@ -32,8 +23,7 @@ const TutorSessionGenerator = () => {
   const [student, setStudent] = useState('');
   const [subject, setSubject] = useState<Subject | null | undefined>(null);
   const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(DEFAULT_TIME);
-  const [duration, setDuration] = useState(DEFAULT_DURATION);
+  const [data, setData] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const [modeMap] = useState(new Map<number, Mode>());
@@ -94,7 +84,7 @@ const TutorSessionGenerator = () => {
   // clear error msg if any of the required component changes
   useEffect(() => {
     if (errorMsg) setErrorMsg('');
-  }, [selectedMode, subject, student, date, time, duration]);
+  }, [selectedMode, subject, student, date, data]);
 
   const handleModeChange = (e: { target: { value: string } }) => {
     const modeId: number = parseInt(e.target.value);
@@ -115,42 +105,41 @@ const TutorSessionGenerator = () => {
     const selectedSubjs: Subject[] | undefined = modeSubjectsMap.get(modes[0]);
     if (selectedSubjs) setSubject(selectedSubjs[0]);
     setDate(new Date());
-    setTime(DEFAULT_TIME);
-    setDuration(DEFAULT_DURATION);
+    setData('');
   }
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    if (selectedMode && subject && student && date && time && duration) {
+    if (selectedMode && subject && student && date && data) {
       date.setHours(0);
       date.setMinutes(0);
       date.setSeconds(0);
       date.setMilliseconds(0);
 
-      const session: Session = {
+      const sessionData: SessionData = {
         modeId: selectedMode.id,
         student: student,
         subjectId: subject.id,
         sessionDate: date,
-        sessionStartTime: getTimeInNumber(time),
-        sessionLengthInMinutes: getDurationInNumber(duration)
+        data: data
       };
 
-      console.log('Initiating session send')
-      postSession(session);
-      console.log('Sent session')
+      console.log('Initiating session data send')
+      postSessionData(sessionData);
+      console.log('Sent session data')
       reset();
     } else {
       if (!selectedMode) setErrorMsg("Invalid selected mode");
       else if (!subject) setErrorMsg(`Invalid subject => ${subject}`);
       else if (!student) setErrorMsg("Empty student name");
+      else if (!data) setErrorMsg("Empty data");
     }
   };
 
   return (
     <div>
-      <h3>Create session</h3>
+      <h3>Save session data locally</h3>
       <div className="d-flex justify-content-center">
         <form className={'card-box'} onSubmit={handleSubmit}>
           <div className={'record'}>
@@ -177,8 +166,8 @@ const TutorSessionGenerator = () => {
             <label>Student:</label>
             <input
               type={'text'}
-              value={student}
               placeholder={DEFAULT_STUDENT_INPUT}
+              value={student}
               onChange={e => setStudent(e.target.value)}
             />
           </div>
@@ -208,33 +197,22 @@ const TutorSessionGenerator = () => {
             />
           </div>
           <div className={'record'}>
-            <label>Time:</label>
-            <input
-              type={'time'}
-              value={time}
-              max={"23:59"}
-              min={"00:00"}
-              step={"60"}
-              onChange={e => setTime(e.target.value)}
+            <label>Data:</label>
+            <textarea
+              value={data}
+              rows={7}
+              placeholder={DEFAULT_DATA}
+              className={"leftLine"}
+              onChange={(e) => {
+                setData(e.target.value);
+              }}
             />
           </div>
-          <div className={'record'}>
-            <label>Duration:</label>
-            <input
-              type={'time'}
-              value={duration}
-              max={"23:59"}
-              min={"00:00"}
-              step={"60"}
-              onChange={e => setDuration(e.target.value)}
-            />
-          </div>
-
           {errorMsg ? <CustomError errorMsg={errorMsg}/> : ''}
           <input
             className={"btn btn-primary width100"}
             type={"submit"}
-            value={'Generate'}
+            value={'Save'}
           />
         </form>
       </div>
@@ -242,4 +220,4 @@ const TutorSessionGenerator = () => {
   );
 };
 
-export default TutorSessionGenerator;
+export default TutorSessionSaveDataComponent;
