@@ -64,7 +64,7 @@ const TutorSessionGetLatestData = () => {
           <input
             className={"btn btn-primary width100"}
             type={"submit"}
-            value={'Save'}
+            value={'Fetch'}
           />
           <div className={'record'}>
             <label>Data:</label>

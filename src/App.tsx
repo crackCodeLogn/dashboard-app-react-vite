@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home/>}/>
         <Route path={"portfolio"} element={<Portfolio/>}/>
-        <Route path={"market/adhoc"} element={<MarketDataAdhoc showTable={true}/>}/>
+        <Route path={"market/adhoc"} element={<MarketDataAdhoc/>}/>
         {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
         <Route path={"tutor"} element={<Tutor/>}/>
         <Route path={"library"} element={<Library/>}/>

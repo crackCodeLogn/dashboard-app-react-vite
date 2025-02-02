@@ -234,7 +234,7 @@ const TutorSessionGenerator = () => {
           <input
             className={"btn btn-primary width100"}
             type={"submit"}
-            value={'Save'}
+            value={'Generate'}
           />
         </form>
       </div>

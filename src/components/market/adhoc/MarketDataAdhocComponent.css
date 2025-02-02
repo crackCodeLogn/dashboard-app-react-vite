@@ -1,0 +1,11 @@
+.table-custom {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-custom td:first-child {
+    max-width: 30%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
