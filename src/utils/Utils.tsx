@@ -1,3 +1,5 @@
+import currency from "currency.js";
+
 export class Utils {
   static yValueFormat(value: number): string {
     return value.toFixed(2);
@@ -10,5 +12,9 @@ export class Utils {
     const month = dateStr.substring(4, 6);
     const day = dateStr.substring(6, 8);
     return `${year}-${month}-${day}`;
+  }
+
+  static formatDollar(value: number): string {
+    return currency(value).format();
   }
 }

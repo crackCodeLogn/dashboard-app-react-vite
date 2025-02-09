@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 import {fetchGicValuationData} from "../../services/GicDataService.tsx";
 import {DataPacket} from "../../assets/proto/generated/DataPacket.ts";
 import {Utils} from "../../utils/Utils.tsx";
-import Chart1, {ChartOneSeriesProps} from "../chart/echarts/Chart.tsx";
 import CustomError from "../error/CustomError.tsx";
+import GicValuationDataComponent from "../gic/GicValuationDataComponent.tsx";
 
 export interface GicValuation {
   date: string,
@@ -36,20 +36,10 @@ const PortfolioGicValuationDataComponent = () => {
       });
   }, []);
 
-
-  function getChartData(gicValuationData: GicValuation[] | null): ChartOneSeriesProps {
-    return {
-      title: 'GIC Valuation',
-      showLegend: false,
-      xData: gicValuationData?.map(v => v.date),
-      yData: gicValuationData?.map(v => Utils.yValueFormat(v.value))
-    };
-  }
-
   return (
     <>
       {gicValuationData
-        ? <Chart1 {...getChartData(gicValuationData)}/>
+        ? <GicValuationDataComponent valuationData={gicValuationData}/>
         : <CustomError errorMsg={!errorMsg ? 'No GIC valuation data fetched' : errorMsg}/>}
     </>
   )

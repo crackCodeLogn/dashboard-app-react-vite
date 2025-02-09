@@ -1,10 +1,6 @@
 import Table from "react-bootstrap/Table";
-import currency from 'currency.js';
 import {AccountType, FixedDepositList} from '../../assets/proto/generated/FixedDeposit.ts'
-
-function formatDollar(value: number): string {
-  return currency(value).format();
-}
+import {Utils} from "../../utils/Utils.tsx";
 
 const GicListingsComponent = (params: { title: string, gicData: FixedDepositList }) => {
   const title: string = params.title;
@@ -35,10 +31,10 @@ const GicListingsComponent = (params: { title: string, gicData: FixedDepositList
             <td>{gic.startDate}</td>
             <td>{gic.endDate}</td>
             <td>{AccountType[gic.accountType]}</td>
-            <td>{formatDollar(gic.depositAmount)}</td>
+            <td>{Utils.formatDollar(gic.depositAmount)}</td>
             <td>{gic.rateOfInterest}</td>
-            <td>{formatDollar(gic.expectedInterest)}</td>
-            <td>{formatDollar(gic.expectedAmount)}</td>
+            <td>{Utils.formatDollar(gic.expectedInterest)}</td>
+            <td>{Utils.formatDollar(gic.expectedAmount)}</td>
           </tr>
         ))}
         </tbody>
