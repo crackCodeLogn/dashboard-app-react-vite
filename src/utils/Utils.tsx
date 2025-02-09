@@ -14,7 +14,8 @@ export class Utils {
     return `${year}-${month}-${day}`;
   }
 
-  static formatDollar(value: number): string {
+  static formatDollar(value: number | undefined): string {
+    if (!value) value = 0.0;
     return currency(value).format();
   }
 }

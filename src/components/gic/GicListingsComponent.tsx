@@ -1,3 +1,4 @@
+import "./GicListingsComponent.css";
 import Table from "react-bootstrap/Table";
 import {AccountType, FixedDepositList} from '../../assets/proto/generated/FixedDeposit.ts'
 import {Utils} from "../../utils/Utils.tsx";
@@ -6,10 +7,14 @@ const GicListingsComponent = (params: { title: string, gicData: FixedDepositList
   const title: string = params.title;
   const gicData: FixedDepositList = params.gicData;
 
+  const getRowColor = (accountType: number): string => {
+    return AccountType[accountType] === "TFSA" ? "highlight" : "";
+  }
+
   return (
     <div>
       <h4>{title}</h4>
-      <Table striped bordered hover variant={'light'}>
+      <Table bordered hover variant={'light'}>
         <thead>
         <tr>
           <th>Number</th>
@@ -25,7 +30,7 @@ const GicListingsComponent = (params: { title: string, gicData: FixedDepositList
         </thead>
         <tbody>
         {gicData.FixedDeposit.map((gic) => (
-          <tr key={gic.fdNumber}>
+          <tr key={gic.fdNumber} className={getRowColor(gic.accountType)}>
             <td>{gic.fdNumber}</td>
             <td>{gic.bankIFSC}</td>
             <td>{gic.startDate}</td>

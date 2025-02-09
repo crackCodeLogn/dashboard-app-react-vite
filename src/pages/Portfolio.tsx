@@ -1,5 +1,6 @@
 import PortfolioGicListingsComponent from "../components/portfolio/PortfolioGicListingsComponent.tsx";
 import PortfolioGicValuationDataComponent from "../components/portfolio/PortfolioGicValuationDataComponent.tsx";
+import PortfolioNetWorthComponent from "../components/portfolio/PortfolioNetWorthComponent.tsx";
 
 
 const Portfolio = () => {
@@ -8,8 +9,10 @@ const Portfolio = () => {
       <h1> Portfolio </h1>
       <hr/>
       <div className={'row'}>
-        {/*<NetWorth />*/}
-        {<PortfolioGicListingsComponent/>}
+        <div className={'record'}>
+          {<PortfolioNetWorthComponent/>}
+          {<PortfolioGicListingsComponent/>}
+        </div>
         {<PortfolioGicValuationDataComponent/>}
       </div>
     </div>
