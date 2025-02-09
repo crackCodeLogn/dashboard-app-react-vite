@@ -6,7 +6,7 @@ function formatDollar(value: number): string {
   return currency(value).format();
 }
 
-const GicListings = (params: { title: string, gicData: FixedDepositList }) => {
+const GicListingsComponent = (params: { title: string, gicData: FixedDepositList }) => {
   const title: string = params.title;
   const gicData: FixedDepositList = params.gicData;
 
@@ -47,4 +47,4 @@ const GicListings = (params: { title: string, gicData: FixedDepositList }) => {
   );
 };
 
-export default GicListings;
+export default GicListingsComponent;
