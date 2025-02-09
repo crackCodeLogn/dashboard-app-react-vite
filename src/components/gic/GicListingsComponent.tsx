@@ -13,7 +13,7 @@ const GicListingsComponent = (params: { title: string, gicData: FixedDepositList
 
   return (
     <div>
-      <h4>{title}</h4>
+      <h2>{title}</h2>
       <Table bordered hover variant={'light'}>
         <thead>
         <tr>

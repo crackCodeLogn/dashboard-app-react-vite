@@ -25,7 +25,7 @@ const PortfolioGicValuationDataComponent = () => {
         const dataPacket: DataPacket = DataPacket.deserializeBinary(binaryData);
         const gicValuation: GicValuation[] = [];
         for (const entry of dataPacket.intDoubleMap.entries()) {
-          console.log(entry);
+          // console.log(entry);
           gicValuation.push({date: Utils.getDateInString(entry[0]), value: entry[1]})
         }
         setGicValuationData(gicValuation);
