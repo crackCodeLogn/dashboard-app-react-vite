@@ -9,7 +9,7 @@ const Portfolio = () => {
       <h1> Portfolio </h1>
       <hr/>
       <div className={'row'}>
-        <div className={'record'}>
+        <div className={'record-space-around'}>
           {<PortfolioNetWorthComponent/>}
           {<PortfolioGicListingsComponent/>}
         </div>
