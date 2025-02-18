@@ -10,6 +10,7 @@ import MarketDataAdhoc from "./pages/MarketDataAdhoc.tsx";
 import Library from "./pages/Library.tsx";
 import Expiry from "./pages/Expiry.tsx";
 import Tutor from "./pages/Tutor.tsx";
+import Banking from "./pages/Banking.tsx";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path={"portfolio"} element={<Portfolio/>}/>
         <Route path={"market/adhoc"} element={<MarketDataAdhoc/>}/>
         {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
+        <Route path={"banking"} element={<Banking/>}/>
         <Route path={"tutor"} element={<Tutor/>}/>
         <Route path={"library"} element={<Library/>}/>
         <Route path={"expiry"} element={<Expiry/>}/>
