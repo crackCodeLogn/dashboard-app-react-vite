@@ -8,6 +8,7 @@ import {
   updateBankBalanceAmount
 } from "../../services/BankingDataService.tsx";
 import CustomError from "../error/CustomError.tsx";
+import {Utils} from "../../utils/Utils.tsx";
 
 const UpdateBankAccountBalanceComponent = () => {
   const [bankAccounts, setBankAccounts] = useState<BankAccounts | null>();
@@ -135,7 +136,8 @@ const UpdateBankAccountBalanceComponent = () => {
                   </select>
                   <label>Current Account Balance: </label>
                 {/*todo - there seems to be a bug in the coloring, if the account balance is updated to a negative from positive or vice-versa, the color doesn't reflect until refreshed manually*/}
-                  <label className={getCssClassForAccountBalance(selectedBankAccount)}>${currentAmount}</label>
+                  <label
+                      className={getCssClassForAccountBalance(selectedBankAccount)}>{Utils.formatDollar(parseFloat(currentAmount))}</label>
                   <label>New Account Balance: </label>
                   <input type={"number"}
                          step={"any"}
