@@ -4,6 +4,7 @@ import {DataPacket} from "../assets/proto/generated/DataPacket.ts";
 const HOST_URL: string = import.meta.env.VITE_HOST;
 const TWM_BASE_URL: string = `http://${HOST_URL}:22134`;
 const TWM_BANK_ACCOUNT_UPDATE_BALANCE: string = "/central/bank/bank-accounts/bank-account/balance";
+const TWM_BANK_ACCOUNT_BALANCE: string = "/central/bank/bank-accounts/bank-account/balance";
 const TWM_ALL_BANKS: string = "/central/bank/banks/getBanks";
 const TWM_ALL_BANK_ACCOUNTS: string = "/central/bank/bank-accounts/bank-accounts";
 
@@ -75,3 +76,10 @@ export const updateBankBalanceAmount = async (data: BankBalanceUpdate,
   const binaryObject = dataPacket.serializeBinary();
   return post(binaryObject, timeout, useProto, TWM_BANK_ACCOUNT_UPDATE_BALANCE);
 };
+
+export const getBankAccountBalance = async (accountId: string, timeout: number = 3000, useProto: boolean = false) => {
+  return fetch(timeout, useProto, TWM_BANK_ACCOUNT_BALANCE, {
+    'id': accountId,
+    'db': 'crdb'
+  });
+}

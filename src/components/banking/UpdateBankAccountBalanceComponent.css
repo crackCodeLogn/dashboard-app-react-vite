@@ -1,0 +1,17 @@
+.current-balance-green {
+    background-color: #4CAF50; /* Green Highlight */
+    color: white;
+    padding: 0.2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.current-balance-red {
+    background-color: #AF4C50; /* Red Highlight */
+    color: white;
+    padding: 0.2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}

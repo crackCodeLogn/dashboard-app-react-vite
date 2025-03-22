@@ -1,6 +1,12 @@
+import "./UpdateBankAccountBalanceComponent.css";
 import {useEffect, useState} from "react";
 import {BankAccount, BankAccounts} from "../../assets/proto/generated/Bank.ts";
-import {BankBalanceUpdate, getAllBankAccounts, updateBankBalanceAmount} from "../../services/BankingDataService.tsx";
+import {
+  BankBalanceUpdate,
+  getAllBankAccounts,
+  getBankAccountBalance,
+  updateBankBalanceAmount
+} from "../../services/BankingDataService.tsx";
 import CustomError from "../error/CustomError.tsx";
 
 const UpdateBankAccountBalanceComponent = () => {
@@ -9,6 +15,7 @@ const UpdateBankAccountBalanceComponent = () => {
   const [selectedBankAccountIndex, setSelectedBankAccountIndex] = useState(-1);
   const [selectedBankAccount, setSelectedBankAccount] = useState<BankAccount | undefined>();
   const [newAmount, setNewAmount] = useState('');
+  const [currentAmount, setCurrentAmount] = useState('-1.0');
 
   useEffect(() => {
     getAllBankAccounts()
@@ -27,7 +34,9 @@ const UpdateBankAccountBalanceComponent = () => {
         bankAccounts.accounts = [...bankAccounts.accounts].sort((a, b) => a.name.localeCompare(b.name));
         setBankAccounts(bankAccounts);
         setSelectedBankAccountIndex(0);
-        setSelectedBankAccount(bankAccounts.accounts[0]);
+        const bankAccount = bankAccounts.accounts[0];
+        setSelectedBankAccount(bankAccount);
+        getAccountBalance(bankAccount);
       })
       .catch(err => {
         console.error(err);
@@ -38,6 +47,29 @@ const UpdateBankAccountBalanceComponent = () => {
   useEffect(() => {
     setErrorMsg('');
   }, [newAmount, selectedBankAccountIndex]);
+
+  const handleAccountSelection = async (e: { target: { value: string; }; }) => {
+    const accountIndex = parseInt(e.target.value);
+    setSelectedBankAccountIndex(accountIndex);
+    if (bankAccounts) {
+      const bankAccount = bankAccounts.accounts[accountIndex];
+      setSelectedBankAccount(bankAccount);
+      await getAccountBalance(bankAccount);
+    }
+  };
+
+  const getAccountBalance = async (bankAccount: BankAccount) => {
+    getBankAccountBalance(bankAccount.externalId)
+      .then(result => {
+        console.log("Result obtained: " + result);
+        // if (!result) throw new Error(`no bank balance found for ${bankAccount.name}`);
+        setCurrentAmount(result);
+      })
+      .catch(err => {
+        console.error(err);
+        setErrorMsg(`error encountered => ${err}`);
+      });
+  }
 
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -65,12 +97,18 @@ const UpdateBankAccountBalanceComponent = () => {
           setSelectedBankAccountIndex(0);
           setSelectedBankAccount(bankAccounts?.accounts[0]);
           setNewAmount('0.0');
+          if (bankAccounts?.accounts[0]) getAccountBalance(bankAccounts.accounts[0]);
+          else setCurrentAmount('-1.0');
         }).catch(err => {
           console.error(err);
           setErrorMsg(err.toString());
         });
     }
   };
+
+  const getCssClassForAccountBalance = (bankAccount: BankAccount | undefined) => {
+    return (!bankAccount || bankAccount?.balance <= 0.0) ? 'current-balance-red' : 'current-balance-green';
+  }
 
   return (
     <div>
@@ -88,17 +126,17 @@ const UpdateBankAccountBalanceComponent = () => {
                   <label> Select Bank Account: </label>
                   <select
                       value={selectedBankAccountIndex}
-                      onChange={(e) => {
-                        const accountIndex = parseInt(e.target.value);
-                        setSelectedBankAccountIndex(accountIndex);
-                        setSelectedBankAccount(bankAccounts.accounts[accountIndex]);
-                      }}>
+                      onChange={handleAccountSelection}>
                     {bankAccounts.accounts.map((account, index) => (
                       <option key={index} value={index}>
                         {account.name}
                       </option>
                     ))}
                   </select>
+                  <label>Current Account Balance: </label>
+                {/*todo - there seems to be a bug in the coloring, if the account balance is updated to a negative from positive or vice-versa, the color doesn't reflect until refreshed manually*/}
+                  <label className={getCssClassForAccountBalance(selectedBankAccount)}>${currentAmount}</label>
+                  <label>New Account Balance: </label>
                   <input type={"number"}
                          step={"any"}
                          value={newAmount}
