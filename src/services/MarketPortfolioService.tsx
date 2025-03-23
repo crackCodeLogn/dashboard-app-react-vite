@@ -3,7 +3,7 @@ import axios, {AxiosInstance} from 'axios';
 const HOST_URL: string = import.meta.env.VITE_HOST;
 const PORTFOLIO_DATA_BASE_URL: string = `http://${HOST_URL}:40037`;
 const PORTFOLIO_NET_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market/valuations";
-const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market/accounts/valuations";
+const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market/valuations/account";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
