@@ -1,6 +1,10 @@
 import PortfolioGicListingsComponent from "../components/portfolio/PortfolioGicListingsComponent.tsx";
 import PortfolioGicValuationDataComponent from "../components/portfolio/PortfolioGicValuationDataComponent.tsx";
 import PortfolioNetWorthComponent from "../components/portfolio/PortfolioNetWorthComponent.tsx";
+import PortfolioNetMarketValuationDataComponent
+  from "../components/portfolio/PortfolioNetMarketValuationDataComponent.tsx";
+import PortfolioMarketAccountValuationDataComponent
+  from "../components/portfolio/PortfolioMarketAccountValuationDataComponent.tsx";
 
 
 const Portfolio = () => {
@@ -14,6 +18,10 @@ const Portfolio = () => {
           {<PortfolioGicListingsComponent/>}
         </div>
         {<PortfolioGicValuationDataComponent/>}
+        {<PortfolioNetMarketValuationDataComponent/>}
+        {<PortfolioMarketAccountValuationDataComponent accountType={'TFSA'}/>}
+        {<PortfolioMarketAccountValuationDataComponent accountType={'NR'}/>}
+        {<PortfolioMarketAccountValuationDataComponent accountType={'FHSA'}/>}
       </div>
     </div>
   );

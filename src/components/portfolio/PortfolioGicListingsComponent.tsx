@@ -9,7 +9,7 @@ const PortfolioGicListingsComponent = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    fetchGicExpiriesData(undefined, true)
+    fetchGicExpiriesData()
       .then(result => {
         if (!result) {
           throw new Error(`no gic expiry data found`);

@@ -15,7 +15,7 @@ const PortfolioGicValuationDataComponent = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    fetchGicValuationData(undefined, true)
+    fetchGicValuationData()
       .then(result => {
         if (!result) {
           throw new Error(`no gic valuation data found`);

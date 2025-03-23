@@ -30,11 +30,11 @@ async function fetch(timeout: number, useProto: boolean, endPoint: string) {
 }
 
 export const fetchGicExpiriesData = async (timeout: number = 3000,
-                                           useProto: boolean = false) => {
+                                           useProto: boolean = true) => {
   return fetch(timeout, useProto, PORTFOLIO_GIC_EXPIRIES_DATA_END_POINT);
 };
 
 export const fetchGicValuationData = async (timeout: number = 3000,
-                                            useProto: boolean = false) => {
+                                            useProto: boolean = true) => {
   return fetch(timeout, useProto, PORTFOLIO_GIC_VALUATIONS_DATA_END_POINT);
 };
