@@ -41,7 +41,8 @@ const PortfolioMarketAccountValuationDataComponent = (props: { accountType: stri
     <>
       {marketValuationData
         ?
-        <MarketValuationDataComponent valuationData={marketValuationData} title={`Market ${accountType} Valuation`}/>
+        <MarketValuationDataComponent valuationData={marketValuationData}
+                                      title={`Market ${accountType} Valuation - Profit / Loss`}/>
         : <CustomError errorMsg={!errorMsg ? 'No Net Market valuation data fetched' : errorMsg}/>}
     </>
   )

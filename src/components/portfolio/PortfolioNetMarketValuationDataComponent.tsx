@@ -39,7 +39,8 @@ const PortfolioNetMarketValuationDataComponent = () => {
   return (
     <>
       {marketValuationData
-        ? <MarketValuationDataComponent valuationData={marketValuationData} title={'Market Net Valuation'}/>
+        ? <MarketValuationDataComponent valuationData={marketValuationData}
+                                        title={'Market Net Valuation - Profit / Loss'}/>
         : <CustomError errorMsg={!errorMsg ? 'No Net Market valuation data fetched' : errorMsg}/>}
     </>
   )
