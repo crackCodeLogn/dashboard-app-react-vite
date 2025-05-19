@@ -11,6 +11,7 @@ import Library from "./pages/Library.tsx";
 import Expiry from "./pages/Expiry.tsx";
 import Tutor from "./pages/Tutor.tsx";
 import Banking from "./pages/Banking.tsx";
+import LanguageFr from "./pages/LanguageFr.tsx";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path={"tutor"} element={<Tutor/>}/>
         <Route path={"library"} element={<Library/>}/>
         <Route path={"expiry"} element={<Expiry/>}/>
+        <Route path={"language-fr"} element={<LanguageFr/>}/>
         <Route path={"contact"} element={<Contact/>}/>
         <Route path={"*"} element={<NoPage/>}/>
       </Routes>

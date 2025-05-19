@@ -26,6 +26,7 @@ const NavigationBar = () => {
         <Link to={"/tutor"} onClick={handleClose}>Tutor</Link>
         <Link to={"/library"} onClick={handleClose}>Library</Link>
         <Link to={"/expiry"} onClick={handleClose}>Expiry</Link>
+        <Link to={"/language-fr"} onClick={handleClose}>Language: FR</Link>
         <Link to={"/contact"} onClick={handleClose}>Contact</Link>
       </div>
     </nav>
