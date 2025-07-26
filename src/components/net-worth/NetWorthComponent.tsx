@@ -1,16 +1,14 @@
 import "./NetWorthComponent.css";
 import {Utils} from "../../utils/Utils.tsx";
 
-function getPercentage(mapValue: number | undefined, total: number): string {
-  if (mapValue === undefined) return '0.00%';
+function getPercentage(mapValue: number | undefined, total: number | undefined): string {
+  if (mapValue === undefined || total === undefined) return '0.00%';
   return `${Utils.yValueFormat(100 * (mapValue / total))}%`;
 }
 
 const NetWorthComponent = (props: { dataPoints: Map<string, number>; }) => {
   const dataPoints: Map<string, number> = props.dataPoints;
-  let totalVal = 0.0;
-  for (const val of dataPoints.values()) totalVal += val;
-
+  const totalVal = dataPoints.get("net-worth");
 
   return (
     <div className="centralize">
