@@ -1,14 +1,10 @@
 import "./UpdateBankAccountBalanceComponent.css";
 import {useEffect, useState} from "react";
 import {BankAccount, BankAccounts} from "../../assets/proto/generated/Bank.ts";
-import {
-  BankBalanceUpdate,
-  getAllBankAccounts,
-  getBankAccountBalance,
-  updateBankBalanceAmount
-} from "../../services/BankingDataService.tsx";
+import {BankBalanceUpdate, getAllBankAccounts, getBankAccountBalance, updateBankBalanceAmount} from "../../services/BankingDataService.tsx";
 import CustomError from "../error/CustomError.tsx";
 import {Utils} from "../../utils/Utils.tsx";
+import Table from "react-bootstrap/Table";
 
 const UpdateBankAccountBalanceComponent = () => {
   const [bankAccounts, setBankAccounts] = useState<BankAccounts | null>();
@@ -148,6 +144,28 @@ const UpdateBankAccountBalanceComponent = () => {
                   <input type={'submit'}/>
               </form>
           </div>}
+      <br/>
+      <h3>At a Glance</h3>
+      {bankAccounts &&
+          <div className={"centralize"}>
+              <Table bordered hover variant={'light'} className={"table-narrow"}>
+                  <thead>
+                  <tr>
+                      <th>Bank</th>
+                      <th>Current Balance</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {bankAccounts.accounts.map((account) => (
+                    <tr>
+                      <td>{account.name}</td>
+                      <td>{Utils.formatDollar(account.balance)}</td>
+                    </tr>
+                  ))}
+                  </tbody>
+              </Table>
+          </div>
+      }
     </div>
   )
 }
