@@ -1,0 +1,24 @@
+.color-default {
+    color: #ff5050 !important;
+}
+
+.color-income {
+    color: #4CAF50 !important;
+}
+
+.color-investment {
+    color: cadetblue !important;
+}
+
+.color-update-expense {
+    color: orangered !important;
+}
+
+.color-rebal {
+    color: darkgoldenrod !important;
+}
+
+
+.cell-strong {
+    font-weight: bold;
+}
