@@ -5,8 +5,8 @@ const MARKET_DATA_BASE: string = `http://${HOST_URL}:5025`;
 const GET_ALL_MODES_END_POINT: string = "/tutor/modes";
 const GET_ALL_SUBJECTS_END_POINT: string = "/tutor/subjects";
 const POST_SESSION_END_POINT: string = "/tutor/session";
-const POST_SESSION_DATA_END_POINT: string = "/tutor/sessionData";
-const GET_LATEST_SESSION_DATA_END_POINT: string = "/tutor/sessionData";
+const POST_SESSION_DATA_END_POINT: string = "/tutor/session/data";
+const GET_LATEST_SESSION_DATA_END_POINT: string = "/tutor/session/data";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
