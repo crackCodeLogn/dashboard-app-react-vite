@@ -13,6 +13,7 @@ import Tutor from "./pages/Tutor.tsx";
 import Banking from "./pages/Banking.tsx";
 import LanguageFr from "./pages/LanguageFr.tsx";
 import ExpenseSim from "./pages/ExpenseSim.tsx";
+import ItemPricing from "./pages/ItemPricing.tsx";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path={"library"} element={<Library/>}/>
         <Route path={"expiry"} element={<Expiry/>}/>
         <Route path={"expense-sim"} element={<ExpenseSim/>}/>
+        <Route path={"item-pricing"} element={<ItemPricing/>}/>
         <Route path={"language-fr"} element={<LanguageFr/>}/>
         <Route path={"contact"} element={<Contact/>}/>
         <Route path={"*"} element={<NoPage/>}/>

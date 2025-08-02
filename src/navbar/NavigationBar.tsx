@@ -27,6 +27,7 @@ const NavigationBar = () => {
         <Link to={"/library"} onClick={handleClose}>Library</Link>
         <Link to={"/expiry"} onClick={handleClose}>Expiry</Link>
         <Link to={"/expense-sim"} onClick={handleClose}>Expense-Sim</Link>
+        <Link to={"/item-pricing"} onClick={handleClose}>Item-Pricing</Link>
         <Link to={"/language-fr"} onClick={handleClose}>Language: FR</Link>
         <Link to={"/contact"} onClick={handleClose}>Contact</Link>
       </div>

@@ -5,6 +5,7 @@ const ExpenseSim = () => {
   return (
     <div className={'row'}>
       <h1> Expense Simulator </h1>
+      <hr/>
       <div className={'linear'}>
         <ExpenseSimulatorComponent/>
       </div>
