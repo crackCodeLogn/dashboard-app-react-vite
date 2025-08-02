@@ -18,4 +18,9 @@ export class Utils {
     if (!value) value = 0.0;
     return currency(value).format();
   }
+
+  static getPercentage(mapValue: number | undefined, total: number | undefined): string {
+    if (mapValue === undefined || total === undefined) return '0.00%';
+    return `${Utils.yValueFormat(100 * (mapValue / total))}%`;
+  }
 }

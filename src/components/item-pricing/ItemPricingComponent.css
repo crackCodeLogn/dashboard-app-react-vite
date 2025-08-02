@@ -2,6 +2,10 @@
     color: #ff5050 !important;
 }
 
+.color-gray {
+    color: dimgray !important;
+}
+
 .centralize {
     align-items: start;
 }

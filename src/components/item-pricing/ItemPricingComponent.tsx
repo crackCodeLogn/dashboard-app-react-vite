@@ -23,6 +23,8 @@ const ItemPricingComponent = () => {
   const [endDate, setEndDate] = useState<number>(getDefaultEndDate());
   const [isLoading, setLoading] = useState<boolean>(false);
   const [itemPricingStats, setItemPricingStats] = useState<ItemPricingStats | null>(null);
+  const [categoryTotal, setCategoryTotal] = useState(0.0);
+  const [categoryExtraTotal, setCategoryExtraTotal] = useState(0.0);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -48,6 +50,14 @@ const ItemPricingComponent = () => {
         const binaryData = new Uint8Array(result);
         const stats: ItemPricingStats = ItemPricingStats.deserializeBinary(binaryData);
         console.log(stats);
+
+        let categoryTotal = 0.0;
+        for (const val of stats.categoryTotalPriceMap.values()) categoryTotal += val;
+        setCategoryTotal(categoryTotal);
+
+        let categoryExtraTotal = 0.0;
+        for (const val of stats.categoryExtraAggregateMap.values()) categoryExtraTotal += val;
+        setCategoryExtraTotal(categoryExtraTotal);
 
         setItemPricingStats(stats);
         setLoading(false);
@@ -110,6 +120,7 @@ const ItemPricingComponent = () => {
                               <div className="net-worth-item" key={category}>
                                 <h2>{category}</h2>
                                 <h2 className={'color-default'}>{Utils.formatDollar(value)}</h2>
+                                <h3 className={'color-gray'}>{Utils.getPercentage(value, categoryTotal)}</h3>
                               </div>
                             ))}
                         </div>
@@ -125,6 +136,7 @@ const ItemPricingComponent = () => {
                                     <div className="net-worth-item" key={category}>
                                       <h2>{category}</h2>
                                       <h2 className={'color-default'}>{Utils.formatDollar(value)}</h2>
+                                      <h3 className={'color-gray'}>{Utils.getPercentage(value, categoryExtraTotal)}</h3>
                                     </div>
                                   ))}
                               </div>
