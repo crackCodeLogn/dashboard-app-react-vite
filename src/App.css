@@ -135,3 +135,7 @@ textarea {
 .error {
     color: red;
 }
+
+.centralize-2 {
+    justify-items: center;
+}

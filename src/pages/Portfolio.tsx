@@ -1,10 +1,9 @@
 import PortfolioGicListingsComponent from "../components/portfolio/PortfolioGicListingsComponent.tsx";
 import PortfolioGicValuationDataComponent from "../components/portfolio/PortfolioGicValuationDataComponent.tsx";
 import PortfolioNetWorthComponent from "../components/portfolio/PortfolioNetWorthComponent.tsx";
-import PortfolioNetMarketValuationDataComponent
-  from "../components/portfolio/PortfolioNetMarketValuationDataComponent.tsx";
-import PortfolioMarketAccountValuationDataComponent
-  from "../components/portfolio/PortfolioMarketAccountValuationDataComponent.tsx";
+import PortfolioNetMarketValuationDataComponent from "../components/portfolio/PortfolioNetMarketValuationDataComponent.tsx";
+import PortfolioMarketAccountValuationDataComponent from "../components/portfolio/PortfolioMarketAccountValuationDataComponent.tsx";
+import PortfolioMarketAccountDividendsValuationDataComponent from "../components/portfolio/PortfolioMarketAccountDividendsValuationDataComponent.tsx";
 
 
 const Portfolio = () => {
@@ -16,6 +15,11 @@ const Portfolio = () => {
         <div className={'record-space-around'}>
           {<PortfolioNetWorthComponent/>}
           {<PortfolioGicListingsComponent/>}
+        </div>
+        <div className={'record-space-around'}>
+          {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'TFSA'} limit={16}/>}
+          {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'NR'} limit={16}/>}
+          {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'FHSA'} limit={16}/>}
         </div>
         {<PortfolioGicValuationDataComponent/>}
         {<PortfolioNetMarketValuationDataComponent/>}
