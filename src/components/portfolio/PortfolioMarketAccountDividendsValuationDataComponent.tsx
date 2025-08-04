@@ -14,6 +14,7 @@ const PortfolioMarketAccountValuationDataComponent = (props: { accountType: stri
   const accountType: string = props.accountType;
   const limit: number = props.limit;
   const [marketDividendValuationData, setMarketDividendValuationData] = useState<MarketDividendValuation[] | null>(null);
+  const [totalValue, setTotalValue] = useState(0.0);
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
@@ -26,10 +27,13 @@ const PortfolioMarketAccountValuationDataComponent = (props: { accountType: stri
         const binaryData = new Uint8Array(result);
         const dataPacket: DataPacket = DataPacket.deserializeBinary(binaryData);
         const marketDividendValuations: MarketDividendValuation[] = [];
+        let totalValue = 0.0;
         for (const entry of dataPacket.stringDoubleMap.entries()) {
           // console.log(entry);
           marketDividendValuations.push({symbol: entry[0], value: entry[1]})
+          totalValue += entry[1];
         }
+        setTotalValue(totalValue);
         marketDividendValuations.sort((a, b) => b.value - a.value);
         setMarketDividendValuationData(marketDividendValuations.slice(0, Math.min(marketDividendValuations.length, limit - 1)));
       })
@@ -53,6 +57,10 @@ const PortfolioMarketAccountValuationDataComponent = (props: { accountType: stri
             </tr>
             </thead>
             <tbody>
+            <tr>
+              <td className={'color-investment cell-strong'}>TOTAL</td>
+              <td className={'color-investment cell-strong'}>{Utils.formatDollar(totalValue)}</td>
+            </tr>
             {marketDividendValuationData.map((valuation) => (
               <tr key={valuation.symbol}>
                 <td>{valuation.symbol}</td>
