@@ -28,7 +28,7 @@ async function fetch(timeout: number, useProto: boolean, endPoint: string, param
   }
 }
 
-export const getItemPricingStats = async (startDate: number, endDate: number, timeout: number = 3000, useProto: boolean = true) => {
+export const getItemPricingStats = async (startDate: number, endDate: number, timeout: number = 30000, useProto: boolean = true) => {
   return fetch(timeout, useProto, ITEM_PRICING_EXTRACT_END_POINT, {
     'startDate': startDate,
     'endDate': endDate
