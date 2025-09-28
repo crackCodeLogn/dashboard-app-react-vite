@@ -10,7 +10,7 @@
     align-items: start;
 }
 
-.net-worth-big {
+.item-pricing-big {
     background-color: #ff5050;
     color: white;
     padding: 1rem;
@@ -20,21 +20,21 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.net-worth-grid {
+.item-pricing-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Two columns */
     gap: 1rem;
     width: 100%;
 }
 
-.net-worth-grid-3 {
+.item-pricing-grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Three columns */
     gap: 1rem;
     /*width: 100%;*/
 }
 
-.net-worth-item {
+.item-pricing-item {
     background-color: #f0f0f0;
     padding: 1rem;
     border-radius: 10px;

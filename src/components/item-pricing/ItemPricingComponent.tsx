@@ -108,16 +108,16 @@ const ItemPricingComponent = () => {
         {itemPricingStats &&
             <div className={'record-space-around'}>
                 <div className={'centralize'}>
-                    <div className="net-worth-container">
-                        <div className="net-worth-big">
+                    <div className="item-pricing-container">
+                        <div className="item-pricing-big">
                             <h1>Total Spent</h1>
                             <h1>{Utils.formatDollar(itemPricingStats.totalSpent)}</h1>
                         </div>
-                        <div className="net-worth-grid">
+                        <div className="item-pricing-grid">
                           {[...itemPricingStats.categoryTotalPriceMap.entries()]
                             .sort((a, b) => b[1] - a[1]) // in decreasing order of value
                             .map(([category, value]) => (
-                              <div className="net-worth-item" key={category}>
+                              <div className="item-pricing-item" key={category}>
                                 <h2>{category}</h2>
                                 <h2 className={'color-default'}>{Utils.formatDollar(value)}</h2>
                                 <h3 className={'color-gray'}>{Utils.getPercentage(value, categoryTotal)}</h3>
@@ -125,15 +125,15 @@ const ItemPricingComponent = () => {
                             ))}
                         </div>
                       {itemPricingStats.categoryExtraAggregateMap.size > 0 &&
-                          <div className={'net-worth-container'}>
-                              <div className={'net-worth-big'}>
+                          <div className={'item-pricing-container'}>
+                              <div className={'item-pricing-big'}>
                                   <h3>Breakdown of extra</h3>
                               </div>
-                              <div className="net-worth-grid-3">
+                              <div className="item-pricing-grid-3">
                                 {[...itemPricingStats.categoryExtraAggregateMap.entries()]
                                   .sort((a, b) => b[1] - a[1]) // in decreasing order of value
                                   .map(([category, value]) => (
-                                    <div className="net-worth-item" key={category}>
+                                    <div className="item-pricing-item" key={category}>
                                       <h2>{category}</h2>
                                       <h2 className={'color-default'}>{Utils.formatDollar(value)}</h2>
                                       <h3 className={'color-gray'}>{Utils.getPercentage(value, categoryExtraTotal)}</h3>
