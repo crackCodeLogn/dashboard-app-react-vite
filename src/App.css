@@ -80,12 +80,89 @@ h1 {
 }
 
 .record-space-around {
-    width: 100%;
+    /* 1. Enable Flexbox */
     display: flex;
-    flex-direction: row;
-    /*align-items: center;*/
-    justify-content: space-around;
-    gap: 1rem;
+
+    /* 2. Horizontal Spacing FIX: Use space-between to push items to edges,
+          which creates a balanced proportional gap in the middle for 2 items. */
+    justify-content: space-evenly;
+
+    /* 3. VERTICAL CENTERING: Align items in the center vertically */
+    align-items: center;
+
+    /* 4. Allow wrapping to the next line if the screen is too narrow */
+    flex-wrap: wrap;
+
+    /* 5. Add vertical padding/margin for row separation */
+    margin: 20px 0px;
+    padding: 10px 0; /* Optional: small padding for container */
+}
+
+/* Target the direct children (the components) */
+.record-space-around > * {
+    /* 6. FIX: Use flex-basis to control width and flex-shrink: 0 to prevent shrinking */
+
+    /* For 2 items: 48% is close to half, leaving 4% for the gap created by space-between */
+    /* For 3 items: 32% allows them to fit (3 * 32% = 96%) with space-between gaps */
+    flex-basis: 45%; /* Adjust this percentage based on your desired layout */
+
+    /* 7. Crucial: Prevents the component from shrinking below the flex-basis value */
+    flex-shrink: 0;
+
+    /* 8. Optional: Allows component to grow slightly if space allows, but based on 48% basis */
+    flex-grow: 0;
+
+    /* 9. Ensure a minimum width for responsiveness on small screens */
+    min-width: 300px; /* Ensure component content is readable */
+
+    /* 10. Margin for consistent vertical spacing when items wrap */
+    margin-bottom: 20px;
+
+    /* Optional: Center content inside the component */
+    text-align: center;
+}
+
+.record-space-around-3 {
+    /* 1. Enable Flexbox */
+    display: flex;
+
+    /* 2. Horizontal Spacing FIX: Use space-between to push items to edges,
+          which creates a balanced proportional gap in the middle for 2 items. */
+    justify-content: space-between;
+
+    /* 3. VERTICAL CENTERING: Align items in the center vertically */
+    align-items: center;
+
+    /* 4. Allow wrapping to the next line if the screen is too narrow */
+    flex-wrap: wrap;
+
+    /* 5. Add vertical padding/margin for row separation */
+    margin: 20px 0;
+    padding: 0 10px; /* Optional: small padding for container */
+}
+
+/* Target the direct children (the components) */
+.record-space-around-3 > * {
+    /* 6. FIX: Use flex-basis to control width and flex-shrink: 0 to prevent shrinking */
+
+    /* For 2 items: 48% is close to half, leaving 4% for the gap created by space-between */
+    /* For 3 items: 32% allows them to fit (3 * 32% = 96%) with space-between gaps */
+    flex-basis: 32%; /* Adjust this percentage based on your desired layout */
+
+    /* 7. Crucial: Prevents the component from shrinking below the flex-basis value */
+    flex-shrink: 0;
+
+    /* 8. Optional: Allows component to grow slightly if space allows, but based on 48% basis */
+    flex-grow: 0;
+
+    /* 9. Ensure a minimum width for responsiveness on small screens */
+    min-width: 300px; /* Ensure component content is readable */
+
+    /* 10. Margin for consistent vertical spacing when items wrap */
+    margin-bottom: 20px;
+
+    /* Optional: Center content inside the component */
+    text-align: center;
 }
 
 

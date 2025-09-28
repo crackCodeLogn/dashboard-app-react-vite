@@ -1,12 +1,10 @@
-/* PortfolioMarketAccountValuationSectorPieChart.css */
-
 .pie-chart-container {
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     background-color: #fff;
-    max-width: 750px; /* Adjust max-width as desired */
+    /* Removed max-width here to allow components to expand with the flex layout */
     margin: 20px auto;
 }
 
@@ -23,7 +21,47 @@
     margin-bottom: 20px;
 }
 
-/* Styling for the custom Recharts tooltip */
+/* --- NEW FLEX LAYOUT CONTAINER --- */
+.chart-and-table-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align to the top */
+    gap: 30px; /* Space between chart and table */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+/* Pie Chart Area - Chart + Legend */
+.pie-chart-area {
+    display: flex;
+    flex-direction: column;
+    /* Use flex: 1 to allow it to take up space, but set a basis for control */
+    flex: 1 1 55%;
+    min-width: 300px;
+}
+
+/* Detail Table Area */
+.detail-table-container {
+    /* Use flex: 1 to allow it to take up space, but set a basis for control */
+    flex: 1 1 35%;
+    min-width: 250px;
+}
+
+.table-sector-detail {
+    /* Ensure the table doesn't exceed its container */
+    width: 100%;
+    font-size: 0.9em;
+    margin-bottom: 0;
+}
+
+/* Highlight top sectors in the detail table (optional) */
+.table-sector-detail .cell-strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Rest of the styling for tooltip/utilities */
+/* ... (Keep the existing .custom-tooltip, .color-investment, .cell-strong styles) ... */
+
 .custom-tooltip {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -44,11 +82,6 @@
     color: #666;
 }
 
-/* Utility classes (assuming these exist from your other components) */
 .color-investment {
-    color: #17a2b8; /* A standard investment/info color */
-}
-
-.cell-strong {
-    font-weight: bold;
+    color: #17a2b8;
 }

@@ -20,13 +20,17 @@ const Portfolio = () => {
         </div>
         <div className={'record-space-around'}>
           {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'TFSA'} limit={16}/>}
+          {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
+        </div>
+        <div className={'record-space-around'}>
           {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'NR'} limit={16}/>}
+          {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
+        </div>
+        <div className={'record-space-around'}>
           {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'FHSA'} limit={16}/>}
+          {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
         </div>
         {/*<div className={'record-space-around'}>*/}
-        {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
-        {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
-        {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
         {/*</div>*/}
         {<PortfolioGicValuationDataComponent/>}
         {<PortfolioNetMarketValuationDataComponent/>}

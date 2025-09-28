@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip} from 'recharts';
-import {fetchAccountMarketSectorValuationsData} from '../../services/MarketPortfolioService.tsx'; // Assumed path
-import {DataPacket} from '../../assets/proto/generated/DataPacket.ts'; // Assumed path
+import {fetchAccountMarketSectorValuationsData} from '../../services/MarketPortfolioService.tsx';
+import {DataPacket} from '../../assets/proto/generated/DataPacket.ts';
 import CustomError from '../error/CustomError.tsx';
-import {Utils} from '../../utils/Utils.tsx'; // For formatting dollar amounts
+import {Utils} from '../../utils/Utils.tsx';
 import './PortfolioMarketAccountValuationSectorPieChart.css'; // Dedicated CSS file
+import Table from "react-bootstrap/Table"; // Import Table component
 
 // Define the structure for the chart data
 export interface SectorValuation {
@@ -12,21 +13,21 @@ export interface SectorValuation {
   value: number; // Valuation amount
 }
 
-// Color palette for the pie chart sectors (add more as needed)
+// Color palette for the pie chart sectors
 const COLORS = [
-  '#0088FE', // Blue
-  '#00C49F', // Green
-  '#FFBB28', // Yellow
-  '#FF8042', // Orange
-  '#AF19FF', // Purple
-  '#FF4560', // Red-Orange
-  '#546E7A', // Gray-Blue
-  '#7CFC00', // Neon Green
+  '#0088FE', '#00C49F', '#FFBB28', '#FF8042',
+  '#AF19FF', '#FF4560', '#546E7A', '#7CFC00',
 ];
 
-const PortfolioMarketAccountValuationSectorPieChartComponent = (props: { accountType: string; limit: number }) => {
+const PortfolioMarketSectorPieChartComponent = (props: { accountType: string; limit: number }) => {
   const {accountType, limit} = props;
-  const [sectorValuationData, setSectorValuationData] = useState<SectorValuation[] | null>(null);
+
+  // State for the data used in the chart (limited + 'Other')
+  const [chartData, setChartData] = useState<SectorValuation[] | null>(null);
+
+  // State for ALL sectors (used in the detailed table)
+  const [fullSectorData, setFullSectorData] = useState<SectorValuation[] | null>(null);
+
   const [errorMsg, setErrorMsg] = useState('');
   const [totalValue, setTotalValue] = useState(0.0);
 
@@ -42,32 +43,32 @@ const PortfolioMarketAccountValuationSectorPieChartComponent = (props: { account
       const binaryData = new Uint8Array(result);
       const dataPacket: DataPacket = DataPacket.deserializeBinary(binaryData);
 
-      const sectorValuations: SectorValuation[] = [];
+      let sectorValuations: SectorValuation[] = [];
       let total = 0.0;
 
       // 2. Map Processing
       for (const entry of dataPacket.stringDoubleMap.entries()) {
-        const sector = entry[0];
-        const value = entry[1];
-        sectorValuations.push({name: sector, value: value});
-        total += value;
+        sectorValuations.push({name: entry[0], value: entry[1]});
+        total += entry[1];
       }
 
-      // 3. Sort and Limit
+      // Sort the data
       sectorValuations.sort((a, b) => b.value - a.value);
 
-      // Separate the top sectors and group the rest into an "Other" category
+      // --- Prepare Data for Chart (Limited) ---
       const topSectors = sectorValuations.slice(0, Math.min(sectorValuations.length, limit));
       const otherSectors = sectorValuations.slice(limit);
 
-      let finalData = topSectors;
+      let finalChartData = [...topSectors]; // Use spread to avoid mutation
       if (otherSectors.length > 0) {
         const otherValue = otherSectors.reduce((sum, item) => sum + item.value, 0);
-        finalData.push({name: `Other (${otherSectors.length} Sectors)`, value: otherValue});
+        finalChartData.push({name: `Other (${otherSectors.length} Sectors)`, value: otherValue});
       }
 
+      // --- Update State ---
       setTotalValue(total);
-      setSectorValuationData(finalData);
+      setChartData(finalChartData);
+      setFullSectorData(sectorValuations); // Store ALL data for the detail table
 
     } catch (err) {
       console.error(err);
@@ -79,11 +80,11 @@ const PortfolioMarketAccountValuationSectorPieChartComponent = (props: { account
     fetchData();
   }, [fetchData]);
 
-  // Custom Tooltip component for formatting (optional, but highly recommended)
+  // Custom Tooltip component for formatting
   const CustomTooltip = ({active, payload}: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
-      const percentage = ((data.value / totalValue) * 100).toFixed(2);
+      const percentage = totalValue > 0 ? ((data.value / totalValue) * 100).toFixed(2) : 0;
       return (
         <div className="custom-tooltip">
           <p className="label">{`${data.name}: ${Utils.formatDollar(data.value)}`}</p>
@@ -95,45 +96,91 @@ const PortfolioMarketAccountValuationSectorPieChartComponent = (props: { account
   };
 
   // Render Logic
-  if (errorMsg || (sectorValuationData && sectorValuationData.length === 0)) {
+  if (errorMsg || (fullSectorData && fullSectorData.length === 0)) {
     return <CustomError errorMsg={errorMsg || 'No Sector Valuation data available to display.'}/>;
   }
 
-  if (!sectorValuationData) {
-    // Basic loading state or just return null/empty div
+  if (!fullSectorData || !chartData) {
     return <div>Loading Sector Data...</div>;
   }
+
+  // Detailed Sector Table Component
+  const DetailSectorTable = () => (
+    <div className="detail-table-container">
+      <Table bordered hover variant={'light'} className={"table-sector-detail"}>
+        <thead>
+        <tr>
+          <th colSpan={2}>All Sectors ({fullSectorData.length})</th>
+        </tr>
+        <tr>
+          <th>Sector</th>
+          <th>% Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {fullSectorData.map((sector, index) => {
+          const percentage = totalValue > 0 ? ((sector.value / totalValue) * 100).toFixed(2) : 0;
+          return (
+            <tr key={sector.name}>
+              <td className={index < limit ? 'cell-strong' : ''}>{sector.name}</td>
+              <td>{percentage}%</td>
+            </tr>
+          );
+        })}
+        </tbody>
+      </Table>
+    </div>
+  );
 
   return (
     <div className="pie-chart-container">
       <h2>Sector Breakdown: {accountType}</h2>
       <p className="total-label">Total Value: <span className="cell-strong color-investment">{Utils.formatDollar(totalValue)}</span></p>
 
-      <ResponsiveContainer width="100%" height={350}>
-        <PieChart>
-          <Pie
-            data={sectorValuationData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%" // Center X position
-            cy="50%" // Center Y position
-            outerRadius={100}
-            fill="#8884d8"
-            labelLine={false}
-            // Use a simple function for labels outside the slices
-            label={({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`}
-            paddingAngle={2} // Small gap between slices
-          >
-            {sectorValuationData.map((_entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip totalValue={totalValue}/>}/>
-          <Legend layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{paddingLeft: '20px'}}/>
-        </PieChart>
-      </ResponsiveContainer>
+      {/* Container for the Pie Chart + Detail Table */}
+      <div className="chart-and-table-flex">
+
+        {/* Pie Chart and Legend */}
+        <div className="pie-chart-area">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#8884d8"
+                labelLine={false}
+                label={({name, percent}) => `${name.split(' ')[0]}: ${(percent * 100).toFixed(0)}%`}
+                paddingAngle={2}
+              >
+                {chartData.map((_entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip totalValue={totalValue}/>}/>
+              {/* NOTE: Legend is often better placed outside the PieChart component for custom control */}
+            </PieChart>
+          </ResponsiveContainer>
+          <Legend
+            payload={chartData.map((item, index) => ({
+              value: item.name,
+              type: 'square',
+              id: item.name,
+              color: COLORS[index % COLORS.length]
+            }))}
+            layout="vertical" align="right" verticalAlign="middle" wrapperStyle={{paddingTop: '20px'}}
+          />
+        </div>
+
+        {/* Detail Table */}
+        <DetailSectorTable/>
+
+      </div>
     </div>
   );
 };
 
-export default PortfolioMarketAccountValuationSectorPieChartComponent;
+export default PortfolioMarketSectorPieChartComponent;
