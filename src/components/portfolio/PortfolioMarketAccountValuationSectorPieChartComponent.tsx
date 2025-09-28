@@ -134,7 +134,7 @@ const PortfolioMarketSectorPieChartComponent = (props: { accountType: string; li
 
   return (
     <div className="pie-chart-container">
-      <h2>Sector Breakdown: {accountType}</h2>
+      <h2>Sector Breakdown</h2>
       <p className="total-label">Total Value: <span className="cell-strong color-investment">{Utils.formatDollar(totalValue)}</span></p>
 
       {/* Container for the Pie Chart + Detail Table */}

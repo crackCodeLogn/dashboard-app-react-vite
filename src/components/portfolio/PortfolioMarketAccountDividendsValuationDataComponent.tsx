@@ -48,7 +48,7 @@ const PortfolioMarketAccountValuationDataComponent = (props: { accountType: stri
       {marketDividendValuationData
         ?
         <div className={'centralize-2'}>
-          <h2>Dividends: {accountType}</h2>
+          <h2>Dividends</h2>
           <Table bordered hover variant={'light'} className={"table-narrow"}>
             <thead>
             <tr>

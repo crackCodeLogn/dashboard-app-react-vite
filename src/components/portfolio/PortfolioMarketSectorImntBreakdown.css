@@ -1,0 +1,117 @@
+/* PortfolioMarketSectorImntBreakdown.css */
+
+.imnt-breakdown-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    /* --- FIX 1: ADD MAX WIDTH --- */
+    max-width: 500px; /* Reduced width: Adjust this value as needed (e.g., 400px - 600px) */
+    margin: 20px auto; /* Keep it centered */
+}
+
+.imnt-breakdown-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.sector-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sector-item {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Sector Header Styling (Clickable Area) */
+.sector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* --- FIX 2: TIGHTER PADDING --- */
+    padding: 8px 12px; /* Reduced vertical and horizontal padding */
+    background-color: #f7f7f7;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+
+.sector-header:hover {
+    background-color: #e9e9e9;
+}
+
+.sector-title {
+    font-weight: bold;
+    flex-grow: 1;
+    text-align: left;
+    /* --- FIX 3: REMOVED HORIZONTAL MARGIN --- */
+    margin-right: 10px; /* Slight margin, but rely on justify-content for separation */
+    white-space: nowrap; /* Prevent long sector names from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Use ellipsis if name is too long */
+}
+
+.sector-value {
+    font-size: 1.05em;
+    /* --- FIX 4: REDUCED MARGIN --- */
+    margin-left: auto; /* Push to the right */
+    margin-right: 10px;
+}
+
+.toggle-icon {
+    font-size: 0.8em;
+    transition: transform 0.2s;
+}
+
+/* Investment Details Styling */
+.imnt-details-content {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    background-color: #fff;
+}
+
+.imnt-details-content.expanded {
+    max-height: 500px;
+    opacity: 1;
+    border-top: 1px solid #eee;
+    /* --- FIX 5: TIGHTER VERTICAL PADDING --- */
+    padding: 8px 0;
+}
+
+.imnt-list {
+    list-style: none;
+    padding: 0;
+    /* --- FIX 6: TIGHTER HORIZONTAL MARGIN --- */
+    margin: 0 12px;
+}
+
+.imnt-list li {
+    display: flex;
+    justify-content: space-between;
+    /* --- FIX 7: TIGHTER VERTICAL PADDING --- */
+    padding: 3px 0;
+    border-bottom: 1px dotted #f0f0f0;
+    font-size: 0.9em;
+}
+
+.imnt-name {
+    color: #666;
+    /* --- FIX 8: SLIGHT MARGIN ON LEFT FOR LIST ITEM NAME --- */
+    padding-left: 5px;
+}
+
+.imnt-valuation {
+    /* --- FIX 9: SLIGHT MARGIN ON RIGHT FOR LIST ITEM VALUE --- */
+    padding-right: 5px;
+    font-weight: 500;
+}
+
+/* ... (Utility classes like .color-investment, .cell-strong remain the same) ... */
