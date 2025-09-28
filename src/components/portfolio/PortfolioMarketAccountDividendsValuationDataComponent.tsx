@@ -54,17 +54,20 @@ const PortfolioMarketAccountValuationDataComponent = (props: { accountType: stri
             <tr>
               <th>Symbol</th>
               <th>All Time</th>
+              <th>Allocation</th>
             </tr>
             </thead>
             <tbody>
             <tr>
               <td className={'color-investment cell-strong'}>TOTAL</td>
               <td className={'color-investment cell-strong'}>{Utils.formatDollar(totalValue)}</td>
+              <td className={'color-investment cell-strong'}>100%</td>
             </tr>
             {marketDividendValuationData.map((valuation) => (
               <tr key={valuation.symbol}>
                 <td>{valuation.symbol}</td>
                 <td>{Utils.formatDollar(valuation.value)}</td>
+                <td>{Utils.getPercentage(valuation.value, totalValue)}</td>
               </tr>
             ))}
             </tbody>
