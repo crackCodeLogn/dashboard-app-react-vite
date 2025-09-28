@@ -19,8 +19,8 @@ const Portfolio = () => {
           {<PortfolioGicListingsComponent/>}
         </div>
         {<PortfolioGicValuationDataComponent/>}
+        <h2 className="market-breakdown-title">Market</h2>
         {<PortfolioNetMarketValuationDataComponent/>}
-        <h2 className="market-breakdown-title">Market Breakdown</h2>
         <div>
           <h2 className="account-section-heading">TFSA</h2>
           <div className={'record-space-around-3'}>
