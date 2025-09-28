@@ -4,6 +4,8 @@ import PortfolioNetWorthComponent from "../components/portfolio/PortfolioNetWort
 import PortfolioNetMarketValuationDataComponent from "../components/portfolio/PortfolioNetMarketValuationDataComponent.tsx";
 import PortfolioMarketAccountValuationDataComponent from "../components/portfolio/PortfolioMarketAccountValuationDataComponent.tsx";
 import PortfolioMarketAccountDividendsValuationDataComponent from "../components/portfolio/PortfolioMarketAccountDividendsValuationDataComponent.tsx";
+import PortfolioMarketAccountValuationSectorPieChartComponent
+  from "../components/portfolio/PortfolioMarketAccountValuationSectorPieChartComponent.tsx";
 
 
 const Portfolio = () => {
@@ -21,6 +23,11 @@ const Portfolio = () => {
           {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'NR'} limit={16}/>}
           {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'FHSA'} limit={16}/>}
         </div>
+        {/*<div className={'record-space-around'}>*/}
+        {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
+        {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
+        {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
+        {/*</div>*/}
         {<PortfolioGicValuationDataComponent/>}
         {<PortfolioNetMarketValuationDataComponent/>}
         {<PortfolioMarketAccountValuationDataComponent accountType={'TFSA'}/>}

@@ -5,6 +5,8 @@ const PORTFOLIO_DATA_BASE_URL: string = `http://${HOST_URL}:40037`;
 const PORTFOLIO_NET_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market/valuations";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market/valuations/account";
 const PORTFOLIO_ACCOUNT_MARKET_DIVIDEND_VALUATIONS_END_POINT: string = "/portfolio/market/valuations/dividends";
+const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_END_POINT: string = "/portfolio/market/valuations/sector/account";
+const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_IMNT_END_POINT: string = "/portfolio/market/valuations/sector-imnt/account";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
@@ -49,6 +51,24 @@ export const fetchAccountMarketDividendValuationsData = async (
   timeout: number = 3000,
   useProto: boolean = true) => {
   return fetch(timeout, useProto, PORTFOLIO_ACCOUNT_MARKET_DIVIDEND_VALUATIONS_END_POINT, {
+    'accountType': accountType
+  });
+};
+
+export const fetchAccountMarketSectorValuationsData = async (
+  accountType: string,
+  timeout: number = 3000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_END_POINT, {
+    'accountType': accountType
+  });
+};
+
+export const fetchAccountMarketSectorImntValuationsData = async (
+  accountType: string,
+  timeout: number = 3000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_IMNT_END_POINT, {
     'accountType': accountType
   });
 };
