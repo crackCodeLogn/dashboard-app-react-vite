@@ -18,25 +18,30 @@ const Portfolio = () => {
           {<PortfolioNetWorthComponent/>}
           {<PortfolioGicListingsComponent/>}
         </div>
-        <div className={'record-space-around'}>
-          {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'TFSA'} limit={16}/>}
-          {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
-        </div>
-        <div className={'record-space-around'}>
-          {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'NR'} limit={16}/>}
-          {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
-        </div>
-        <div className={'record-space-around'}>
-          {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'FHSA'} limit={16}/>}
-          {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
-        </div>
-        {/*<div className={'record-space-around'}>*/}
-        {/*</div>*/}
         {<PortfolioGicValuationDataComponent/>}
         {<PortfolioNetMarketValuationDataComponent/>}
-        {<PortfolioMarketAccountValuationDataComponent accountType={'TFSA'}/>}
-        {<PortfolioMarketAccountValuationDataComponent accountType={'NR'}/>}
-        {<PortfolioMarketAccountValuationDataComponent accountType={'FHSA'}/>}
+        <div>
+          <div className={'record-space-around-3'}>
+            {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'TFSA'} limit={16}/>}
+            {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
+            {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
+          </div>
+          {<PortfolioMarketAccountValuationDataComponent accountType={'TFSA'}/>}
+        </div>
+        <div>
+          <div className={'record-space-around'}>
+            {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'NR'} limit={16}/>}
+            {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
+          </div>
+          {<PortfolioMarketAccountValuationDataComponent accountType={'NR'}/>}
+        </div>
+        <div>
+          <div className={'record-space-around'}>
+            {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'FHSA'} limit={16}/>}
+            {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
+          </div>
+          {<PortfolioMarketAccountValuationDataComponent accountType={'FHSA'}/>}
+        </div>
       </div>
     </div>
   );
