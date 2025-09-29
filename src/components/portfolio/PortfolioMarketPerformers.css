@@ -1,0 +1,141 @@
+/* PortfolioMarketPerformers.css */
+
+.performers-component-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    margin: 20px auto;
+}
+
+.performers-component-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Control Panel Styling */
+.control-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 25px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.control-panel label {
+    font-weight: 500;
+    color: #555;
+}
+
+.n-select {
+    margin-left: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.refresh-button {
+    padding: 6px 15px;
+    background-color: #17a2b8; /* Your investment/info color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.refresh-button:hover {
+    background-color: #117a8b;
+}
+
+/* Performers Display Layout */
+.performers-flex-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap; /* Allows tables to stack on small screens */
+}
+
+.performer-list-container {
+    flex: 1 1 45%; /* Allows both tables to take up roughly half the space */
+    min-width: 350px; /* Minimum width before wrapping */
+}
+
+.performer-list-container h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #444;
+}
+
+/* Table Styling */
+.performer-table {
+    width: 100%;
+    font-size: 0.85em;
+    margin-bottom: 0;
+}
+
+.performer-table th {
+    font-weight: bold;
+    background-color: #f8f9fa;
+    /* Styles for sortable columns */
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+    position: relative;
+}
+
+.performer-table th:hover {
+    background-color: #e2e6ea;
+}
+
+.sortable {
+    /* Ensures padding for the icon on the right */
+    padding-right: 25px !important;
+}
+
+.sort-indicator {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    color: #888; /* Neutral color for the sort indicator */
+}
+
+.right-align {
+    text-align: right;
+}
+
+/* --- COLOR CODING --- */
+.gain {
+    color: #28a744; /* Green for gain */
+    font-weight: 600;
+}
+
+.loss {
+    color: #dc3545; /* Red for loss */
+    font-weight: 600;
+}
+
+/* Style for the PnL Icon (Triangle) */
+.pnl-icon {
+    /* Position the icon inline, inheriting color from .gain or .loss */
+    margin-right: 5px;
+    font-size: 0.9em;
+}
+
+.cell-strong {
+    font-weight: 700;
+}
+
+.no-data-msg {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+}

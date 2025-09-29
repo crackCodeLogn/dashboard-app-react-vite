@@ -7,6 +7,7 @@ const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market
 const PORTFOLIO_ACCOUNT_MARKET_DIVIDEND_VALUATIONS_END_POINT: string = "/portfolio/market/valuations/dividends";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_END_POINT: string = "/portfolio/market/valuations/sector/account";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_IMNT_END_POINT: string = "/portfolio/market/valuations/sector-imnt/account";
+const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_BEST_WORST_PERFORMERS_END_POINT: string = "/portfolio/market/valuations/best-worst/account";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
@@ -70,5 +71,18 @@ export const fetchAccountMarketSectorImntValuationsData = async (
   useProto: boolean = true) => {
   return fetch(timeout, useProto, PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_IMNT_END_POINT, {
     'accountType': accountType
+  });
+};
+
+export const fetchAccountMarketValuationsBestAndWorstPerformersData = async (
+  accountType: string,
+  n: number = 10,
+  useDividends: boolean = false,
+  timeout: number = 3000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_BEST_WORST_PERFORMERS_END_POINT, {
+    'accountType': accountType,
+    'n': n,
+    'divs': useDividends
   });
 };

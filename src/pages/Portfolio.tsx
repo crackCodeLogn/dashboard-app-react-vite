@@ -7,6 +7,7 @@ import PortfolioMarketAccountDividendsValuationDataComponent from "../components
 import PortfolioMarketAccountValuationSectorPieChartComponent
   from "../components/portfolio/PortfolioMarketAccountValuationSectorPieChartComponent.tsx";
 import PortfolioMarketSectorImntBreakdownComponent from "../components/portfolio/PortfolioMarketSectorImntBreakdownComponent.tsx";
+import PortfolioMarketPerformersComponent from "../components/portfolio/PortfolioMarketPerformersComponent.tsx";
 
 
 const Portfolio = () => {
@@ -28,6 +29,7 @@ const Portfolio = () => {
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
             {<PortfolioMarketSectorImntBreakdownComponent accountType={'TFSA'}/>}
           </div>
+          {<PortfolioMarketPerformersComponent accountType={'TFSA'}/>}
           {<PortfolioMarketAccountValuationDataComponent accountType={'TFSA'}/>}
         </div>
         <div>
@@ -37,6 +39,7 @@ const Portfolio = () => {
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
             {<PortfolioMarketSectorImntBreakdownComponent accountType={'NR'}/>}
           </div>
+          {<PortfolioMarketPerformersComponent accountType={'NR'}/>}
           {<PortfolioMarketAccountValuationDataComponent accountType={'NR'}/>}
         </div>
         <div>
@@ -46,6 +49,7 @@ const Portfolio = () => {
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
             {<PortfolioMarketSectorImntBreakdownComponent accountType={'FHSA'}/>}
           </div>
+          {<PortfolioMarketPerformersComponent accountType={'FHSA'}/>}
           {<PortfolioMarketAccountValuationDataComponent accountType={'FHSA'}/>}
         </div>
       </div>
