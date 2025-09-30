@@ -236,8 +236,8 @@ const PortfolioMarketInstrumentValuationComponent = () => {
               {/* Use val.accountType from the API response */}
               <td className="cell-strong">{val.accountType}</td>
               <td className="right-align">{Utils.formatDollar(val.bookVal)}</td>
-              <td className={`right-align ${val.pnlDisplay.className}`}>
-                <span className="pnl-icon">{val.pnlDisplay.icon}</span>
+              <td className={`right-align`}>
+                <span className={`pnl-icon ${val.pnlDisplay.className}`}>{val.pnlDisplay.icon}</span>
                 {val.pnlDisplay.value}
               </td>
               <td className="right-align">{Utils.formatDollar(val.currentVal)}</td>
@@ -250,8 +250,8 @@ const PortfolioMarketInstrumentValuationComponent = () => {
           <tr className="total-row">
             <td className="cell-strong">TOTAL</td>
             <td className="right-align cell-strong">{Utils.formatDollar(totals.bookVal)}</td>
-            <td className={`right-align cell-strong ${totalPnlDisplay.className}`}>
-              <span className="pnl-icon">{totalPnlDisplay.icon}</span>
+            <td className={`right-align cell-strong`}>
+              <span className={`pnl-icon ${totalPnlDisplay.className}`}>{totalPnlDisplay.icon}</span>
               {totalPnlDisplay.value}
             </td>
             <td className="right-align cell-strong">{Utils.formatDollar(totals.currentVal)}</td>
