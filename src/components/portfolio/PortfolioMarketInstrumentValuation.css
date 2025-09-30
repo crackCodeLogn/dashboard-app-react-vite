@@ -1,0 +1,160 @@
+/* PortfolioMarketInstrumentValuation.css */
+
+.instrument-valuation-container {
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    margin: 30px auto;
+    max-width: 900px; /* Reduced max-width for conciseness */
+}
+
+.instrument-valuation-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 1.8em;
+}
+
+/* Control Panel Styling */
+.valuation-controls {
+    display: flex; /* Ensure .control-panel style is present */
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+}
+
+.valuation-controls input,
+.valuation-controls select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.fetch-button {
+    padding: 8px 15px;
+    background-color: #17a2b8; /* Matching the Performers component style */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.fetch-button:hover:not(:disabled) {
+    background-color: #117a8b;
+}
+
+/* --- Single Account Display (Neat & Concise) --- */
+
+.single-valuation-display .display-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #007bff;
+    font-size: 1.4em;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.single-data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* 2 columns: 1 part for key, 1.5 parts for value */
+    gap: 1px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.data-item {
+    padding: 10px 15px;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+}
+
+.key-item {
+    background-color: #f9f9f9;
+    font-weight: 500;
+    border-right: 1px solid #e0e0e0;
+}
+
+.value-item {
+    background-color: #ffffff;
+    justify-content: flex-end; /* Align value to the right */
+}
+
+/* --- All Accounts Table --- */
+.multi-valuation-display {
+    margin-top: 30px;
+}
+
+.multi-valuation-display .display-title {
+    text-align: left;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.4em;
+}
+
+.valuation-table {
+    width: 100%;
+    font-size: 0.85em; /* Make table text smaller */
+}
+
+.valuation-table th {
+    background-color: #343a40;
+    color: white;
+    font-weight: 500;
+}
+
+/* Total Row Styling */
+.total-row {
+    background-color: #e9ecef; /* Light gray for total row */
+    border-top: 2px solid #6c757d !important;
+}
+
+.total-row td {
+    font-size: 1em;
+}
+
+/* PnL and General Utility Styles */
+.gain {
+    color: #28a745; /* Green for gain */
+    font-weight: 600;
+}
+
+.loss {
+    color: #dc3545; /* Red for loss */
+    font-weight: 600;
+}
+
+.pnl-icon {
+    margin-right: 5px;
+    font-size: 0.9em;
+}
+
+.right-align {
+    text-align: right;
+}
+
+.cell-strong {
+    font-weight: 700;
+}
+
+.loading-message, .initial-message {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-style: italic;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    margin-top: 20px;
+}
