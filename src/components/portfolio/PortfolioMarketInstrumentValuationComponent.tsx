@@ -189,6 +189,12 @@ const PortfolioMarketInstrumentValuationComponent = () => {
         <div className="data-item key-item">Current Value</div>
         <div className="data-item value-item">{Utils.formatDollar(data.currentVal)}</div>
 
+        <div className="data-item key-item">P&L (%)</div>
+        <div className={`data-item value-item ${data.pnlDisplay.className}`}>
+          <span className="pnl-icon">{data.pnlDisplay.icon}</span>
+          {Utils.getPercentage(data.pnl, data.bookVal)}
+        </div>
+
         <div className="data-item key-item">Dividend Yield</div>
         <div className="data-item value-item">{data.divYield}</div>
 
@@ -225,6 +231,7 @@ const PortfolioMarketInstrumentValuationComponent = () => {
             <th className="right-align">Book Value</th>
             <th className="right-align">P&L</th>
             <th className="right-align">Current Value</th>
+            <th className="right-align">P&L (%)</th>
             <th className="right-align">Div Yield</th>
             <th className="right-align">Total Dividends</th>
             <th>Sector</th>
@@ -241,6 +248,10 @@ const PortfolioMarketInstrumentValuationComponent = () => {
                 {val.pnlDisplay.value}
               </td>
               <td className="right-align">{Utils.formatDollar(val.currentVal)}</td>
+              <td className={`right-align`}>
+                <span className={`pnl-icon ${val.pnlDisplay.className}`}>{val.pnlDisplay.icon}</span>
+                {Utils.getPercentage(val.pnl, val.bookVal)}
+              </td>
               <td className="right-align">{val.divYield}</td>
               <td className="right-align">{Utils.formatDollar(val.totalDiv)}</td>
               <td>{val.sector}</td>
@@ -255,6 +266,7 @@ const PortfolioMarketInstrumentValuationComponent = () => {
               {totalPnlDisplay.value}
             </td>
             <td className="right-align cell-strong">{Utils.formatDollar(totals.currentVal)}</td>
+            <td className="right-align"></td>
             <td className="right-align"></td>
             {/* Div Yield N/A */}
             <td className="right-align cell-strong">{Utils.formatDollar(totals.totalDiv)}</td>
