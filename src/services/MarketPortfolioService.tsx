@@ -9,6 +9,7 @@ const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_END_POINT: string = "/portfolio
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_IMNT_END_POINT: string = "/portfolio/market/valuations/sector-imnt/account";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_BEST_WORST_PERFORMERS_END_POINT: string = "/portfolio/market/valuations/best-worst/account";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATION_IMNT_END_POINT: string = "/portfolio/market/valuation/account";
+const PORTFOLIO_MARKET_INFO_IMNTS_DIV_YEILD_SECTOR: string = "/portfolio/market/info/imnts/dividend-yield-sector";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
@@ -97,4 +98,10 @@ export const fetchAccountMarketImntValuationData = async (
     'imnt': imnt,
     'accountType': accountType
   });
+};
+
+export const fetchDividendYieldAndSectorForAllImnts = async (
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_MARKET_INFO_IMNTS_DIV_YEILD_SECTOR);
 };

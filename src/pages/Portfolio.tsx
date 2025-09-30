@@ -9,6 +9,7 @@ import PortfolioMarketAccountValuationSectorPieChartComponent
 import PortfolioMarketSectorImntBreakdownComponent from "../components/portfolio/PortfolioMarketSectorImntBreakdownComponent.tsx";
 import PortfolioMarketPerformersComponent from "../components/portfolio/PortfolioMarketPerformersComponent.tsx";
 import PortfolioMarketInstrumentValuationComponent from "../components/portfolio/PortfolioMarketInstrumentValuationComponent.tsx";
+import PortfolioMarketInstrumentDivSectorInfoComponent from "../components/portfolio/PortfolioMarketInstrumentDivSectorInfoComponent.tsx";
 
 
 const Portfolio = () => {
@@ -22,6 +23,7 @@ const Portfolio = () => {
         </div>
         {<PortfolioGicValuationDataComponent/>}
         <h2 className="market-breakdown-title">Market</h2>
+        {<PortfolioMarketInstrumentDivSectorInfoComponent/>}
         {<PortfolioMarketInstrumentValuationComponent/>}
         {<PortfolioNetMarketValuationDataComponent/>}
         <div>

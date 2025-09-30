@@ -1,0 +1,112 @@
+/* PortfolioMarketInstrumentDivSectorInfo.css */
+
+.instrument-market-info-container {
+    padding: 20px;
+    background-color: #ffffff;
+    /* Removed: margin: 20px auto; as the table wrapper will be centered now */
+    width: 100%;
+}
+
+.instrument-market-info-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    color: #333;
+}
+
+/* --- New Wrapper for Vertical Scrolling (Updated for Centering and Width) --- */
+.wide-table-wrapper {
+    /* Set a maximum height and enable vertical scrolling */
+    max-height: 400px;
+    overflow-y: auto;
+
+    /* Ensure no horizontal scrolling */
+    overflow-x: hidden;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+    /* --- NEW STYLES FOR CENTERING AND WIDTH --- */
+    max-width: 36%; /* Restrict maximum width to 50% of the parent container */
+    margin: 0 auto; /* Set margins to 0 top/bottom and 'auto' left/right to center the block element */
+}
+
+/* Table Styling for a Single, Full-Width Table */
+.market-info-table {
+    /* Keep width: 100% so the table fills its *new* 50%-max-width container */
+    width: 100%;
+    font-size: 0.9em;
+    table-layout: auto;
+    margin-bottom: 0 !important;
+}
+
+/* (Rest of the CSS file remains the same) */
+.market-info-table thead th {
+    /* Make headers sticky so they remain visible during vertical scroll */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #e9ecef !important;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 10px;
+    border: none !important;
+    text-align: left;
+}
+
+.market-info-table thead th:hover {
+    background-color: #dee2e6 !important;
+}
+
+.market-info-table tbody td {
+    padding: 8px 10px;
+    border-top: 1px solid #eee;
+}
+
+
+/* Column specific styles (using class names from the original component) */
+.cell-imnt {
+    /* Natural width */
+}
+
+.cell-div {
+    /* Natural width */
+    text-align: right;
+}
+
+.cell-sector {
+    /* Natural width */
+}
+
+.right-align {
+    text-align: right;
+}
+
+.cell-strong {
+    font-weight: 600;
+    color: #444;
+}
+
+.div-yield-cell {
+    color: #28a745; /* Standard green color for yield/positive value */
+    font-weight: 500;
+}
+
+.total-count-message {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.loading-message, .initial-message {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-style: italic;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    margin: 20px auto;
+}
