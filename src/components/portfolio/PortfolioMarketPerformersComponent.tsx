@@ -121,8 +121,8 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
     const {key, direction} = sortState;
 
     sorted.sort((a, b) => {
-      let valA = a[key];
-      let valB = b[key];
+      const valA = a[key];
+      const valB = b[key];
 
       // Handle string comparisons (Instrument)
       if (typeof valA === 'string' && typeof valB === 'string') {
@@ -259,16 +259,14 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
             ))}
           </select>
         </label>
-        {/*<label>
+        <label>
           <input
             type="checkbox"
             checked={useDividends}
             onChange={(e) => setUseDividends(e.target.checked)}
           />
-          Include Dividends
+          <span>Include Dividends</span>
         </label>
-        // Hiding the include dividends selection
-        */}
         <button onClick={fetchData} className="refresh-button">Refresh Data</button>
       </div>
 
