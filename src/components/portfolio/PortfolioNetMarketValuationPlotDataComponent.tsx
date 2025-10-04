@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {fetchAccountMarketValuationsPlotData} from "../../services/MarketPortfolioService.tsx";
+import {fetchNetMarketValuationsPlotData} from "../../services/MarketPortfolioService.tsx";
 import {DataPacket} from "../../assets/proto/generated/DataPacket.ts";
 import {Utils} from "../../utils/Utils.tsx";
 import CustomError from "../error/CustomError.tsx";
@@ -10,13 +10,12 @@ export interface MarketValuation {
   value: number
 }
 
-const PortfolioMarketAccountValuationDataComponent = (props: { accountType: string; }) => {
-  const accountType: string = props.accountType;
+const PortfolioNetMarketValuationPlotDataComponent = () => {
   const [marketValuationData, setMarketValuationData] = useState<MarketValuation[] | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    fetchAccountMarketValuationsPlotData(accountType)
+    fetchNetMarketValuationsPlotData()
       .then(result => {
         if (!result) {
           throw new Error(`no net market valuation data found`);
@@ -40,12 +39,12 @@ const PortfolioMarketAccountValuationDataComponent = (props: { accountType: stri
   return (
     <>
       {marketValuationData
-        ?
-        <MarketValuationDataComponent valuationData={marketValuationData}
-                                      title={`Market ${accountType} Valuation - Profit / Loss`}/>
+        ? <MarketValuationDataComponent valuationData={marketValuationData}
+                                        title={'Market Net Valuation - Profit / Loss'}/>
         : <CustomError errorMsg={!errorMsg ? 'No Net Market valuation data fetched' : errorMsg}/>}
     </>
   )
+
 }
 
-export default PortfolioMarketAccountValuationDataComponent;
+export default PortfolioNetMarketValuationPlotDataComponent;

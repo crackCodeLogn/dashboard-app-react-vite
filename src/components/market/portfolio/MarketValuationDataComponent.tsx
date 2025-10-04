@@ -1,6 +1,6 @@
 import Chart1, {ChartOneSeriesProps} from "../../chart/echarts/Chart.tsx";
 import {Utils} from "../../../utils/Utils.tsx";
-import {MarketValuation} from "../../portfolio/PortfolioNetMarketValuationDataComponent.tsx";
+import {MarketValuation} from "../../portfolio/PortfolioNetMarketValuationPlotDataComponent.tsx";
 
 const MarketValuationDataComponent = (props: { valuationData: MarketValuation[]; title: string }) => {
   const valuationData: MarketValuation[] = props.valuationData;

@@ -1,0 +1,231 @@
+/* PortfolioNetMarketValuationData.css */
+
+.net-mv-container {
+    padding: 25px; /* Slightly more padding */
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Slightly rounder corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
+    background-color: #ffffff; /* Use white background for main container */
+    margin: 20px auto;
+}
+
+.net-mv-container h2 {
+    text-align: center;
+    margin-bottom: 30px; /* More separation */
+    font-size: 2.0em;
+    color: #1c2e4a; /* Darker, professional header color */
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Control Panel Styling - Centered and clean */
+.control-panel {
+    display: flex;
+    /* CHANGE: Centralize the checkbox and button */
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 25px;
+    padding: 10px 0;
+}
+
+.control-panel label {
+    font-weight: 500;
+    color: #444;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.control-panel input[type="checkbox"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+}
+
+.refresh-button {
+    padding: 8px 20px;
+    background-color: #007bff; /* Primary blue for action */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.refresh-button:hover {
+    background-color: #0056b3;
+}
+
+.no-data-msg {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* --- FLEX LAYOUT FOR CHART AND TABLE --- */
+.mv-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap; /* Allows stacking on smaller screens */
+}
+
+.mv-chart-container {
+    flex: 1 1;
+    padding: 15px;
+}
+
+.mv-chart-container h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
+.mv-table-container {
+    flex: 1 1 550px; /* Allows table area to grow, minimum 550px wide */
+    min-width: 70%;
+    /* No border here, the wrapper will handle it */
+}
+
+.mv-table-container h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+.total-label {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Specific styling for the chart area layout */
+.chart-area-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Table Wrapper for Vertical Scroll */
+.table-scroll-wrapper {
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Table Styling */
+.positions-table {
+    width: 100%;
+    font-size: 0.9em;
+    margin-bottom: 0;
+    border-collapse: separate; /* Required for sticky headers to work correctly in some contexts */
+}
+
+.positions-table thead th {
+    /* Sticky header base styles */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #f8f9fa;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+    border-bottom: 1px solid #ccc !important;
+}
+
+/* --- AGGREGATION ROW STYLING (The first <tr> in <thead>) --- */
+/* 1. Increase font/strength, 2. Ensure it sticks to the top (top: 0) */
+.aggregation-row td,
+.aggregation-row th {
+    background-color: #e0f7fa !important; /* Very light cyan info background color, !important to override table striped */
+    font-weight: 800 !important; /* Increased strength */
+    font-size: 1.05em; /* Increased font size */
+    padding: 12px 10px !important; /* Increased padding for height */
+    position: sticky;
+    top: 0;
+    z-index: 11; /* Higher z-index than the other header row */
+    border-bottom: 3px solid #007bff !important; /* Stronger blue border */
+    color: #1c2e4a;
+}
+
+/* Adjust the second row (actual headers) to stick just below the aggregation row */
+/* 2. Fix: Adjust top offset to prevent floating over the first data row */
+.positions-table thead tr:nth-child(2) th {
+    /* Use 50px as a safe offset based on the increased padding/font size of the aggregation row */
+    top: 50px;
+    background-color: #eef2f7 !important; /* Slightly darker header background */
+    z-index: 10;
+}
+
+
+.positions-table th:hover {
+    background-color: #dde2e6;
+}
+
+.sortable {
+    padding-right: 25px !important;
+}
+
+.sort-indicator {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9em;
+    color: #555; /* Darker neutral color for the indicator */
+}
+
+.right-align {
+    text-align: right;
+}
+
+.cell-strong {
+    font-weight: 700;
+}
+
+/* --- COLOR CODING AND ARROWS --- */
+.gain {
+    color: #1e7e34; /* Deeper green for gain */
+    font-weight: 600;
+}
+
+.loss {
+    color: #c82333; /* Deeper red for loss */
+    font-weight: 600;
+}
+
+.green-arrow {
+    color: #1e7e34;
+    margin-right: 5px;
+}
+
+.red-arrow {
+    color: #c82333;
+    margin-right: 5px;
+}
+
+/* Tooltip style */
+.custom-tooltip {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: 0.9em;
+}
+
+.color-investment {
+    color: #007bff;
+    font-weight: 700;
+}

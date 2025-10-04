@@ -1,7 +1,7 @@
 import PortfolioGicListingsComponent from "../components/portfolio/PortfolioGicListingsComponent.tsx";
 import PortfolioGicValuationDataComponent from "../components/portfolio/PortfolioGicValuationDataComponent.tsx";
 import PortfolioNetWorthComponent from "../components/portfolio/PortfolioNetWorthComponent.tsx";
-import PortfolioNetMarketValuationDataComponent from "../components/portfolio/PortfolioNetMarketValuationDataComponent.tsx";
+import PortfolioNetMarketValuationPlotDataComponent from "../components/portfolio/PortfolioNetMarketValuationPlotDataComponent.tsx";
 import PortfolioMarketAccountValuationDataComponent from "../components/portfolio/PortfolioMarketAccountValuationDataComponent.tsx";
 import PortfolioMarketAccountDividendsValuationDataComponent from "../components/portfolio/PortfolioMarketAccountDividendsValuationDataComponent.tsx";
 import PortfolioMarketAccountValuationSectorPieChartComponent
@@ -10,6 +10,7 @@ import PortfolioMarketSectorImntBreakdownComponent from "../components/portfolio
 import PortfolioMarketPerformersComponent from "../components/portfolio/PortfolioMarketPerformersComponent.tsx";
 import PortfolioMarketInstrumentValuationComponent from "../components/portfolio/PortfolioMarketInstrumentValuationComponent.tsx";
 import PortfolioMarketInstrumentDivSectorInfoComponent from "../components/portfolio/PortfolioMarketInstrumentDivSectorInfoComponent.tsx";
+import PortfolioNetMarketValuationDataComponent from "../components/portfolio/PortfolioNetMarketValuationDataComponent.tsx";
 
 
 const Portfolio = () => {
@@ -23,9 +24,10 @@ const Portfolio = () => {
         </div>
         {<PortfolioGicValuationDataComponent/>}
         <h2 className="market-breakdown-title">Market</h2>
+        {<PortfolioNetMarketValuationPlotDataComponent/>}
+        {<PortfolioNetMarketValuationDataComponent/>}
         {<PortfolioMarketInstrumentDivSectorInfoComponent/>}
         {<PortfolioMarketInstrumentValuationComponent/>}
-        {<PortfolioNetMarketValuationDataComponent/>}
         <div>
           <h2 className="account-section-heading">TFSA</h2>
           <div className={'record-space-around-3'}>
