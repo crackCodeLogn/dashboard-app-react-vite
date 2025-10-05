@@ -15,7 +15,7 @@ function getKey(row: string[], map: Map<string, number>, key: string) {
   return `row-${row[retVal]}`;
 }
 
-function getClassName(row: string[], map: Map<string, number>, cellIndex: number) {
+function getClassName(row: string[], map: Map<string, number>, cellIndex: number, fromToList: Pair[], rowNumber: number) {
   function getOrDefault(key: string, def = 0) {
     const answer = map.get(key);
     return answer === undefined ? def : answer;
@@ -26,6 +26,10 @@ function getClassName(row: string[], map: Map<string, number>, cellIndex: number
     case getOrDefault("From"):
     case getOrDefault("To"):
       return "cell-strong";
+    case fromToList[rowNumber].from:
+      return "color-blue cell-strong";
+    case fromToList[rowNumber].to:
+      return "color-red-purple cell-strong";
   }
 
   if (getOrDefault("Amount") === cellIndex) {
@@ -54,9 +58,15 @@ function getClassName(row: string[], map: Map<string, number>, cellIndex: number
   return "";
 }
 
+export interface Pair {
+  from: number,
+  to: number
+}
+
 const ExpenseSimulatorComponent = () => {
   const [colHeader, setColHeader] = useState<string[]>([]);
   const [colNameIndexMap, setColNameIndexMap] = useState(new Map<string, number>());
+  const [fromToList, setFromToList] = useState<Pair[]>([]);
   const [rows, setRows] = useState<string[][]>([[]]);
 
   useEffect(() => {
@@ -77,14 +87,21 @@ const ExpenseSimulatorComponent = () => {
           // console.log(nameIndexMap);
 
           const dataRows: string[][] = [];
+          const fromToRecs: Pair[] = [];
           let rowCount = 1;
           for (const rec of recs.slice(1)) {
             const cells = rec.split(",");
             cells.push(`${rowCount}`);
             rowCount++;
             dataRows.push(cells);
+            fromToRecs.push({
+              from: nameIndexMap.get(cells[headerRow.length - 6]),
+              to: nameIndexMap.get(cells[headerRow.length - 5])
+            })
           }
           setRows(dataRows);
+          setFromToList(fromToRecs);
+          console.log(fromToRecs);
         }
       });
   }, []);
@@ -100,10 +117,10 @@ const ExpenseSimulatorComponent = () => {
         </tr>
         </thead>
         <tbody>
-        {rows.map((row) => (
+        {rows.map((row, rowNum) => (
           <tr key={getKey(row, colNameIndexMap, "Seq")}>
             {row.map((cell, cellIndex) => (
-              <td key={`col-${cellIndex}`} className={getClassName(row, colNameIndexMap, cellIndex)}>{cell}</td>
+              <td key={`col-${cellIndex}`} className={getClassName(row, colNameIndexMap, cellIndex, fromToList, rowNum)}>{cell}</td>
             ))}
           </tr>
         ))}

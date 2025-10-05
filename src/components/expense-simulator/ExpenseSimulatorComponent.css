@@ -18,6 +18,13 @@
     color: darkgoldenrod !important;
 }
 
+.color-blue {
+    color: #000080 !important;
+}
+
+.color-red-purple {
+    color: #8B008B !important;
+}
 
 .cell-strong {
     font-weight: bold;
