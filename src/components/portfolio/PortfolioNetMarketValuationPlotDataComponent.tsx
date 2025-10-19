@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {fetchNetMarketValuationsPlotData} from "../../services/MarketPortfolioService.tsx";
+import {fetchAggrMarketValuationsPlotData} from "../../services/MarketPortfolioService.tsx";
 import {DataPacket} from "../../assets/proto/generated/DataPacket.ts";
 import {Utils} from "../../utils/Utils.tsx";
 import CustomError from "../error/CustomError.tsx";
@@ -15,7 +15,7 @@ const PortfolioNetMarketValuationPlotDataComponent = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    fetchNetMarketValuationsPlotData()
+    fetchAggrMarketValuationsPlotData()
       .then(result => {
         if (!result) {
           throw new Error(`no net market valuation data found`);

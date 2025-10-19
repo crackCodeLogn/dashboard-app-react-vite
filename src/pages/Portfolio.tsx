@@ -10,7 +10,8 @@ import PortfolioMarketSectorImntBreakdownComponent from "../components/portfolio
 import PortfolioMarketPerformersComponent from "../components/portfolio/PortfolioMarketPerformersComponent.tsx";
 import PortfolioMarketInstrumentValuationComponent from "../components/portfolio/PortfolioMarketInstrumentValuationComponent.tsx";
 import PortfolioMarketInstrumentDivSectorInfoComponent from "../components/portfolio/PortfolioMarketInstrumentDivSectorInfoComponent.tsx";
-import PortfolioNetMarketValuationDataComponent from "../components/portfolio/PortfolioNetMarketValuationDataComponent.tsx";
+import PortfolioAggrMarketValuationDataComponent from "../components/portfolio/PortfolioAggrMarketValuationDataComponent.tsx";
+import PortfolioSectionNetOverview from "../components/portfolio/PortfolioSectionNetOverviewComponent.tsx";
 
 
 const Portfolio = () => {
@@ -24,12 +25,14 @@ const Portfolio = () => {
         </div>
         {<PortfolioGicValuationDataComponent/>}
         <h2 className="market-breakdown-title">Market</h2>
+        {<PortfolioSectionNetOverview accountType={''} useDividends={true}/>}
         {<PortfolioNetMarketValuationPlotDataComponent/>}
-        {<PortfolioNetMarketValuationDataComponent/>}
+        {<PortfolioAggrMarketValuationDataComponent/>}
         {<PortfolioMarketInstrumentDivSectorInfoComponent/>}
         {<PortfolioMarketInstrumentValuationComponent/>}
         <div>
           <h2 className="account-section-heading">TFSA</h2>
+          {<PortfolioSectionNetOverview accountType={'TFSA'} useDividends={true}/>}
           <div className={'record-space-around-3'}>
             {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'TFSA'} limit={16}/>}
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
@@ -40,6 +43,7 @@ const Portfolio = () => {
         </div>
         <div>
           <h2 className="account-section-heading">NR</h2>
+          {<PortfolioSectionNetOverview accountType={'NR'} useDividends={true}/>}
           <div className={'record-space-around-3'}>
             {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'NR'} limit={16}/>}
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
@@ -50,6 +54,7 @@ const Portfolio = () => {
         </div>
         <div>
           <h2 className="account-section-heading">FHSA</h2>
+          {<PortfolioSectionNetOverview accountType={'FHSA'} useDividends={true}/>}
           <div className={'record-space-around-3'}>
             {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'FHSA'} limit={16}/>}
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}

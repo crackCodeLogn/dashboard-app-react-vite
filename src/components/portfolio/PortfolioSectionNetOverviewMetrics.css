@@ -1,0 +1,72 @@
+/* Container for the entire horizontal bar */
+.portfolio-metrics-container {
+    display: flex;
+    background-color: #20232a; /* Dark background similar to trading apps */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Ensures rounded corners are respected */
+    color: #f0f0f0; /* Light text */
+    font-family: 'Arial', sans-serif;
+    height: 90px; /* Fixed height for consistency */
+}
+
+/* Individual Metric Block */
+.metric-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+    border-right: 1px solid #363a44; /* Subtle divider */
+    flex-grow: 1; /* Distribute space evenly */
+    min-width: 120px;
+}
+
+/* Make the last block slightly different */
+.metric-block:last-child {
+    border-right: none;
+}
+
+/* Metric Label (e.g., "Current Value") */
+.metric-label {
+    font-size: 0.8em;
+    color: #a0a0a0;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+/* Metric Value (The big number) */
+.metric-value {
+    font-size: 1.2em;
+    font-weight: 700;
+    white-space: nowrap; /* Prevents values from wrapping */
+}
+
+/* --- Specific Styling for Key Metrics --- */
+
+/* Highlight Current Value slightly */
+.metric-block:first-child {
+    background-color: #2a2e35;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.metric-block:first-child .metric-value {
+    font-size: 1.5em; /* Larger for the most important metric */
+    color: #4db6ac; /* A clean, financial cyan/teal */
+}
+
+/* PnL Styling (Color Coding) */
+.metric-block.pnl-positive {
+    color: #00ff7f; /* Vibrant Green */
+}
+
+.metric-block.pnl-negative {
+    color: #ff4500; /* Vibrant Red/Orange */
+}
+
+.metric-block.pnl-positive .metric-label,
+.metric-block.pnl-negative .metric-label {
+    color: inherit; /* Inherit the vibrant color for the label too */
+}

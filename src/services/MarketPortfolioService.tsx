@@ -2,14 +2,16 @@ import axios, {AxiosInstance} from 'axios';
 
 const HOST_URL: string = import.meta.env.VITE_HOST;
 const PORTFOLIO_DATA_BASE_URL: string = `http://${HOST_URL}:40037`;
-const PORTFOLIO_NET_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market/valuations";
-const PORTFOLIO_NET_MARKET_VALUATIONS_PLOT_END_POINT: string = "/portfolio/market/valuations/plot";
+const PORTFOLIO_AGGR_MARKET_VALUATIONS_END_POINT: string = "/portfolio/market/valuations";
+const PORTFOLIO_AGGR_MARKET_VALUATIONS_PLOT_END_POINT: string = "/portfolio/market/valuations/plot";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_PLOT_END_POINT: string = "/portfolio/market/valuations/plot/account";
 const PORTFOLIO_ACCOUNT_MARKET_DIVIDEND_VALUATIONS_END_POINT: string = "/portfolio/market/valuations/dividends";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_END_POINT: string = "/portfolio/market/valuations/sector/account";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_SECTOR_IMNT_END_POINT: string = "/portfolio/market/valuations/sector-imnt/account";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_BEST_WORST_PERFORMERS_END_POINT: string = "/portfolio/market/valuations/best-worst/account";
 const PORTFOLIO_ACCOUNT_MARKET_VALUATION_IMNT_END_POINT: string = "/portfolio/market/valuation/account";
+const PORTFOLIO_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT: string = "/portfolio/market/valuations/net";
+const PORTFOLIO_ACCOUNT_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT: string = "/portfolio/market/valuations/net/account";
 const PORTFOLIO_MARKET_INFO_IMNTS_DIV_YEILD_SECTOR: string = "/portfolio/market/info/imnts/dividend-yield-sector";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
@@ -36,18 +38,18 @@ async function fetch(timeout: number, useProto: boolean, endPoint: string, param
   }
 }
 
-export const fetchNetMarketValuationsData = async (
+export const fetchAggrMarketValuationsData = async (
   useDividends: boolean = false,
   timeout: number = 3000,
   useProto: boolean = true) => {
-  return fetch(timeout, useProto, PORTFOLIO_NET_MARKET_VALUATIONS_END_POINT, {
+  return fetch(timeout, useProto, PORTFOLIO_AGGR_MARKET_VALUATIONS_END_POINT, {
     'divs': useDividends
   });
 };
 
-export const fetchNetMarketValuationsPlotData = async (timeout: number = 3000,
-                                                       useProto: boolean = true) => {
-  return fetch(timeout, useProto, PORTFOLIO_NET_MARKET_VALUATIONS_PLOT_END_POINT);
+export const fetchAggrMarketValuationsPlotData = async (timeout: number = 3000,
+                                                        useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_AGGR_MARKET_VALUATIONS_PLOT_END_POINT);
 };
 
 export const fetchAccountMarketValuationsPlotData = async (
@@ -114,4 +116,24 @@ export const fetchDividendYieldAndSectorForAllImnts = async (
   timeout: number = 30000,
   useProto: boolean = true) => {
   return fetch(timeout, useProto, PORTFOLIO_MARKET_INFO_IMNTS_DIV_YEILD_SECTOR);
+};
+
+export const fetchNetMarketValuationOverviewMetricData = async (
+  useDividends: boolean = false,
+  timeout: number = 3000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT, {
+    'divs': useDividends
+  });
+};
+
+export const fetchAccountNetMarketValuationOverviewMetricData = async (
+  accountType: string,
+  useDividends: boolean = false,
+  timeout: number = 3000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_ACCOUNT_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT, {
+    'accountType': accountType,
+    'divs': useDividends
+  });
 };

@@ -5,8 +5,8 @@ import Table from 'react-bootstrap/Table';
 import {DataPacket} from '../../assets/proto/generated/DataPacket.ts';
 import CustomError from '../error/CustomError.tsx';
 import {Utils} from '../../utils/Utils.tsx';
-import './PortfolioNetMarketValuationData.css';
-import {fetchNetMarketValuationsData} from "../../services/MarketPortfolioService.tsx";
+import './PortfolioAggrMarketValuationData.css';
+import {fetchAggrMarketValuationsData} from "../../services/MarketPortfolioService.tsx";
 
 // --- KEY DEFINITIONS (Replicated from user prompt) ---
 const KEY_ACCOUNT_TYPES = "accountTypes";
@@ -105,7 +105,7 @@ const parseNetMarketValuationData = (dataStrings: string[]): PositionData[] => {
 };
 
 
-const PortfolioNetMarketValuationDataComponent = () => {
+const PortfolioAggrMarketValuationDataComponent = () => {
   // --- State ---
   const [positions, setPositions] = useState<PositionData[]>([]);
   const [useDividends, setUseDividends] = useState<boolean>(false);
@@ -118,7 +118,7 @@ const PortfolioNetMarketValuationDataComponent = () => {
     setPositions([]);
     try {
       // 1. Fetch Data (mocked/placeholder)
-      const result = await fetchNetMarketValuationsData(useDividends);
+      const result = await fetchAggrMarketValuationsData(useDividends);
 
       if (!result) {
         throw new Error(`No net market valuation data found.`);
@@ -469,4 +469,4 @@ const PortfolioNetMarketValuationDataComponent = () => {
   );
 };
 
-export default PortfolioNetMarketValuationDataComponent;
+export default PortfolioAggrMarketValuationDataComponent;
