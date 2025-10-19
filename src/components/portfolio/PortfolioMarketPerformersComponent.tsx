@@ -14,6 +14,7 @@ export interface Performer {
   currentValue: number; // Book Cost + PNL
   pnlPercent: number; // PNL as a percentage of Book Cost
   isBest: boolean;    // True if a best performer, False if a worst performer
+  qty: number;
 }
 
 // New types for sorting
@@ -37,16 +38,17 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
   const [performers, setPerformers] = useState<Performer[] | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Function to process the raw data string: "<%.02f>|<%.02f>"
+  // Function to process the raw data string: "<%.02f>|<%.02f>|<%.02f>"
   const parsePerformerData = (rawData: Map<string, string>): Performer[] => {
     const allPerformers: Performer[] = [];
 
     for (const [instrument, dataString] of rawData.entries()) {
       const parts = dataString.split('|');
-      if (parts.length !== 2) continue;
+      if (parts.length !== 3) continue;
 
       const pnl = parseFloat(parts[0]);
       const bookCost = parseFloat(parts[1]);
+      const qty = parseFloat(parts[2]);
 
       if (isNaN(pnl) || isNaN(bookCost)) continue;
 
@@ -60,8 +62,10 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
         bookCost,
         currentValue,
         pnlPercent,
-        isBest: false // Initial state
+        isBest: false, // Initial state
+        qty
       });
+      // console.log(allPerformers);
     }
 
     // --- MODIFIED LOGIC START: Filter, Sort, and Slice based on PnL sign ---
@@ -190,6 +194,9 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
             >
               Instrument <span className="sort-indicator">{getSortIcon('instrument', sortState)}</span>
             </th>
+            <th className="right-align">Qty</th>
+            <th className="right-align">Book Cost</th>
+            <th className="right-align">Current Value</th>
             <th
               onClick={() => handleSort(listType, 'pnlPercent')}
               className="right-align sortable"
@@ -202,8 +209,6 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
             >
               P&L ($) <span className="sort-indicator">{getSortIcon('pnl', sortState)}</span>
             </th>
-            <th className="right-align">Book Cost</th>
-            <th className="right-align">Current Value</th>
           </tr>
           </thead>
           <tbody>
@@ -216,7 +221,9 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
             return (
               <tr key={p.instrument}>
                 <td className="cell-strong">{p.instrument}</td>
-
+                <td className="right-align">{Utils.yValueFormat(p.qty)}</td>
+                <td className="right-align">{Utils.formatDollar(p.bookCost)}</td>
+                <td className="right-align">{Utils.formatDollar(p.currentValue)}</td>
                 {/* P&L (%) Column with colored icon */}
                 <td className={`right-align`}>
                   <span className={`pnl-icon ${pnlClass}`}>{icon}</span>
@@ -228,9 +235,6 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
                   <span className={`pnl-icon ${pnlClass}`}>{icon}</span>
                   {Utils.formatDollar(p.pnl)}
                 </td>
-
-                <td className="right-align">{Utils.formatDollar(p.bookCost)}</td>
-                <td className="right-align">{Utils.formatDollar(p.currentValue)}</td>
               </tr>
             );
           })}

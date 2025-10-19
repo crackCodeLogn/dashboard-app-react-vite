@@ -17,6 +17,7 @@ const KEY_IMNT = "imnt";
 const KEY_PNL = "pnl";
 const KEY_SECTOR = "sector";
 const KEY_TOTAL_DIV = "totalDiv";
+const KEY_QTY = "qty";
 
 // --- Configuration ---
 const SECTOR_LIMIT = 8; // Max number of sectors to display before grouping into 'Other'
@@ -32,6 +33,7 @@ export interface PositionData {
   sector: string;
   totalDiv: number;
   pnlPercent: number; // Calculated field
+  qty: number;
 }
 
 export interface AggregationData {
@@ -40,6 +42,7 @@ export interface AggregationData {
   totalPnL: number;
   totalTotalDiv: number;
   overallPnLPercent: number;
+  totalQty: number;
 }
 
 // --- Sorting Types ---
@@ -77,7 +80,7 @@ const parseNetMarketValuationData = (dataStrings: string[]): PositionData[] => {
     const bookVal = parseFloat(dataMap[KEY_BOOK_VAL] || '0');
     const currentVal = parseFloat(dataMap[KEY_CURRENT_VAL] || '0');
     const totalDiv = parseFloat(dataMap[KEY_TOTAL_DIV] || '0');
-    let pnl = parseFloat(dataMap[KEY_PNL] || '0');
+    const pnl = parseFloat(dataMap[KEY_PNL] || '0');
 
     if (isNaN(bookVal) || isNaN(currentVal) || isNaN(pnl) || isNaN(totalDiv)) {
       console.warn(`Skipping malformed data line: ${line}`);
@@ -86,6 +89,7 @@ const parseNetMarketValuationData = (dataStrings: string[]): PositionData[] => {
 
     // Calculate PnL % based on bookVal
     const pnlPercent = bookVal !== 0 ? (pnl / bookVal) * 100 : 0;
+    const qty = parseFloat(dataMap[KEY_QTY] || '0');
 
     const position: PositionData = {
       accountTypes: dataMap[KEY_ACCOUNT_TYPES] || 'N/A',
@@ -97,6 +101,7 @@ const parseNetMarketValuationData = (dataStrings: string[]): PositionData[] => {
       sector: dataMap[KEY_SECTOR] || 'Unassigned',
       totalDiv: totalDiv,
       pnlPercent: pnlPercent,
+      qty: qty,
     };
 
     positions.push(position);
@@ -179,7 +184,8 @@ const PortfolioAggrMarketValuationDataComponent = () => {
       totalCurrentVal: 0,
       totalPnL: 0,
       totalTotalDiv: 0,
-      overallPnLPercent: 0
+      overallPnLPercent: 0,
+      totalQty: 0,
     };
 
     if (positions.length === 0) return agg;
@@ -189,6 +195,7 @@ const PortfolioAggrMarketValuationDataComponent = () => {
     // Use the *calculated* PnL which includes or excludes dividends based on the checkbox state
     agg.totalPnL = positions.reduce((sum, p) => sum + p.pnl, 0);
     agg.totalTotalDiv = positions.reduce((sum, p) => sum + p.totalDiv, 0);
+    agg.totalQty = positions.reduce((sum, p) => sum + p.qty, 0);
 
     // Calculate overall PnL Percent using aggregated PnL and BookVal
     agg.overallPnLPercent = agg.totalBookVal !== 0 ? (agg.totalPnL / agg.totalBookVal) * 100 : 0;
@@ -205,7 +212,7 @@ const PortfolioAggrMarketValuationDataComponent = () => {
       sectorMap.set(sector, (sectorMap.get(sector) || 0) + currentVal);
     });
 
-    let data: SectorValuation[] = [];
+    const data: SectorValuation[] = [];
     for (const [name, value] of sectorMap.entries()) {
       data.push({name, value});
     }
@@ -271,7 +278,7 @@ const PortfolioAggrMarketValuationDataComponent = () => {
 
   // Aggregation Row Component
   const AggregationRow = () => {
-    const {totalPnL, overallPnLPercent, totalBookVal, totalCurrentVal, totalTotalDiv} = aggregationData;
+    const {totalPnL, overallPnLPercent, totalBookVal, totalCurrentVal, totalTotalDiv, totalQty} = aggregationData;
     const isPositive = totalPnL >= 0;
     const pnlClass = isPositive ? 'gain' : 'loss';
     const icon = isPositive ? '▲' : '▼';
@@ -284,6 +291,7 @@ const PortfolioAggrMarketValuationDataComponent = () => {
         {/* Acct Type column */}
         <td></td>
         {/* sector column */}
+        <td className="right-align cell-strong">{Utils.yValueFormat(totalQty)}</td>
         <td className="right-align cell-strong">{Utils.formatDollar(totalBookVal)}</td>
         <td className="right-align cell-strong">{Utils.formatDollar(totalCurrentVal)}</td>
 
@@ -408,6 +416,9 @@ const PortfolioAggrMarketValuationDataComponent = () => {
                 <th onClick={() => handleSort(KEY_SECTOR as SortKey)} className="sortable">
                   Sector <span className="sort-indicator">{getSortIcon(KEY_SECTOR as SortKey)}</span>
                 </th>
+                <th onClick={() => handleSort(KEY_QTY as SortKey)} className="sortable">
+                  Qty <span className="sort-indicator">{getSortIcon(KEY_QTY as SortKey)}</span>
+                </th>
                 <th onClick={() => handleSort(KEY_BOOK_VAL as SortKey)} className="right-align sortable">
                   Book Val <span className="sort-indicator">{getSortIcon(KEY_BOOK_VAL as SortKey)}</span>
                 </th>
@@ -440,6 +451,7 @@ const PortfolioAggrMarketValuationDataComponent = () => {
                     <td className="cell-strong">{p.imnt}</td>
                     <td>{p.accountTypes}</td>
                     <td>{p.sector}</td>
+                    <td className="right-align">{Utils.yValueFormat(p.qty)}</td>
                     <td className="right-align">{Utils.formatDollar(p.bookVal)}</td>
                     <td className="right-align">{Utils.formatDollar(p.currentVal)}</td>
 

@@ -10,6 +10,7 @@ const KEY_TOTAL_DIV = "totalDiv";
 const KEY_PNL = "pnl";
 const KEY_CURRENT_VAL = "currentVal";
 const KEY_BOOK_VAL = "bookVal";
+const KEY_QTY = "qty";
 
 const PortfolioSectionNetOverview = (props: { accountType: string, useDividends: boolean }) => {
 
@@ -19,6 +20,7 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
   const [pnl, setPnl] = useState<number>(0.00);
   const [pnlPct, setPnlPct] = useState<string>('0.00%');
   const [totalDiv, setTotalDiv] = useState<number>(0.00);
+  const [qty, setQty] = useState<number>(0.00);
 
   useEffect(() => {
     fetchData();
@@ -50,8 +52,9 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
         setPnl(metricValueMap.get(KEY_PNL) as number);
         setPnlPct(Utils.getPercentage(metricValueMap.get(KEY_PNL), metricValueMap.get(KEY_BOOK_VAL)));
       }
-      if (metricValueMap.has(KEY_CURRENT_VAL)) setCurrentVal(metricValueMap.get(KEY_CURRENT_VAL) as number);
-      if (metricValueMap.has(KEY_TOTAL_DIV)) setTotalDiv(metricValueMap.get(KEY_TOTAL_DIV) as number);
+      setCurrentVal(metricValueMap.get(KEY_CURRENT_VAL) as number);
+      setTotalDiv(metricValueMap.get(KEY_TOTAL_DIV) || 0.0);
+      setQty(metricValueMap.get(KEY_QTY) || 0.0);
 
     } catch (err) {
       console.error(err);
@@ -65,7 +68,8 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
       currentVal: currentVal,
       pnlPct: pnlPct,
       pnl: pnl,
-      totalDiv: totalDiv
+      totalDiv: totalDiv,
+      qty: qty
     }}/>
   );
 };
