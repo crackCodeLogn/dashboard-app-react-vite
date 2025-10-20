@@ -1,4 +1,3 @@
-import PortfolioGicListingsComponent from "../components/portfolio/PortfolioGicListingsComponent.tsx";
 import PortfolioGicValuationDataComponent from "../components/portfolio/PortfolioGicValuationDataComponent.tsx";
 import PortfolioNetWorthComponent from "../components/portfolio/PortfolioNetWorthComponent.tsx";
 import PortfolioNetMarketValuationPlotDataComponent from "../components/portfolio/PortfolioNetMarketValuationPlotDataComponent.tsx";
@@ -12,6 +11,7 @@ import PortfolioMarketInstrumentValuationComponent from "../components/portfolio
 import PortfolioMarketInstrumentDivSectorInfoComponent from "../components/portfolio/PortfolioMarketInstrumentDivSectorInfoComponent.tsx";
 import PortfolioAggrMarketValuationDataComponent from "../components/portfolio/PortfolioAggrMarketValuationDataComponent.tsx";
 import PortfolioSectionNetOverview from "../components/portfolio/PortfolioSectionNetOverviewComponent.tsx";
+import GicAggregatorComponent from "../components/gic/GicAggregatorComponent.tsx";
 
 
 const Portfolio = () => {
@@ -21,7 +21,8 @@ const Portfolio = () => {
       <div className={'row'}>
         <div className={'record-space-around'}>
           {<PortfolioNetWorthComponent/>}
-          {<PortfolioGicListingsComponent/>}
+          {/*{<PortfolioGicListingsComponent/>}*/}
+          {<GicAggregatorComponent/>}
         </div>
         {<PortfolioGicValuationDataComponent/>}
         <h2 className="market-breakdown-title">Market</h2>

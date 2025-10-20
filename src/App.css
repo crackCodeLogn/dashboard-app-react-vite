@@ -104,7 +104,7 @@ h1 {
 
     /* For 2 items: 48% is close to half, leaving 4% for the gap created by space-between */
     /* For 3 items: 32% allows them to fit (3 * 32% = 96%) with space-between gaps */
-    flex-basis: 45%; /* Adjust this percentage based on your desired layout */
+    flex-basis: 47%; /* Adjust this percentage based on your desired layout */
 
     /* 7. Crucial: Prevents the component from shrinking below the flex-basis value */
     flex-shrink: 0;
