@@ -9,8 +9,8 @@ import CorrelationHeatmap, {CorrelationEntry} from "../heatmap/CorrelationHeatma
 import CustomError from "../error/CustomError.tsx";
 
 
-const PortfolioHeatmapComponent = (props: { accountType: string }) => {
-  const {accountType} = props;
+const PortfolioHeatmapComponent = (props: { accountType: string, cellSizePx: number }) => {
+  const {accountType, cellSizePx} = props;
 
   const [correlationEntries, setCorrelationEntries] = useState<CorrelationEntry[]>([]);
   const [errorMsg, setErrorMsg] = useState('');
@@ -60,7 +60,7 @@ const PortfolioHeatmapComponent = (props: { accountType: string }) => {
     <div className={"centerLine"}>
       {errorMsg
         ? <CustomError errorMsg={errorMsg}/>
-        : <CorrelationHeatmap data={correlationEntries}/>}
+        : <CorrelationHeatmap data={correlationEntries} cellSizePx={cellSizePx}/>}
     </div>
   );
 };

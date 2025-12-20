@@ -50,7 +50,7 @@ const Portfolio = () => {
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'TFSA'} limit={5}/>}
             {<PortfolioMarketSectorImntBreakdownComponent accountType={'TFSA'}/>}
           </div>
-          {<PortfolioHeatmapComponent accountType={"TFSA"}/>}
+          {<PortfolioHeatmapComponent accountType={"TFSA"} cellSizePx={55}/>}
         </div>
         <div>
           <h2 className="account-section-heading">NR</h2>
@@ -62,7 +62,7 @@ const Portfolio = () => {
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'NR'} limit={5}/>}
             {<PortfolioMarketSectorImntBreakdownComponent accountType={'NR'}/>}
           </div>
-          {<PortfolioHeatmapComponent accountType={"NR"}/>}
+          {<PortfolioHeatmapComponent accountType={"NR"} cellSizePx={51}/>}
         </div>
         <div>
           <h2 className="account-section-heading">FHSA</h2>
@@ -74,7 +74,7 @@ const Portfolio = () => {
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
             {<PortfolioMarketSectorImntBreakdownComponent accountType={'FHSA'}/>}
           </div>
-          {<PortfolioHeatmapComponent accountType={"FHSA"}/>}
+          {<PortfolioHeatmapComponent accountType={"FHSA"} cellSizePx={75}/>}
         </div>
       </div>
     </div>

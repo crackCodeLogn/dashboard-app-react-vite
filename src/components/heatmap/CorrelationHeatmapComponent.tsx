@@ -10,6 +10,7 @@ export interface CorrelationEntry {
 
 interface CorrelationHeatmapProps {
   data: CorrelationEntry[]
+  cellSizePx: number
   min?: number // default -1
   max?: number // default 1
 }
@@ -42,11 +43,12 @@ export function convertCorrelationToNivoSeries(data: CorrelationEntry[]): NivoHe
 
 export default function CorrelationHeatmap({
                                              data,
+                                             cellSizePx,
                                              min = -1,
                                              max = 1,
                                            }: CorrelationHeatmapProps) {
   // 1. Control "Zoom" by defining the size of each cell in pixels
-  const [cellSize, setCellSize] = useState(40);
+  const [cellSize, setCellSize] = useState(cellSizePx);
 
   const heatmapData = useMemo(() => convertCorrelationToNivoSeries(data), [data]);
   const instrumentCount = heatmapData.length;
