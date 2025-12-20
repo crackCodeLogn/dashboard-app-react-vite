@@ -56,7 +56,7 @@ export default function CorrelationHeatmap({
   // 2. Calculate dynamic dimensions based on number of instruments and zoom level
   const margin = {top: 80, right: 40, bottom: 60, left: 80};
   const chartWidth = instrumentCount * cellSize + margin.left + margin.right;
-  const chartHeight = instrumentCount * cellSize + margin.top + margin.bottom;
+  const chartHeight = instrumentCount * cellSize + margin.top + margin.bottom + 50;
 
   if (instrumentCount === 0) return <div>No data.</div>;
 
@@ -99,6 +99,12 @@ export default function CorrelationHeatmap({
             inactiveOpacity={1}
             activeOpacity={1}
 
+            labelTextColor={({value}) => {
+              // Contrast check: use white text for the dark ends (Red/Blue)
+              // and dark text for the bright middle (Yellow)
+              return Math.abs(value as number) > 0.6 ? '#ffffff' : '#333333';
+            }}
+
             axisTop={{
               tickSize: 5,
               tickPadding: 5,
@@ -110,7 +116,7 @@ export default function CorrelationHeatmap({
             }}
             colors={{
               type: 'diverging',
-              scheme: 'red_yellow_blue',
+              scheme: 'spectral',
               minValue: min,
               maxValue: max,
               divergeAt: 0.5
@@ -118,10 +124,38 @@ export default function CorrelationHeatmap({
             emptyColor="#555555"
             hoverTarget="cell"
             tooltip={({cell}) => (
-              <div style={{padding: '8px', background: '#fff', border: '1px solid #ccc'}}>
-                <strong>{cell.serieId} × {cell.data.x}</strong>: {cell.data.y?.toFixed(3)}
+              <div style={{
+                padding: '8px',
+                background: 'white',
+                border: `2px solid ${cell.color}`,
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                borderRadius: '4px'
+              }}>
+                <div style={{fontSize: '11px', color: '#666'}}>{cell.serieId} × {cell.data.x}</div>
+                <div style={{fontSize: '14px', fontWeight: 'bold'}}>
+                  {Number(cell.data.y).toFixed(4)}
+                </div>
               </div>
             )}
+
+            legends={[
+              {
+                anchor: 'bottom',
+                translateX: 0,
+                translateY: 50, // Positioned 50px below the chart
+                length: 400,
+                thickness: 10,
+                direction: 'row',
+                tickPosition: 'after',
+                tickSize: 3,
+                tickSpacing: 4,
+                tickOverlap: false,
+                tickFormat: '.2f',
+                title: 'Correlation →',
+                titleAlign: 'start',
+                titleOffset: 4
+              }
+            ]}
           />
         </div>
       </div>

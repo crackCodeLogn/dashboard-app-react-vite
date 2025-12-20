@@ -33,11 +33,12 @@ const Portfolio = () => {
           {<GicAggregatorComponent/>}
         </div>
         {<PortfolioGicValuationDataComponent/>}
-        {/*{<PortfolioHeatmapComponent/>}*/}
         <h2 className="market-breakdown-title">Market</h2>
         {<PortfolioSectionNetOverview accountType={''} useDividends={true}/>}
         {<PortfolioNetMarketValuationPlotDataComponent/>}
         {<PortfolioAggrMarketValuationDataComponent/>}
+        {<PortfolioHeatmapComponent accountType={'PORTFOLIO'} cellSizePx={40}/>}
+
         {<PortfolioMarketInstrumentDivSectorInfoComponent/>}
         {<PortfolioMarketInstrumentValuationComponent/>}
         <div>
