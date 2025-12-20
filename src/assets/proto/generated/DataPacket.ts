@@ -18,9 +18,12 @@ export class DataPacket extends pb_1.Message {
         stringIntMap?: Map<string, number>;
         stringLongMap?: Map<string, number>;
         strings?: string[];
+        table?: DataPacket.Table[];
+        intStringMap?: Map<number, string>;
+        dataPacketList?: DataPacket.RepeatedDataPacket[];
     }) {
         super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [3, 4, 5, 10], this.#one_of_decls);
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [3, 4, 5, 10, 11, 13], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
             if ("intDoubleMap" in data && data.intDoubleMap != undefined) {
                 this.intDoubleMap = data.intDoubleMap;
@@ -52,6 +55,15 @@ export class DataPacket extends pb_1.Message {
             if ("strings" in data && data.strings != undefined) {
                 this.strings = data.strings;
             }
+            if ("table" in data && data.table != undefined) {
+                this.table = data.table;
+            }
+            if ("intStringMap" in data && data.intStringMap != undefined) {
+                this.intStringMap = data.intStringMap;
+            }
+            if ("dataPacketList" in data && data.dataPacketList != undefined) {
+                this.dataPacketList = data.dataPacketList;
+            }
         }
         if (!this.intDoubleMap)
             this.intDoubleMap = new Map();
@@ -65,6 +77,8 @@ export class DataPacket extends pb_1.Message {
             this.stringIntMap = new Map();
         if (!this.stringLongMap)
             this.stringLongMap = new Map();
+        if (!this.intStringMap)
+            this.intStringMap = new Map();
     }
     get intDoubleMap() {
         return pb_1.Message.getField(this, 1) as any as Map<number, number>;
@@ -120,13 +134,35 @@ export class DataPacket extends pb_1.Message {
     set stringLongMap(value: Map<string, number>) {
         pb_1.Message.setField(this, 9, value as any);
     }
-
     get strings() {
         return pb_1.Message.getFieldWithDefault(this, 10, []) as string[];
     }
-
     set strings(value: string[]) {
         pb_1.Message.setField(this, 10, value);
+    }
+
+    get table() {
+        return pb_1.Message.getRepeatedWrapperField(this, DataPacket.Table, 11) as DataPacket.Table[];
+    }
+
+    set table(value: DataPacket.Table[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 11, value);
+    }
+
+    get intStringMap() {
+        return pb_1.Message.getField(this, 12) as any as Map<number, string>;
+    }
+
+    set intStringMap(value: Map<number, string>) {
+        pb_1.Message.setField(this, 12, value as any);
+    }
+
+    get dataPacketList() {
+        return pb_1.Message.getRepeatedWrapperField(this, DataPacket.RepeatedDataPacket, 13) as DataPacket.RepeatedDataPacket[];
+    }
+
+    set dataPacketList(value: DataPacket.RepeatedDataPacket[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 13, value);
     }
     static fromObject(data: {
         intDoubleMap?: {
@@ -151,6 +187,11 @@ export class DataPacket extends pb_1.Message {
             [key: string]: number;
         };
         strings?: string[];
+        table?: ReturnType<typeof DataPacket.Table.prototype.toObject>[];
+        intStringMap?: {
+            [key: number]: string;
+        };
+        dataPacketList?: ReturnType<typeof DataPacket.RepeatedDataPacket.prototype.toObject>[];
     }): DataPacket {
         const message = new DataPacket({});
         if (typeof data.intDoubleMap == "object") {
@@ -183,11 +224,21 @@ export class DataPacket extends pb_1.Message {
         if (data.strings != null) {
             message.strings = data.strings;
         }
+        if (data.table != null) {
+            message.table = data.table.map(item => DataPacket.Table.fromObject(item));
+        }
+        if (typeof data.intStringMap == "object") {
+            message.intStringMap = new Map(Object.entries(data.intStringMap).map(([key, value]) => [Number(key), value]));
+        }
+        if (data.dataPacketList != null) {
+            message.dataPacketList = data.dataPacketList.map(item => DataPacket.RepeatedDataPacket.fromObject(item));
+        }
         return message;
     }
 
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): DataPacket {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new DataPacket();
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+          message = new DataPacket();
         while (reader.nextField()) {
             if (reader.isEndGroup())
                 break;
@@ -222,12 +273,23 @@ export class DataPacket extends pb_1.Message {
                 case 10:
                     pb_1.Message.addToRepeatedField(message, 10, reader.readString());
                     break;
+                case 11:
+                    reader.readMessage(message.table, () => pb_1.Message.addToRepeatedWrapperField(message, 11, DataPacket.Table.deserialize(reader), DataPacket.Table));
+                    break;
+                case 12:
+                    reader.readMessage(message, () => pb_1.Map.deserializeBinary(message.intStringMap as any, reader, reader.readInt32, reader.readString));
+                    break;
+                case 13:
+                    reader.readMessage(message.dataPacketList, () => pb_1.Message.addToRepeatedWrapperField(message, 13, DataPacket.RepeatedDataPacket.deserialize(reader), DataPacket.RepeatedDataPacket));
+                    break;
                 default:
                     reader.skipField();
             }
         }
         return message;
     }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
 
     toObject() {
         const data: {
@@ -253,6 +315,11 @@ export class DataPacket extends pb_1.Message {
                 [key: string]: number;
             };
             strings?: string[];
+            table?: ReturnType<typeof DataPacket.Table.prototype.toObject>[];
+            intStringMap?: {
+                [key: number]: string;
+            };
+            dataPacketList?: ReturnType<typeof DataPacket.RepeatedDataPacket.prototype.toObject>[];
         } = {};
         if (this.intDoubleMap != null) {
             data.intDoubleMap = (Object.fromEntries)(this.intDoubleMap);
@@ -284,12 +351,17 @@ export class DataPacket extends pb_1.Message {
         if (this.strings != null) {
             data.strings = this.strings;
         }
+        if (this.table != null) {
+            data.table = this.table.map((item: DataPacket.Table) => item.toObject());
+        }
+        if (this.intStringMap != null) {
+            data.intStringMap = (Object.fromEntries)(this.intStringMap);
+        }
+        if (this.dataPacketList != null) {
+            data.dataPacketList = this.dataPacketList.map((item: DataPacket.RepeatedDataPacket) => item.toObject());
+        }
         return data;
     }
-
-    serialize(): Uint8Array;
-
-    serialize(w: pb_1.BinaryWriter): void;
 
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
@@ -337,6 +409,16 @@ export class DataPacket extends pb_1.Message {
         }
         if (this.strings.length)
             writer.writeRepeatedString(10, this.strings);
+        if (this.table.length)
+            writer.writeRepeatedMessage(11, this.table, (item: DataPacket.Table) => item.serialize(writer));
+        for (const [key, value] of this.intStringMap) {
+            writer.writeMessage(12, this.intStringMap, () => {
+                writer.writeInt32(1, key);
+                writer.writeString(2, value);
+            });
+        }
+        if (this.dataPacketList.length)
+            writer.writeRepeatedMessage(13, this.dataPacketList, (item: DataPacket.RepeatedDataPacket) => item.serialize(writer));
         if (!w)
             return writer.getResultBuffer();
     }
@@ -345,5 +427,329 @@ export class DataPacket extends pb_1.Message {
     }
     static deserializeBinary(bytes: Uint8Array): DataPacket {
         return DataPacket.deserialize(bytes);
+    }
+}
+
+export namespace DataPacket {
+    export class Table extends pb_1.Message {
+        #one_of_decls: number[][] = [];
+
+        constructor(data?: any[] | {
+            entries?: DataPacket.TableCell[];
+        }) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [1], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("entries" in data && data.entries != undefined) {
+                    this.entries = data.entries;
+                }
+            }
+        }
+
+        get entries() {
+            return pb_1.Message.getRepeatedWrapperField(this, DataPacket.TableCell, 1) as DataPacket.TableCell[];
+        }
+
+        set entries(value: DataPacket.TableCell[]) {
+            pb_1.Message.setRepeatedWrapperField(this, 1, value);
+        }
+
+        static fromObject(data: {
+            entries?: ReturnType<typeof DataPacket.TableCell.prototype.toObject>[];
+        }): Table {
+            const message = new Table({});
+            if (data.entries != null) {
+                message.entries = data.entries.map(item => DataPacket.TableCell.fromObject(item));
+            }
+            return message;
+        }
+
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Table {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+              message = new Table();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        reader.readMessage(message.entries, () => pb_1.Message.addToRepeatedWrapperField(message, 1, DataPacket.TableCell.deserialize(reader), DataPacket.TableCell));
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+
+        static deserializeBinary(bytes: Uint8Array): Table {
+            return Table.deserialize(bytes);
+        }
+
+        toObject() {
+            const data: {
+                entries?: ReturnType<typeof DataPacket.TableCell.prototype.toObject>[];
+            } = {};
+            if (this.entries != null) {
+                data.entries = this.entries.map((item: DataPacket.TableCell) => item.toObject());
+            }
+            return data;
+        }
+
+        serialize(): Uint8Array;
+
+        serialize(w: pb_1.BinaryWriter): void;
+
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.entries.length)
+                writer.writeRepeatedMessage(1, this.entries, (item: DataPacket.TableCell) => item.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+    }
+
+    export class TableCell extends pb_1.Message {
+        #one_of_decls: number[][] = [];
+
+        constructor(data?: any[] | {
+            rowKey?: string;
+            colKey?: string;
+            value?: string;
+        }) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("rowKey" in data && data.rowKey != undefined) {
+                    this.rowKey = data.rowKey;
+                }
+                if ("colKey" in data && data.colKey != undefined) {
+                    this.colKey = data.colKey;
+                }
+                if ("value" in data && data.value != undefined) {
+                    this.value = data.value;
+                }
+            }
+        }
+
+        get rowKey() {
+            return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+        }
+
+        set rowKey(value: string) {
+            pb_1.Message.setField(this, 1, value);
+        }
+
+        get colKey() {
+            return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+        }
+
+        set colKey(value: string) {
+            pb_1.Message.setField(this, 2, value);
+        }
+
+        get value() {
+            return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+        }
+
+        set value(value: string) {
+            pb_1.Message.setField(this, 3, value);
+        }
+
+        static fromObject(data: {
+            rowKey?: string;
+            colKey?: string;
+            value?: string;
+        }): TableCell {
+            const message = new TableCell({});
+            if (data.rowKey != null) {
+                message.rowKey = data.rowKey;
+            }
+            if (data.colKey != null) {
+                message.colKey = data.colKey;
+            }
+            if (data.value != null) {
+                message.value = data.value;
+            }
+            return message;
+        }
+
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): TableCell {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+              message = new TableCell();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        message.rowKey = reader.readString();
+                        break;
+                    case 2:
+                        message.colKey = reader.readString();
+                        break;
+                    case 3:
+                        message.value = reader.readString();
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+
+        static deserializeBinary(bytes: Uint8Array): TableCell {
+            return TableCell.deserialize(bytes);
+        }
+
+        toObject() {
+            const data: {
+                rowKey?: string;
+                colKey?: string;
+                value?: string;
+            } = {};
+            if (this.rowKey != null) {
+                data.rowKey = this.rowKey;
+            }
+            if (this.colKey != null) {
+                data.colKey = this.colKey;
+            }
+            if (this.value != null) {
+                data.value = this.value;
+            }
+            return data;
+        }
+
+        serialize(): Uint8Array;
+
+        serialize(w: pb_1.BinaryWriter): void;
+
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.rowKey.length)
+                writer.writeString(1, this.rowKey);
+            if (this.colKey.length)
+                writer.writeString(2, this.colKey);
+            if (this.value.length)
+                writer.writeString(3, this.value);
+            if (!w)
+                return writer.getResultBuffer();
+        }
+
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
+    }
+
+    export class RepeatedDataPacket extends pb_1.Message {
+        #one_of_decls: number[][] = [];
+
+        constructor(data?: any[] | {
+            uuid?: string;
+            dataPacket?: DataPacket;
+        }) {
+            super();
+            pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+            if (!Array.isArray(data) && typeof data == "object") {
+                if ("uuid" in data && data.uuid != undefined) {
+                    this.uuid = data.uuid;
+                }
+                if ("dataPacket" in data && data.dataPacket != undefined) {
+                    this.dataPacket = data.dataPacket;
+                }
+            }
+        }
+
+        get uuid() {
+            return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+        }
+
+        set uuid(value: string) {
+            pb_1.Message.setField(this, 1, value);
+        }
+
+        get dataPacket() {
+            return pb_1.Message.getWrapperField(this, DataPacket, 2) as DataPacket;
+        }
+
+        set dataPacket(value: DataPacket) {
+            pb_1.Message.setWrapperField(this, 2, value);
+        }
+
+        get has_dataPacket() {
+            return pb_1.Message.getField(this, 2) != null;
+        }
+
+        static fromObject(data: {
+            uuid?: string;
+            dataPacket?: ReturnType<typeof DataPacket.prototype.toObject>;
+        }): RepeatedDataPacket {
+            const message = new RepeatedDataPacket({});
+            if (data.uuid != null) {
+                message.uuid = data.uuid;
+            }
+            if (data.dataPacket != null) {
+                message.dataPacket = DataPacket.fromObject(data.dataPacket);
+            }
+            return message;
+        }
+
+        static deserialize(bytes: Uint8Array | pb_1.BinaryReader): RepeatedDataPacket {
+            const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+              message = new RepeatedDataPacket();
+            while (reader.nextField()) {
+                if (reader.isEndGroup())
+                    break;
+                switch (reader.getFieldNumber()) {
+                    case 1:
+                        message.uuid = reader.readString();
+                        break;
+                    case 2:
+                        reader.readMessage(message.dataPacket, () => message.dataPacket = DataPacket.deserialize(reader));
+                        break;
+                    default:
+                        reader.skipField();
+                }
+            }
+            return message;
+        }
+
+        static deserializeBinary(bytes: Uint8Array): RepeatedDataPacket {
+            return RepeatedDataPacket.deserialize(bytes);
+        }
+
+        toObject() {
+            const data: {
+                uuid?: string;
+                dataPacket?: ReturnType<typeof DataPacket.prototype.toObject>;
+            } = {};
+            if (this.uuid != null) {
+                data.uuid = this.uuid;
+            }
+            if (this.dataPacket != null) {
+                data.dataPacket = this.dataPacket.toObject();
+            }
+            return data;
+        }
+
+        serialize(): Uint8Array;
+
+        serialize(w: pb_1.BinaryWriter): void;
+
+        serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+            const writer = w || new pb_1.BinaryWriter();
+            if (this.uuid.length)
+                writer.writeString(1, this.uuid);
+            if (this.has_dataPacket)
+                writer.writeMessage(2, this.dataPacket, () => this.dataPacket.serialize(writer));
+            if (!w)
+                return writer.getResultBuffer();
+        }
+
+        serializeBinary(): Uint8Array {
+            return this.serialize();
+        }
     }
 }

@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nivo/core": "^0.99.0",
+    "@nivo/heatmap": "^0.99.0",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "currency.js": "^2.0.4",
+    "d3": "^7.9.0",
     "dayjs": "^1.11.13",
     "echarts": "^5.6.0",
     "echarts-for-react": "^3.0.2",

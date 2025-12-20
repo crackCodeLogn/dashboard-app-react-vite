@@ -1,4 +1,5 @@
 import axios, {AxiosInstance} from 'axios';
+import {DataPacket} from "../assets/proto/generated/DataPacket.ts";
 
 const HOST_URL: string = import.meta.env.VITE_HOST;
 const PORTFOLIO_DATA_BASE_URL: string = `http://${HOST_URL}:40037`;
@@ -12,7 +13,11 @@ const PORTFOLIO_ACCOUNT_MARKET_VALUATIONS_BEST_WORST_PERFORMERS_END_POINT: strin
 const PORTFOLIO_ACCOUNT_MARKET_VALUATION_IMNT_END_POINT: string = "/portfolio/market/valuation/account";
 const PORTFOLIO_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT: string = "/portfolio/market/valuations/net";
 const PORTFOLIO_ACCOUNT_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT: string = "/portfolio/market/valuations/net/account";
-const PORTFOLIO_MARKET_INFO_IMNTS_DIV_YEILD_SECTOR: string = "/portfolio/market/info/imnts/dividend-yield-sector";
+const PORTFOLIO_MARKET_INFO_IMNTS_DIV_YIELD_SECTOR: string = "/portfolio/market/info/imnts/dividend-yield-sector";
+const PORTFOLIO_MARKET_CORRELATION_MATRIX_WHOLE: string = "/portfolio/market/correlation/matrix";
+const PORTFOLIO_MARKET_CORRELATION_MATRIX_ACCOUNT_TYPE: string = "/portfolio/market/correlation/matrix/";
+const PORTFOLIO_MARKET_CORRELATION_MATRIX_TARGETED: string = "/portfolio/market/correlation/matrix";
+const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
@@ -31,6 +36,18 @@ async function fetch(timeout: number, useProto: boolean, endPoint: string, param
   const api: AxiosInstance = generateApi(timeout, useProto);
   try {
     const response = await api.get(endPoint, {params});
+    return response.data;
+  } catch (error) {
+    console.error('api err: ' + error);
+    throw error;
+  }
+}
+
+async function post(data: any, timeout: number, useProto: boolean, endPoint: string) {
+  console.log(endPoint); // todo - remove post testing
+  const api: AxiosInstance = generateApi(timeout, useProto);
+  try {
+    const response = await api.post(endPoint, data);
     return response.data;
   } catch (error) {
     console.error('api err: ' + error);
@@ -115,7 +132,7 @@ export const fetchAccountMarketImntValuationData = async (
 export const fetchDividendYieldAndSectorForAllImnts = async (
   timeout: number = 30000,
   useProto: boolean = true) => {
-  return fetch(timeout, useProto, PORTFOLIO_MARKET_INFO_IMNTS_DIV_YEILD_SECTOR);
+  return fetch(timeout, useProto, PORTFOLIO_MARKET_INFO_IMNTS_DIV_YIELD_SECTOR);
 };
 
 export const fetchNetMarketValuationOverviewMetricData = async (
@@ -135,5 +152,36 @@ export const fetchAccountNetMarketValuationOverviewMetricData = async (
   return fetch(timeout, useProto, PORTFOLIO_ACCOUNT_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT, {
     'accountType': accountType,
     'divs': useDividends
+  });
+};
+
+export const fetchCorrelationMatrixForPortfolio = async (
+  timeout: number = 3000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_MARKET_CORRELATION_MATRIX_WHOLE, {});
+};
+
+export const fetchCorrelationMatrixForAccountType = async (
+  accountType: string,
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_MARKET_CORRELATION_MATRIX_ACCOUNT_TYPE + accountType);
+};
+
+export const fetchCorrelationMatrixForSelectedInstruments = async (
+  dataPacket: DataPacket,
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return post(dataPacket, timeout, useProto, PORTFOLIO_MARKET_CORRELATION_ADHOC);
+};
+
+export const fetchCorrelation = async (
+  imnt1: string,
+  imnt2: string,
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_MARKET_CORRELATION_ADHOC, {
+    'imnt1': imnt1,
+    'imnt2': imnt2
   });
 };
