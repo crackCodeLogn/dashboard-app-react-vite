@@ -94,7 +94,7 @@ export default function CorrelationHeatmap({
             forceSquare={true}
             enableLabels={cellSize > 30} // Only show labels if there's room
             animate={instrumentCount < 30}
-            inactiveOpacity={.9}
+            inactiveOpacity={1}
             activeOpacity={1}
 
             axisTop={{

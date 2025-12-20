@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {fetchAccountMarketValuationsBestAndWorstPerformersData} from '../../services/MarketPortfolioService.tsx';
 import {DataPacket} from '../../assets/proto/generated/DataPacket.ts';
 import CustomError from '../error/CustomError.tsx';
@@ -31,8 +31,14 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
   const [useDividends, setUseDividends] = useState<boolean>(false);
 
   // Sorting States (one for each table, default to PnL% sort)
-  const [bestSort, setBestSort] = useState<{ key: SortKey; direction: SortDirection }>({key: 'pnlPercent', direction: 'desc'});
-  const [worstSort, setWorstSort] = useState<{ key: SortKey; direction: SortDirection }>({key: 'pnlPercent', direction: 'asc'});
+  const [bestSort, setBestSort] = useState<{ key: SortKey; direction: SortDirection }>({
+    key: 'pnlPercent',
+    direction: 'desc'
+  });
+  const [worstSort, setWorstSort] = useState<{ key: SortKey; direction: SortDirection }>({
+    key: 'pnlPercent',
+    direction: 'asc'
+  });
 
   // Data State
   const [performers, setPerformers] = useState<Performer[] | null>(null);
@@ -118,7 +124,10 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
   }, [fetchData]);
 
   // Sorting function generator
-  const getSortedPerformers = useCallback((data: Performer[], sortState: { key: SortKey; direction: SortDirection }): Performer[] => {
+  const getSortedPerformers = useCallback((data: Performer[], sortState: {
+    key: SortKey;
+    direction: SortDirection
+  }): Performer[] => {
     if (sortState.key === 'none') return data;
 
     const sorted = [...data];
@@ -179,7 +188,11 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
 
 
   // Component to render a list of performers
-  const PerformerTable = ({title, data, listType}: { title: string; data: Performer[]; listType: 'best' | 'worst' }) => {
+  const PerformerTable = ({title, data, listType}: {
+    title: string;
+    data: Performer[];
+    listType: 'best' | 'worst'
+  }) => {
     const sortState = listType === 'best' ? bestSort : worstSort;
 
     return (
