@@ -44,7 +44,7 @@ async function post(data: any, timeout: number, useProto: boolean, endPoint: str
   }
 }
 
-export const getAllBanks = async (timeout: number = 3000, useProto: boolean = true) => {
+export const getAllBanks = async (timeout: number = 30000, useProto: boolean = true) => {
   return fetch(timeout, useProto, TWM_ALL_BANKS, {
     'bankField': 'ALL',
     'search': '',
@@ -52,7 +52,7 @@ export const getAllBanks = async (timeout: number = 3000, useProto: boolean = tr
   });
 }
 
-export const getAllBankAccounts = async (timeout: number = 3000, useProto: boolean = true) => {
+export const getAllBankAccounts = async (timeout: number = 30000, useProto: boolean = true) => {
   return fetch(timeout, useProto, TWM_ALL_BANK_ACCOUNTS, {
     'bankField': 'CCY',
     'search': 'CAD',
@@ -67,7 +67,7 @@ export interface BankBalanceUpdate {
 }
 
 export const updateBankBalanceAmount = async (data: BankBalanceUpdate,
-                                              timeout: number = 3000,
+                                              timeout: number = 30000,
                                               useProto: boolean = false) => {
   const dataPacket = new DataPacket();
   dataPacket.stringStringMap.set('id', data.id);
@@ -77,7 +77,7 @@ export const updateBankBalanceAmount = async (data: BankBalanceUpdate,
   return post(binaryObject, timeout, useProto, TWM_BANK_ACCOUNT_UPDATE_BALANCE);
 };
 
-export const getBankAccountBalance = async (accountId: string, timeout: number = 3000, useProto: boolean = false) => {
+export const getBankAccountBalance = async (accountId: string, timeout: number = 30000, useProto: boolean = false) => {
   return fetch(timeout, useProto, TWM_BANK_ACCOUNT_BALANCE, {
     'id': accountId,
     'db': 'crdb'
