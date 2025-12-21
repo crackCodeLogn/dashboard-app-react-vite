@@ -9,6 +9,7 @@ export interface CorrelationEntry {
 }
 
 interface CorrelationHeatmapProps {
+  title: string
   data: CorrelationEntry[]
   cellSizePx: number
   min?: number // default -1
@@ -42,6 +43,7 @@ export function convertCorrelationToNivoSeries(data: CorrelationEntry[]): NivoHe
 }
 
 export default function CorrelationHeatmap({
+                                             title,
                                              data,
                                              cellSizePx,
                                              min = -1,
@@ -54,7 +56,7 @@ export default function CorrelationHeatmap({
   const instrumentCount = heatmapData.length;
 
   // 2. Calculate dynamic dimensions based on number of instruments and zoom level
-  const margin = {top: 80, right: 40, bottom: 60, left: 80};
+  const margin = {top: 80, right: 40, bottom: 60, left: 95};
   const chartWidth = instrumentCount * cellSize + margin.left + margin.right;
   const chartHeight = instrumentCount * cellSize + margin.top + margin.bottom + 50;
 
@@ -62,6 +64,7 @@ export default function CorrelationHeatmap({
 
   return (
     <div style={{width: '100%', height: '80vh', display: 'flex', flexDirection: 'column'}}>
+      {title} LEVEL CORRELATION MATRIX
 
       {/* 3. Zoom Controls */}
       <div style={{marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '15px'}}>

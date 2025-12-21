@@ -63,7 +63,7 @@ const PortfolioHeatmapComponent = (props: { accountType: string, cellSizePx: num
     <div className={"centerLine"}>
       {errorMsg
         ? <CustomError errorMsg={errorMsg}/>
-        : <CorrelationHeatmap data={correlationEntries} cellSizePx={cellSizePx}/>}
+        : <CorrelationHeatmap title={accountType} data={correlationEntries} cellSizePx={cellSizePx}/>}
     </div>
   );
 };
