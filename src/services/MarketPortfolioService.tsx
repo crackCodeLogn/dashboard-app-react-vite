@@ -16,6 +16,7 @@ const PORTFOLIO_ACCOUNT_NET_MARKET_VALUATION_OVERVIEW_METRIC_END_POINT: string =
 const PORTFOLIO_MARKET_INFO_IMNTS_DIV_YIELD_SECTOR: string = "/portfolio/market/info/imnts/dividend-yield-sector";
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_WHOLE: string = "/portfolio/market/correlation/matrix";
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_ACCOUNT_TYPE: string = "/portfolio/market/correlation/matrix/";
+const PORTFOLIO_MARKET_CORRELATION_MATRIX_SECTORS: string = "/portfolio/market/sector/correlation/matrix";
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_TARGETED: string = "/portfolio/market/correlation/matrix";
 const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
 
@@ -166,6 +167,12 @@ export const fetchCorrelationMatrixForAccountType = async (
   timeout: number = 30000,
   useProto: boolean = true) => {
   return fetch(timeout, useProto, PORTFOLIO_MARKET_CORRELATION_MATRIX_ACCOUNT_TYPE + accountType);
+};
+
+export const fetchCorrelationMatrixForSectors = async (
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_MARKET_CORRELATION_MATRIX_SECTORS);
 };
 
 export const fetchCorrelationMatrixForSelectedInstruments = async (

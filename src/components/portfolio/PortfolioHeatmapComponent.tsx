@@ -1,7 +1,8 @@
 import {useCallback, useEffect, useState} from 'react';
 import {
   fetchCorrelationMatrixForAccountType,
-  fetchCorrelationMatrixForPortfolio
+  fetchCorrelationMatrixForPortfolio,
+  fetchCorrelationMatrixForSectors
 } from '../../services/MarketPortfolioService.tsx';
 import './PortfolioMarketPerformers.css';
 import {CorrelationMatrix} from "../../assets/proto/generated/MarketData.ts";
@@ -35,7 +36,9 @@ const PortfolioHeatmapComponent = (props: { accountType: string, cellSizePx: num
     try {
       const result = await (accountType === 'PORTFOLIO'
         ? fetchCorrelationMatrixForPortfolio()
-        : fetchCorrelationMatrixForAccountType(accountType));
+        : (accountType === 'SECTOR'
+          ? fetchCorrelationMatrixForSectors()
+          : fetchCorrelationMatrixForAccountType(accountType)));
 
       if (!result) {
         throw new Error(`No correlation matrix data found for ${accountType}`);
