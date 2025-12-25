@@ -14,6 +14,7 @@ import Banking from "./pages/Banking.tsx";
 import LanguageFr from "./pages/LanguageFr.tsx";
 import ExpenseSim from "./pages/ExpenseSim.tsx";
 import ItemPricing from "./pages/ItemPricing.tsx";
+import MarketMetaData from "./pages/MarketMetaData.tsx";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home/>}/>
         <Route path={"portfolio"} element={<Portfolio/>}/>
+        <Route path={"market/metadata"} element={<MarketMetaData/>}/>
         <Route path={"market/adhoc"} element={<MarketDataAdhoc/>}/>
         {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
         <Route path={"banking"} element={<Banking/>}/>

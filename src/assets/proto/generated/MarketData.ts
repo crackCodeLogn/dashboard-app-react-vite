@@ -26,6 +26,27 @@ export enum InstrumentType {
     CRYPTOCURRENCY = 6,
     OPTION = 7
 }
+
+export enum Signal {
+    SIG_HOLD = 0,
+    SIG_BUY = 1,
+    SIG_STRONG_BUY = 2,
+    SIG_SELL = 3,
+    SIG_STRONG_SELL = 4
+}
+
+export enum Country {
+    CA = 0,
+    IN = 1,
+    US = 2,
+    GLOBAL = 3
+}
+
+export enum CurrencyCode {
+    CAD = 0,
+    INR = 1,
+    USD = 2
+}
 export class Ticker extends pb_1.Message {
     #one_of_decls: number[][] = [];
     constructor(data?: any[] | {
@@ -401,6 +422,13 @@ export class Instrument extends pb_1.Message {
         direction?: Direction;
         metaData?: Map<string, string>;
         userId?: string;
+        signal?: Signal;
+        dividendYield?: number;
+        mer?: number;
+        notes?: string;
+        issueCountry?: Country;
+        originCountry?: Country;
+        ccy?: CurrencyCode;
     }) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
@@ -422,6 +450,27 @@ export class Instrument extends pb_1.Message {
             }
             if ("userId" in data && data.userId != undefined) {
                 this.userId = data.userId;
+            }
+            if ("signal" in data && data.signal != undefined) {
+                this.signal = data.signal;
+            }
+            if ("dividendYield" in data && data.dividendYield != undefined) {
+                this.dividendYield = data.dividendYield;
+            }
+            if ("mer" in data && data.mer != undefined) {
+                this.mer = data.mer;
+            }
+            if ("notes" in data && data.notes != undefined) {
+                this.notes = data.notes;
+            }
+            if ("issueCountry" in data && data.issueCountry != undefined) {
+                this.issueCountry = data.issueCountry;
+            }
+            if ("originCountry" in data && data.originCountry != undefined) {
+                this.originCountry = data.originCountry;
+            }
+            if ("ccy" in data && data.ccy != undefined) {
+                this.ccy = data.ccy;
             }
         }
         if (!this.metaData)
@@ -460,13 +509,67 @@ export class Instrument extends pb_1.Message {
     set metaData(value: Map<string, string>) {
         pb_1.Message.setField(this, 5, value as any);
     }
-
     get userId() {
         return pb_1.Message.getFieldWithDefault(this, 6, "") as string;
     }
-
     set userId(value: string) {
         pb_1.Message.setField(this, 6, value);
+    }
+
+    get signal() {
+        return pb_1.Message.getFieldWithDefault(this, 7, Signal.SIG_HOLD) as Signal;
+    }
+
+    set signal(value: Signal) {
+        pb_1.Message.setField(this, 7, value);
+    }
+
+    get dividendYield() {
+        return pb_1.Message.getFieldWithDefault(this, 8, 0) as number;
+    }
+
+    set dividendYield(value: number) {
+        pb_1.Message.setField(this, 8, value);
+    }
+
+    get mer() {
+        return pb_1.Message.getFieldWithDefault(this, 9, 0) as number;
+    }
+
+    set mer(value: number) {
+        pb_1.Message.setField(this, 9, value);
+    }
+
+    get notes() {
+        return pb_1.Message.getFieldWithDefault(this, 10, "") as string;
+    }
+
+    set notes(value: string) {
+        pb_1.Message.setField(this, 10, value);
+    }
+
+    get issueCountry() {
+        return pb_1.Message.getFieldWithDefault(this, 11, Country.CA) as Country;
+    }
+
+    set issueCountry(value: Country) {
+        pb_1.Message.setField(this, 11, value);
+    }
+
+    get originCountry() {
+        return pb_1.Message.getFieldWithDefault(this, 12, Country.CA) as Country;
+    }
+
+    set originCountry(value: Country) {
+        pb_1.Message.setField(this, 12, value);
+    }
+
+    get ccy() {
+        return pb_1.Message.getFieldWithDefault(this, 13, CurrencyCode.CAD) as CurrencyCode;
+    }
+
+    set ccy(value: CurrencyCode) {
+        pb_1.Message.setField(this, 13, value);
     }
     static fromObject(data: {
         ticker?: ReturnType<typeof Ticker.prototype.toObject>;
@@ -477,6 +580,13 @@ export class Instrument extends pb_1.Message {
             [key: string]: string;
         };
         userId?: string;
+        signal?: Signal;
+        dividendYield?: number;
+        mer?: number;
+        notes?: string;
+        issueCountry?: Country;
+        originCountry?: Country;
+        ccy?: CurrencyCode;
     }): Instrument {
         const message = new Instrument({});
         if (data.ticker != null) {
@@ -497,11 +607,33 @@ export class Instrument extends pb_1.Message {
         if (data.userId != null) {
             message.userId = data.userId;
         }
+        if (data.signal != null) {
+            message.signal = data.signal;
+        }
+        if (data.dividendYield != null) {
+            message.dividendYield = data.dividendYield;
+        }
+        if (data.mer != null) {
+            message.mer = data.mer;
+        }
+        if (data.notes != null) {
+            message.notes = data.notes;
+        }
+        if (data.issueCountry != null) {
+            message.issueCountry = data.issueCountry;
+        }
+        if (data.originCountry != null) {
+            message.originCountry = data.originCountry;
+        }
+        if (data.ccy != null) {
+            message.ccy = data.ccy;
+        }
         return message;
     }
 
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Instrument {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Instrument();
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+          message = new Instrument();
         while (reader.nextField()) {
             if (reader.isEndGroup())
                 break;
@@ -524,13 +656,33 @@ export class Instrument extends pb_1.Message {
                 case 6:
                     message.userId = reader.readString();
                     break;
-                default: reader.skipField();
+                case 7:
+                    message.signal = reader.readEnum();
+                    break;
+                case 8:
+                    message.dividendYield = reader.readDouble();
+                    break;
+                case 9:
+                    message.mer = reader.readDouble();
+                    break;
+                case 10:
+                    message.notes = reader.readString();
+                    break;
+                case 11:
+                    message.issueCountry = reader.readEnum();
+                    break;
+                case 12:
+                    message.originCountry = reader.readEnum();
+                    break;
+                case 13:
+                    message.ccy = reader.readEnum();
+                    break;
+                default:
+                    reader.skipField();
             }
         }
         return message;
     }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
 
     toObject() {
         const data: {
@@ -542,6 +694,13 @@ export class Instrument extends pb_1.Message {
                 [key: string]: string;
             };
             userId?: string;
+            signal?: Signal;
+            dividendYield?: number;
+            mer?: number;
+            notes?: string;
+            issueCountry?: Country;
+            originCountry?: Country;
+            ccy?: CurrencyCode;
         } = {};
         if (this.ticker != null) {
             data.ticker = this.ticker.toObject();
@@ -561,8 +720,33 @@ export class Instrument extends pb_1.Message {
         if (this.userId != null) {
             data.userId = this.userId;
         }
+        if (this.signal != null) {
+            data.signal = this.signal;
+        }
+        if (this.dividendYield != null) {
+            data.dividendYield = this.dividendYield;
+        }
+        if (this.mer != null) {
+            data.mer = this.mer;
+        }
+        if (this.notes != null) {
+            data.notes = this.notes;
+        }
+        if (this.issueCountry != null) {
+            data.issueCountry = this.issueCountry;
+        }
+        if (this.originCountry != null) {
+            data.originCountry = this.originCountry;
+        }
+        if (this.ccy != null) {
+            data.ccy = this.ccy;
+        }
         return data;
     }
+
+    serialize(): Uint8Array;
+
+    serialize(w: pb_1.BinaryWriter): void;
 
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
@@ -582,6 +766,20 @@ export class Instrument extends pb_1.Message {
         }
         if (this.userId.length)
             writer.writeString(6, this.userId);
+        if (this.signal != Signal.SIG_HOLD)
+            writer.writeEnum(7, this.signal);
+        if (this.dividendYield != 0)
+            writer.writeDouble(8, this.dividendYield);
+        if (this.mer != 0)
+            writer.writeDouble(9, this.mer);
+        if (this.notes.length)
+            writer.writeString(10, this.notes);
+        if (this.issueCountry != Country.CA)
+            writer.writeEnum(11, this.issueCountry);
+        if (this.originCountry != Country.CA)
+            writer.writeEnum(12, this.originCountry);
+        if (this.ccy != CurrencyCode.CAD)
+            writer.writeEnum(13, this.ccy);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -628,11 +826,9 @@ export class Portfolio extends pb_1.Message {
     set instruments(value: Instrument[]) {
         pb_1.Message.setRepeatedWrapperField(this, 2, value);
     }
-
     get userId() {
         return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
     }
-
     set userId(value: string) {
         pb_1.Message.setField(this, 3, value);
     }
@@ -653,30 +849,6 @@ export class Portfolio extends pb_1.Message {
         }
         return message;
     }
-
-    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Portfolio {
-        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes), message = new Portfolio();
-        while (reader.nextField()) {
-            if (reader.isEndGroup())
-                break;
-            switch (reader.getFieldNumber()) {
-                case 1:
-                    reader.readMessage(message.investments, () => pb_1.Message.addToRepeatedWrapperField(message, 1, Investment.deserialize(reader), Investment));
-                    break;
-                case 2:
-                    reader.readMessage(message.instruments, () => pb_1.Message.addToRepeatedWrapperField(message, 2, Instrument.deserialize(reader), Instrument));
-                    break;
-                case 3:
-                    message.userId = reader.readString();
-                    break;
-                default: reader.skipField();
-            }
-        }
-        return message;
-    }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
-
     toObject() {
         const data: {
             investments?: ReturnType<typeof Investment.prototype.toObject>[];
@@ -695,6 +867,30 @@ export class Portfolio extends pb_1.Message {
         return data;
     }
 
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Portfolio {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+          message = new Portfolio();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    reader.readMessage(message.investments, () => pb_1.Message.addToRepeatedWrapperField(message, 1, Investment.deserialize(reader), Investment));
+                    break;
+                case 2:
+                    reader.readMessage(message.instruments, () => pb_1.Message.addToRepeatedWrapperField(message, 2, Instrument.deserialize(reader), Instrument));
+                    break;
+                case 3:
+                    message.userId = reader.readString();
+                    break;
+                default:
+                    reader.skipField();
+            }
+        }
+        return message;
+    }
+
+    serialize(): Uint8Array;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
         if (this.investments.length)
@@ -706,6 +902,8 @@ export class Portfolio extends pb_1.Message {
         if (!w)
             return writer.getResultBuffer();
     }
+
+    serialize(w: pb_1.BinaryWriter): void;
     serializeBinary(): Uint8Array {
         return this.serialize();
     }
@@ -713,10 +911,8 @@ export class Portfolio extends pb_1.Message {
         return Portfolio.deserialize(bytes);
     }
 }
-
 export class CorrelationMatrix extends pb_1.Message {
     #one_of_decls: number[][] = [];
-
     constructor(data?: any[] | {
         entries?: CorrelationCell[];
     }) {
@@ -728,15 +924,12 @@ export class CorrelationMatrix extends pb_1.Message {
             }
         }
     }
-
     get entries() {
         return pb_1.Message.getRepeatedWrapperField(this, CorrelationCell, 1) as CorrelationCell[];
     }
-
     set entries(value: CorrelationCell[]) {
         pb_1.Message.setRepeatedWrapperField(this, 1, value);
     }
-
     static fromObject(data: {
         entries?: ReturnType<typeof CorrelationCell.prototype.toObject>[];
     }): CorrelationMatrix {
@@ -745,6 +938,24 @@ export class CorrelationMatrix extends pb_1.Message {
             message.entries = data.entries.map(item => CorrelationCell.fromObject(item));
         }
         return message;
+    }
+    toObject() {
+        const data: {
+            entries?: ReturnType<typeof CorrelationCell.prototype.toObject>[];
+        } = {};
+        if (this.entries != null) {
+            data.entries = this.entries.map((item: CorrelationCell) => item.toObject());
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.entries.length)
+            writer.writeRepeatedMessage(1, this.entries, (item: CorrelationCell) => item.serialize(writer));
+        if (!w)
+            return writer.getResultBuffer();
     }
 
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CorrelationMatrix {
@@ -763,41 +974,16 @@ export class CorrelationMatrix extends pb_1.Message {
         }
         return message;
     }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
 
     static deserializeBinary(bytes: Uint8Array): CorrelationMatrix {
         return CorrelationMatrix.deserialize(bytes);
     }
-
-    toObject() {
-        const data: {
-            entries?: ReturnType<typeof CorrelationCell.prototype.toObject>[];
-        } = {};
-        if (this.entries != null) {
-            data.entries = this.entries.map((item: CorrelationCell) => item.toObject());
-        }
-        return data;
-    }
-
-    serialize(): Uint8Array;
-
-    serialize(w: pb_1.BinaryWriter): void;
-
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.entries.length)
-            writer.writeRepeatedMessage(1, this.entries, (item: CorrelationCell) => item.serialize(writer));
-        if (!w)
-            return writer.getResultBuffer();
-    }
-
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
 }
-
 export class CorrelationCell extends pb_1.Message {
     #one_of_decls: number[][] = [];
-
     constructor(data?: any[] | {
         imntRow?: string;
         imntCol?: string;
@@ -817,31 +1003,24 @@ export class CorrelationCell extends pb_1.Message {
             }
         }
     }
-
     get imntRow() {
         return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-
     set imntRow(value: string) {
         pb_1.Message.setField(this, 1, value);
     }
-
     get imntCol() {
         return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-
     set imntCol(value: string) {
         pb_1.Message.setField(this, 2, value);
     }
-
     get value() {
         return pb_1.Message.getFieldWithDefault(this, 3, 0) as number;
     }
-
     set value(value: number) {
         pb_1.Message.setField(this, 3, value);
     }
-
     static fromObject(data: {
         imntRow?: string;
         imntCol?: string;
@@ -858,6 +1037,36 @@ export class CorrelationCell extends pb_1.Message {
             message.value = data.value;
         }
         return message;
+    }
+    toObject() {
+        const data: {
+            imntRow?: string;
+            imntCol?: string;
+            value?: number;
+        } = {};
+        if (this.imntRow != null) {
+            data.imntRow = this.imntRow;
+        }
+        if (this.imntCol != null) {
+            data.imntCol = this.imntCol;
+        }
+        if (this.value != null) {
+            data.value = this.value;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.imntRow.length)
+            writer.writeString(1, this.imntRow);
+        if (this.imntCol.length)
+            writer.writeString(2, this.imntCol);
+        if (this.value != 0)
+            writer.writeDouble(3, this.value);
+        if (!w)
+            return writer.getResultBuffer();
     }
 
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CorrelationCell {
@@ -882,46 +1091,11 @@ export class CorrelationCell extends pb_1.Message {
         }
         return message;
     }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
 
     static deserializeBinary(bytes: Uint8Array): CorrelationCell {
         return CorrelationCell.deserialize(bytes);
-    }
-
-    toObject() {
-        const data: {
-            imntRow?: string;
-            imntCol?: string;
-            value?: number;
-        } = {};
-        if (this.imntRow != null) {
-            data.imntRow = this.imntRow;
-        }
-        if (this.imntCol != null) {
-            data.imntCol = this.imntCol;
-        }
-        if (this.value != null) {
-            data.value = this.value;
-        }
-        return data;
-    }
-
-    serialize(): Uint8Array;
-
-    serialize(w: pb_1.BinaryWriter): void;
-
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.imntRow.length)
-            writer.writeString(1, this.imntRow);
-        if (this.imntCol.length)
-            writer.writeString(2, this.imntCol);
-        if (this.value != 0)
-            writer.writeDouble(3, this.value);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-
-    serializeBinary(): Uint8Array {
-        return this.serialize();
     }
 }

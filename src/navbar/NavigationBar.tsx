@@ -21,8 +21,9 @@ const NavigationBar = () => {
       <div className={`links ${menuActive ? 'active' : ''}`}>
         <Link to={"/"} onClick={handleClose}>Home</Link>
         <Link to={"/portfolio"} onClick={handleClose}>Portfolio</Link>
-        <Link to={"/banking"} onClick={handleClose}>Banking</Link>
+        <Link to={"/market/metadata"} onClick={handleClose}>Market-Metadata</Link>
         <Link to={"/market/adhoc"} onClick={handleClose}>Market-Adhoc</Link>
+        <Link to={"/banking"} onClick={handleClose}>Banking</Link>
         <Link to={"/tutor"} onClick={handleClose}>Tutor</Link>
         <Link to={"/library"} onClick={handleClose}>Library</Link>
         <Link to={"/expiry"} onClick={handleClose}>Expiry</Link>
