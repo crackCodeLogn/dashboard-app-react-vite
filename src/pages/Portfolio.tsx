@@ -13,13 +13,12 @@ import PortfolioMarketSectorImntBreakdownComponent
 import PortfolioMarketPerformersComponent from "../components/portfolio/PortfolioMarketPerformersComponent.tsx";
 import PortfolioMarketInstrumentValuationComponent
   from "../components/portfolio/PortfolioMarketInstrumentValuationComponent.tsx";
-import PortfolioMarketInstrumentDivSectorInfoComponent
-  from "../components/portfolio/PortfolioMarketInstrumentDivSectorInfoComponent.tsx";
 import PortfolioAggrMarketValuationDataComponent
   from "../components/portfolio/PortfolioAggrMarketValuationDataComponent.tsx";
 import PortfolioSectionNetOverview from "../components/portfolio/PortfolioSectionNetOverviewComponent.tsx";
 import GicAggregatorComponent from "../components/gic/GicAggregatorComponent.tsx";
 import PortfolioHeatmapComponent from "../components/portfolio/PortfolioHeatmapComponent.tsx";
+import PortfolioNewsCorpActionsComponent from "../components/portfolio/PortfolioNewsCorpActionsComponent.tsx";
 
 
 const Portfolio = () => {
@@ -37,10 +36,12 @@ const Portfolio = () => {
         {<PortfolioSectionNetOverview accountType={''} useDividends={true}/>}
         {<PortfolioNetMarketValuationPlotDataComponent/>}
         {<PortfolioAggrMarketValuationDataComponent/>}
+
+        {<PortfolioNewsCorpActionsComponent/>}
         {<PortfolioHeatmapComponent accountType={'SECTOR'} cellSizePx={70}/>}
         {<PortfolioHeatmapComponent accountType={'PORTFOLIO'} cellSizePx={40}/>}
 
-        {<PortfolioMarketInstrumentDivSectorInfoComponent/>}
+        {/*{<PortfolioMarketInstrumentDivSectorInfoComponent/>}*/}
         {<PortfolioMarketInstrumentValuationComponent/>}
         <div>
           <h2 className="account-section-heading">TFSA</h2>

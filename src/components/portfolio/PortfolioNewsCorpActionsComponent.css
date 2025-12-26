@@ -1,0 +1,117 @@
+.portfolio-container {
+    padding: 24px;
+    background-color: #fdfdfd;
+    min-height: auto;
+}
+
+.portfolio-inner {
+    max-width: 1400px; /* Increased width to allow more space for details */
+    margin: 0 auto;
+}
+
+.portfolio-title {
+    font-size: 1.5rem; /* Larger title */
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+    border-left: 5px solid #0088FE;
+    padding-left: 15px;
+}
+
+.table-wrapper {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.corp-action-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Centered Header Row with larger font */
+.corp-action-table th {
+    padding: 16px;
+    color: #444;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background-color: #f1f3f5;
+    border-bottom: 2px solid #dee2e6;
+    text-align: center;
+}
+
+.corp-action-table td {
+    padding: 18px 16px; /* Increased vertical padding for row height */
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Zebra Striping */
+.corp-action-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.corp-action-table tbody tr:hover {
+    background-color: #f1f8ff; /* Subtle hover effect */
+}
+
+.ticker-cell {
+    font-weight: 700;
+    color: #0056b3;
+    font-size: 1.1rem;
+    width: 140px;
+}
+
+/* Specific alignment for the details column to keep it readable */
+.details-cell {
+    text-align: left !important;
+    min-width: 400px;
+}
+
+.event-header {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 6px;
+    font-size: 1.15rem;
+}
+
+.event-message {
+    font-size: 1rem; /* Increased for better readability */
+    color: #444;
+    line-height: 1.5;
+}
+
+.amount-cell {
+    font-weight: 700;
+    color: #2e7d32;
+    font-size: 1.1rem;
+}
+
+.date-cell {
+    color: #333;
+    white-space: nowrap;
+    font-size: 1rem;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid #e0e0e0;
+}
+
+.badge-dividend {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border-color: #bbdefb;
+}
+
+.badge-other {
+    background-color: #f5f5f5;
+    color: #616161;
+}

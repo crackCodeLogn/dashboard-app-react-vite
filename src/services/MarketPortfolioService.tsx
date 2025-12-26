@@ -19,6 +19,7 @@ const PORTFOLIO_MARKET_CORRELATION_MATRIX_ACCOUNT_TYPE: string = "/portfolio/mar
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_SECTORS: string = "/portfolio/market/sector/correlation/matrix";
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_TARGETED: string = "/portfolio/market/correlation/matrix";
 const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
+const PORTFOLIO_MARKET_NEWS_CORP_ACTIONS: string = "/portfolio/market/news/corp-actions";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
@@ -191,4 +192,10 @@ export const fetchCorrelation = async (
     'imnt1': imnt1,
     'imnt2': imnt2
   });
+};
+
+export const fetchNewsCorporateActions = async (
+  timeout: number = 10000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_MARKET_NEWS_CORP_ACTIONS);
 };

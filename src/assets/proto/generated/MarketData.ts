@@ -26,7 +26,6 @@ export enum InstrumentType {
     CRYPTOCURRENCY = 6,
     OPTION = 7
 }
-
 export enum Signal {
     SIG_HOLD = 0,
     SIG_BUY = 1,
@@ -34,14 +33,12 @@ export enum Signal {
     SIG_SELL = 3,
     SIG_STRONG_SELL = 4
 }
-
 export enum Country {
     CA = 0,
     IN = 1,
     US = 2,
     GLOBAL = 3
 }
-
 export enum CurrencyCode {
     CAD = 0,
     INR = 1,
@@ -429,9 +426,11 @@ export class Instrument extends pb_1.Message {
         issueCountry?: Country;
         originCountry?: Country;
         ccy?: CurrencyCode;
+        corporateActions?: CorporateAction[];
+        companyOfficers?: CompanyOfficer[];
     }) {
         super();
-        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [14, 15], this.#one_of_decls);
         if (!Array.isArray(data) && typeof data == "object") {
             if ("ticker" in data && data.ticker != undefined) {
                 this.ticker = data.ticker;
@@ -471,6 +470,12 @@ export class Instrument extends pb_1.Message {
             }
             if ("ccy" in data && data.ccy != undefined) {
                 this.ccy = data.ccy;
+            }
+            if ("corporateActions" in data && data.corporateActions != undefined) {
+                this.corporateActions = data.corporateActions;
+            }
+            if ("companyOfficers" in data && data.companyOfficers != undefined) {
+                this.companyOfficers = data.companyOfficers;
             }
         }
         if (!this.metaData)
@@ -515,61 +520,63 @@ export class Instrument extends pb_1.Message {
     set userId(value: string) {
         pb_1.Message.setField(this, 6, value);
     }
-
     get signal() {
         return pb_1.Message.getFieldWithDefault(this, 7, Signal.SIG_HOLD) as Signal;
     }
-
     set signal(value: Signal) {
         pb_1.Message.setField(this, 7, value);
     }
-
     get dividendYield() {
         return pb_1.Message.getFieldWithDefault(this, 8, 0) as number;
     }
-
     set dividendYield(value: number) {
         pb_1.Message.setField(this, 8, value);
     }
-
     get mer() {
         return pb_1.Message.getFieldWithDefault(this, 9, 0) as number;
     }
-
     set mer(value: number) {
         pb_1.Message.setField(this, 9, value);
     }
-
     get notes() {
         return pb_1.Message.getFieldWithDefault(this, 10, "") as string;
     }
-
     set notes(value: string) {
         pb_1.Message.setField(this, 10, value);
     }
-
     get issueCountry() {
         return pb_1.Message.getFieldWithDefault(this, 11, Country.CA) as Country;
     }
-
     set issueCountry(value: Country) {
         pb_1.Message.setField(this, 11, value);
     }
-
     get originCountry() {
         return pb_1.Message.getFieldWithDefault(this, 12, Country.CA) as Country;
     }
-
     set originCountry(value: Country) {
         pb_1.Message.setField(this, 12, value);
     }
-
     get ccy() {
         return pb_1.Message.getFieldWithDefault(this, 13, CurrencyCode.CAD) as CurrencyCode;
     }
-
     set ccy(value: CurrencyCode) {
         pb_1.Message.setField(this, 13, value);
+    }
+
+    get corporateActions() {
+        return pb_1.Message.getRepeatedWrapperField(this, CorporateAction, 14) as CorporateAction[];
+    }
+
+    set corporateActions(value: CorporateAction[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 14, value);
+    }
+
+    get companyOfficers() {
+        return pb_1.Message.getRepeatedWrapperField(this, CompanyOfficer, 15) as CompanyOfficer[];
+    }
+
+    set companyOfficers(value: CompanyOfficer[]) {
+        pb_1.Message.setRepeatedWrapperField(this, 15, value);
     }
     static fromObject(data: {
         ticker?: ReturnType<typeof Ticker.prototype.toObject>;
@@ -587,6 +594,8 @@ export class Instrument extends pb_1.Message {
         issueCountry?: Country;
         originCountry?: Country;
         ccy?: CurrencyCode;
+        corporateActions?: ReturnType<typeof CorporateAction.prototype.toObject>[];
+        companyOfficers?: ReturnType<typeof CompanyOfficer.prototype.toObject>[];
     }): Instrument {
         const message = new Instrument({});
         if (data.ticker != null) {
@@ -627,6 +636,12 @@ export class Instrument extends pb_1.Message {
         }
         if (data.ccy != null) {
             message.ccy = data.ccy;
+        }
+        if (data.corporateActions != null) {
+            message.corporateActions = data.corporateActions.map(item => CorporateAction.fromObject(item));
+        }
+        if (data.companyOfficers != null) {
+            message.companyOfficers = data.companyOfficers.map(item => CompanyOfficer.fromObject(item));
         }
         return message;
     }
@@ -677,12 +692,20 @@ export class Instrument extends pb_1.Message {
                 case 13:
                     message.ccy = reader.readEnum();
                     break;
+                case 14:
+                    reader.readMessage(message.corporateActions, () => pb_1.Message.addToRepeatedWrapperField(message, 14, CorporateAction.deserialize(reader), CorporateAction));
+                    break;
+                case 15:
+                    reader.readMessage(message.companyOfficers, () => pb_1.Message.addToRepeatedWrapperField(message, 15, CompanyOfficer.deserialize(reader), CompanyOfficer));
+                    break;
                 default:
                     reader.skipField();
             }
         }
         return message;
     }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
 
     toObject() {
         const data: {
@@ -701,6 +724,8 @@ export class Instrument extends pb_1.Message {
             issueCountry?: Country;
             originCountry?: Country;
             ccy?: CurrencyCode;
+            corporateActions?: ReturnType<typeof CorporateAction.prototype.toObject>[];
+            companyOfficers?: ReturnType<typeof CompanyOfficer.prototype.toObject>[];
         } = {};
         if (this.ticker != null) {
             data.ticker = this.ticker.toObject();
@@ -741,12 +766,14 @@ export class Instrument extends pb_1.Message {
         if (this.ccy != null) {
             data.ccy = this.ccy;
         }
+        if (this.corporateActions != null) {
+            data.corporateActions = this.corporateActions.map((item: CorporateAction) => item.toObject());
+        }
+        if (this.companyOfficers != null) {
+            data.companyOfficers = this.companyOfficers.map((item: CompanyOfficer) => item.toObject());
+        }
         return data;
     }
-
-    serialize(): Uint8Array;
-
-    serialize(w: pb_1.BinaryWriter): void;
 
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
@@ -780,6 +807,10 @@ export class Instrument extends pb_1.Message {
             writer.writeEnum(12, this.originCountry);
         if (this.ccy != CurrencyCode.CAD)
             writer.writeEnum(13, this.ccy);
+        if (this.corporateActions.length)
+            writer.writeRepeatedMessage(14, this.corporateActions, (item: CorporateAction) => item.serialize(writer));
+        if (this.companyOfficers.length)
+            writer.writeRepeatedMessage(15, this.companyOfficers, (item: CompanyOfficer) => item.serialize(writer));
         if (!w)
             return writer.getResultBuffer();
     }
@@ -867,6 +898,19 @@ export class Portfolio extends pb_1.Message {
         return data;
     }
 
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.investments.length)
+            writer.writeRepeatedMessage(1, this.investments, (item: Investment) => item.serialize(writer));
+        if (this.instruments.length)
+            writer.writeRepeatedMessage(2, this.instruments, (item: Instrument) => item.serialize(writer));
+        if (this.userId.length)
+            writer.writeString(3, this.userId);
+        if (!w)
+            return writer.getResultBuffer();
+    }
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): Portfolio {
         const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
           message = new Portfolio();
@@ -889,21 +933,6 @@ export class Portfolio extends pb_1.Message {
         }
         return message;
     }
-
-    serialize(): Uint8Array;
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.investments.length)
-            writer.writeRepeatedMessage(1, this.investments, (item: Investment) => item.serialize(writer));
-        if (this.instruments.length)
-            writer.writeRepeatedMessage(2, this.instruments, (item: Instrument) => item.serialize(writer));
-        if (this.userId.length)
-            writer.writeString(3, this.userId);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-
-    serialize(w: pb_1.BinaryWriter): void;
     serializeBinary(): Uint8Array {
         return this.serialize();
     }
@@ -957,7 +986,6 @@ export class CorrelationMatrix extends pb_1.Message {
         if (!w)
             return writer.getResultBuffer();
     }
-
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CorrelationMatrix {
         const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
           message = new CorrelationMatrix();
@@ -977,7 +1005,6 @@ export class CorrelationMatrix extends pb_1.Message {
     serializeBinary(): Uint8Array {
         return this.serialize();
     }
-
     static deserializeBinary(bytes: Uint8Array): CorrelationMatrix {
         return CorrelationMatrix.deserialize(bytes);
     }
@@ -1068,7 +1095,6 @@ export class CorrelationCell extends pb_1.Message {
         if (!w)
             return writer.getResultBuffer();
     }
-
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CorrelationCell {
         const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
           message = new CorrelationCell();
@@ -1094,8 +1120,369 @@ export class CorrelationCell extends pb_1.Message {
     serializeBinary(): Uint8Array {
         return this.serialize();
     }
-
     static deserializeBinary(bytes: Uint8Array): CorrelationCell {
         return CorrelationCell.deserialize(bytes);
+    }
+}
+
+export class CorporateAction extends pb_1.Message {
+    #one_of_decls: number[][] = [];
+
+    constructor(data?: any[] | {
+        header?: string;
+        message?: string;
+        metaAmount?: string;
+        metaDate?: string;
+        metaEventType?: string;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("header" in data && data.header != undefined) {
+                this.header = data.header;
+            }
+            if ("message" in data && data.message != undefined) {
+                this.message = data.message;
+            }
+            if ("metaAmount" in data && data.metaAmount != undefined) {
+                this.metaAmount = data.metaAmount;
+            }
+            if ("metaDate" in data && data.metaDate != undefined) {
+                this.metaDate = data.metaDate;
+            }
+            if ("metaEventType" in data && data.metaEventType != undefined) {
+                this.metaEventType = data.metaEventType;
+            }
+        }
+    }
+
+    get header() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+
+    set header(value: string) {
+        pb_1.Message.setField(this, 1, value);
+    }
+
+    get message() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+
+    set message(value: string) {
+        pb_1.Message.setField(this, 2, value);
+    }
+
+    get metaAmount() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+
+    set metaAmount(value: string) {
+        pb_1.Message.setField(this, 3, value);
+    }
+
+    get metaDate() {
+        return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
+    }
+
+    set metaDate(value: string) {
+        pb_1.Message.setField(this, 4, value);
+    }
+
+    get metaEventType() {
+        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
+    }
+
+    set metaEventType(value: string) {
+        pb_1.Message.setField(this, 5, value);
+    }
+
+    static fromObject(data: {
+        header?: string;
+        message?: string;
+        metaAmount?: string;
+        metaDate?: string;
+        metaEventType?: string;
+    }): CorporateAction {
+        const message = new CorporateAction({});
+        if (data.header != null) {
+            message.header = data.header;
+        }
+        if (data.message != null) {
+            message.message = data.message;
+        }
+        if (data.metaAmount != null) {
+            message.metaAmount = data.metaAmount;
+        }
+        if (data.metaDate != null) {
+            message.metaDate = data.metaDate;
+        }
+        if (data.metaEventType != null) {
+            message.metaEventType = data.metaEventType;
+        }
+        return message;
+    }
+
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CorporateAction {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+          message = new CorporateAction();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.header = reader.readString();
+                    break;
+                case 2:
+                    message.message = reader.readString();
+                    break;
+                case 3:
+                    message.metaAmount = reader.readString();
+                    break;
+                case 4:
+                    message.metaDate = reader.readString();
+                    break;
+                case 5:
+                    message.metaEventType = reader.readString();
+                    break;
+                default:
+                    reader.skipField();
+            }
+        }
+        return message;
+    }
+
+    static deserializeBinary(bytes: Uint8Array): CorporateAction {
+        return CorporateAction.deserialize(bytes);
+    }
+
+    toObject() {
+        const data: {
+            header?: string;
+            message?: string;
+            metaAmount?: string;
+            metaDate?: string;
+            metaEventType?: string;
+        } = {};
+        if (this.header != null) {
+            data.header = this.header;
+        }
+        if (this.message != null) {
+            data.message = this.message;
+        }
+        if (this.metaAmount != null) {
+            data.metaAmount = this.metaAmount;
+        }
+        if (this.metaDate != null) {
+            data.metaDate = this.metaDate;
+        }
+        if (this.metaEventType != null) {
+            data.metaEventType = this.metaEventType;
+        }
+        return data;
+    }
+
+    serialize(): Uint8Array;
+
+    serialize(w: pb_1.BinaryWriter): void;
+
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.header.length)
+            writer.writeString(1, this.header);
+        if (this.message.length)
+            writer.writeString(2, this.message);
+        if (this.metaAmount.length)
+            writer.writeString(3, this.metaAmount);
+        if (this.metaDate.length)
+            writer.writeString(4, this.metaDate);
+        if (this.metaEventType.length)
+            writer.writeString(5, this.metaEventType);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
+}
+
+export class CompanyOfficer extends pb_1.Message {
+    #one_of_decls: number[][] = [];
+
+    constructor(data?: any[] | {
+        name?: string;
+        title?: string;
+        totalPay?: string;
+        fiscalYear?: string;
+        age?: string;
+    }) {
+        super();
+        pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [], this.#one_of_decls);
+        if (!Array.isArray(data) && typeof data == "object") {
+            if ("name" in data && data.name != undefined) {
+                this.name = data.name;
+            }
+            if ("title" in data && data.title != undefined) {
+                this.title = data.title;
+            }
+            if ("totalPay" in data && data.totalPay != undefined) {
+                this.totalPay = data.totalPay;
+            }
+            if ("fiscalYear" in data && data.fiscalYear != undefined) {
+                this.fiscalYear = data.fiscalYear;
+            }
+            if ("age" in data && data.age != undefined) {
+                this.age = data.age;
+            }
+        }
+    }
+
+    get name() {
+        return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
+    }
+
+    set name(value: string) {
+        pb_1.Message.setField(this, 1, value);
+    }
+
+    get title() {
+        return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
+    }
+
+    set title(value: string) {
+        pb_1.Message.setField(this, 2, value);
+    }
+
+    get totalPay() {
+        return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
+    }
+
+    set totalPay(value: string) {
+        pb_1.Message.setField(this, 3, value);
+    }
+
+    get fiscalYear() {
+        return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
+    }
+
+    set fiscalYear(value: string) {
+        pb_1.Message.setField(this, 4, value);
+    }
+
+    get age() {
+        return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
+    }
+
+    set age(value: string) {
+        pb_1.Message.setField(this, 5, value);
+    }
+
+    static fromObject(data: {
+        name?: string;
+        title?: string;
+        totalPay?: string;
+        fiscalYear?: string;
+        age?: string;
+    }): CompanyOfficer {
+        const message = new CompanyOfficer({});
+        if (data.name != null) {
+            message.name = data.name;
+        }
+        if (data.title != null) {
+            message.title = data.title;
+        }
+        if (data.totalPay != null) {
+            message.totalPay = data.totalPay;
+        }
+        if (data.fiscalYear != null) {
+            message.fiscalYear = data.fiscalYear;
+        }
+        if (data.age != null) {
+            message.age = data.age;
+        }
+        return message;
+    }
+
+    static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CompanyOfficer {
+        const reader = bytes instanceof pb_1.BinaryReader ? bytes : new pb_1.BinaryReader(bytes),
+          message = new CompanyOfficer();
+        while (reader.nextField()) {
+            if (reader.isEndGroup())
+                break;
+            switch (reader.getFieldNumber()) {
+                case 1:
+                    message.name = reader.readString();
+                    break;
+                case 2:
+                    message.title = reader.readString();
+                    break;
+                case 3:
+                    message.totalPay = reader.readString();
+                    break;
+                case 4:
+                    message.fiscalYear = reader.readString();
+                    break;
+                case 5:
+                    message.age = reader.readString();
+                    break;
+                default:
+                    reader.skipField();
+            }
+        }
+        return message;
+    }
+
+    static deserializeBinary(bytes: Uint8Array): CompanyOfficer {
+        return CompanyOfficer.deserialize(bytes);
+    }
+
+    toObject() {
+        const data: {
+            name?: string;
+            title?: string;
+            totalPay?: string;
+            fiscalYear?: string;
+            age?: string;
+        } = {};
+        if (this.name != null) {
+            data.name = this.name;
+        }
+        if (this.title != null) {
+            data.title = this.title;
+        }
+        if (this.totalPay != null) {
+            data.totalPay = this.totalPay;
+        }
+        if (this.fiscalYear != null) {
+            data.fiscalYear = this.fiscalYear;
+        }
+        if (this.age != null) {
+            data.age = this.age;
+        }
+        return data;
+    }
+
+    serialize(): Uint8Array;
+
+    serialize(w: pb_1.BinaryWriter): void;
+
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.name.length)
+            writer.writeString(1, this.name);
+        if (this.title.length)
+            writer.writeString(2, this.title);
+        if (this.totalPay.length)
+            writer.writeString(3, this.totalPay);
+        if (this.fiscalYear.length)
+            writer.writeString(4, this.fiscalYear);
+        if (this.age.length)
+            writer.writeString(5, this.age);
+        if (!w)
+            return writer.getResultBuffer();
+    }
+
+    serializeBinary(): Uint8Array {
+        return this.serialize();
     }
 }
