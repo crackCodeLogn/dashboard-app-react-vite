@@ -428,6 +428,7 @@ export class Instrument extends pb_1.Message {
         ccy?: CurrencyCode;
         corporateActions?: CorporateAction[];
         companyOfficers?: CompanyOfficer[];
+        beta?: number;
     }) {
         super();
         pb_1.Message.initialize(this, Array.isArray(data) ? data : [], 0, -1, [14, 15], this.#one_of_decls);
@@ -476,6 +477,9 @@ export class Instrument extends pb_1.Message {
             }
             if ("companyOfficers" in data && data.companyOfficers != undefined) {
                 this.companyOfficers = data.companyOfficers;
+            }
+            if ("beta" in data && data.beta != undefined) {
+                this.beta = data.beta;
             }
         }
         if (!this.metaData)
@@ -562,21 +566,25 @@ export class Instrument extends pb_1.Message {
     set ccy(value: CurrencyCode) {
         pb_1.Message.setField(this, 13, value);
     }
-
     get corporateActions() {
         return pb_1.Message.getRepeatedWrapperField(this, CorporateAction, 14) as CorporateAction[];
     }
-
     set corporateActions(value: CorporateAction[]) {
         pb_1.Message.setRepeatedWrapperField(this, 14, value);
     }
-
     get companyOfficers() {
         return pb_1.Message.getRepeatedWrapperField(this, CompanyOfficer, 15) as CompanyOfficer[];
     }
-
     set companyOfficers(value: CompanyOfficer[]) {
         pb_1.Message.setRepeatedWrapperField(this, 15, value);
+    }
+
+    get beta() {
+        return pb_1.Message.getFieldWithDefault(this, 16, 0) as number;
+    }
+
+    set beta(value: number) {
+        pb_1.Message.setField(this, 16, value);
     }
     static fromObject(data: {
         ticker?: ReturnType<typeof Ticker.prototype.toObject>;
@@ -596,6 +604,7 @@ export class Instrument extends pb_1.Message {
         ccy?: CurrencyCode;
         corporateActions?: ReturnType<typeof CorporateAction.prototype.toObject>[];
         companyOfficers?: ReturnType<typeof CompanyOfficer.prototype.toObject>[];
+        beta?: number;
     }): Instrument {
         const message = new Instrument({});
         if (data.ticker != null) {
@@ -642,6 +651,9 @@ export class Instrument extends pb_1.Message {
         }
         if (data.companyOfficers != null) {
             message.companyOfficers = data.companyOfficers.map(item => CompanyOfficer.fromObject(item));
+        }
+        if (data.beta != null) {
+            message.beta = data.beta;
         }
         return message;
     }
@@ -698,14 +710,15 @@ export class Instrument extends pb_1.Message {
                 case 15:
                     reader.readMessage(message.companyOfficers, () => pb_1.Message.addToRepeatedWrapperField(message, 15, CompanyOfficer.deserialize(reader), CompanyOfficer));
                     break;
+                case 16:
+                    message.beta = reader.readDouble();
+                    break;
                 default:
                     reader.skipField();
             }
         }
         return message;
     }
-    serialize(): Uint8Array;
-    serialize(w: pb_1.BinaryWriter): void;
 
     toObject() {
         const data: {
@@ -726,6 +739,7 @@ export class Instrument extends pb_1.Message {
             ccy?: CurrencyCode;
             corporateActions?: ReturnType<typeof CorporateAction.prototype.toObject>[];
             companyOfficers?: ReturnType<typeof CompanyOfficer.prototype.toObject>[];
+            beta?: number;
         } = {};
         if (this.ticker != null) {
             data.ticker = this.ticker.toObject();
@@ -772,8 +786,15 @@ export class Instrument extends pb_1.Message {
         if (this.companyOfficers != null) {
             data.companyOfficers = this.companyOfficers.map((item: CompanyOfficer) => item.toObject());
         }
+        if (this.beta != null) {
+            data.beta = this.beta;
+        }
         return data;
     }
+
+    serialize(): Uint8Array;
+
+    serialize(w: pb_1.BinaryWriter): void;
 
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
         const writer = w || new pb_1.BinaryWriter();
@@ -811,6 +832,8 @@ export class Instrument extends pb_1.Message {
             writer.writeRepeatedMessage(14, this.corporateActions, (item: CorporateAction) => item.serialize(writer));
         if (this.companyOfficers.length)
             writer.writeRepeatedMessage(15, this.companyOfficers, (item: CompanyOfficer) => item.serialize(writer));
+        if (this.beta != 0)
+            writer.writeDouble(16, this.beta);
         if (!w)
             return writer.getResultBuffer();
     }
@@ -897,7 +920,6 @@ export class Portfolio extends pb_1.Message {
         }
         return data;
     }
-
     serialize(): Uint8Array;
     serialize(w: pb_1.BinaryWriter): void;
     serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
@@ -1124,10 +1146,8 @@ export class CorrelationCell extends pb_1.Message {
         return CorrelationCell.deserialize(bytes);
     }
 }
-
 export class CorporateAction extends pb_1.Message {
     #one_of_decls: number[][] = [];
-
     constructor(data?: any[] | {
         header?: string;
         message?: string;
@@ -1155,47 +1175,36 @@ export class CorporateAction extends pb_1.Message {
             }
         }
     }
-
     get header() {
         return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-
     set header(value: string) {
         pb_1.Message.setField(this, 1, value);
     }
-
     get message() {
         return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-
     set message(value: string) {
         pb_1.Message.setField(this, 2, value);
     }
-
     get metaAmount() {
         return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
     }
-
     set metaAmount(value: string) {
         pb_1.Message.setField(this, 3, value);
     }
-
     get metaDate() {
         return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
     }
-
     set metaDate(value: string) {
         pb_1.Message.setField(this, 4, value);
     }
-
     get metaEventType() {
         return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
     }
-
     set metaEventType(value: string) {
         pb_1.Message.setField(this, 5, value);
     }
-
     static fromObject(data: {
         header?: string;
         message?: string;
@@ -1220,6 +1229,48 @@ export class CorporateAction extends pb_1.Message {
             message.metaEventType = data.metaEventType;
         }
         return message;
+    }
+    toObject() {
+        const data: {
+            header?: string;
+            message?: string;
+            metaAmount?: string;
+            metaDate?: string;
+            metaEventType?: string;
+        } = {};
+        if (this.header != null) {
+            data.header = this.header;
+        }
+        if (this.message != null) {
+            data.message = this.message;
+        }
+        if (this.metaAmount != null) {
+            data.metaAmount = this.metaAmount;
+        }
+        if (this.metaDate != null) {
+            data.metaDate = this.metaDate;
+        }
+        if (this.metaEventType != null) {
+            data.metaEventType = this.metaEventType;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.header.length)
+            writer.writeString(1, this.header);
+        if (this.message.length)
+            writer.writeString(2, this.message);
+        if (this.metaAmount.length)
+            writer.writeString(3, this.metaAmount);
+        if (this.metaDate.length)
+            writer.writeString(4, this.metaDate);
+        if (this.metaEventType.length)
+            writer.writeString(5, this.metaEventType);
+        if (!w)
+            return writer.getResultBuffer();
     }
 
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CorporateAction {
@@ -1250,65 +1301,16 @@ export class CorporateAction extends pb_1.Message {
         }
         return message;
     }
+    serializeBinary(): Uint8Array {
+        return this.serialize();
+    }
 
     static deserializeBinary(bytes: Uint8Array): CorporateAction {
         return CorporateAction.deserialize(bytes);
     }
-
-    toObject() {
-        const data: {
-            header?: string;
-            message?: string;
-            metaAmount?: string;
-            metaDate?: string;
-            metaEventType?: string;
-        } = {};
-        if (this.header != null) {
-            data.header = this.header;
-        }
-        if (this.message != null) {
-            data.message = this.message;
-        }
-        if (this.metaAmount != null) {
-            data.metaAmount = this.metaAmount;
-        }
-        if (this.metaDate != null) {
-            data.metaDate = this.metaDate;
-        }
-        if (this.metaEventType != null) {
-            data.metaEventType = this.metaEventType;
-        }
-        return data;
-    }
-
-    serialize(): Uint8Array;
-
-    serialize(w: pb_1.BinaryWriter): void;
-
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.header.length)
-            writer.writeString(1, this.header);
-        if (this.message.length)
-            writer.writeString(2, this.message);
-        if (this.metaAmount.length)
-            writer.writeString(3, this.metaAmount);
-        if (this.metaDate.length)
-            writer.writeString(4, this.metaDate);
-        if (this.metaEventType.length)
-            writer.writeString(5, this.metaEventType);
-        if (!w)
-            return writer.getResultBuffer();
-    }
-
-    serializeBinary(): Uint8Array {
-        return this.serialize();
-    }
 }
-
 export class CompanyOfficer extends pb_1.Message {
     #one_of_decls: number[][] = [];
-
     constructor(data?: any[] | {
         name?: string;
         title?: string;
@@ -1336,47 +1338,36 @@ export class CompanyOfficer extends pb_1.Message {
             }
         }
     }
-
     get name() {
         return pb_1.Message.getFieldWithDefault(this, 1, "") as string;
     }
-
     set name(value: string) {
         pb_1.Message.setField(this, 1, value);
     }
-
     get title() {
         return pb_1.Message.getFieldWithDefault(this, 2, "") as string;
     }
-
     set title(value: string) {
         pb_1.Message.setField(this, 2, value);
     }
-
     get totalPay() {
         return pb_1.Message.getFieldWithDefault(this, 3, "") as string;
     }
-
     set totalPay(value: string) {
         pb_1.Message.setField(this, 3, value);
     }
-
     get fiscalYear() {
         return pb_1.Message.getFieldWithDefault(this, 4, "") as string;
     }
-
     set fiscalYear(value: string) {
         pb_1.Message.setField(this, 4, value);
     }
-
     get age() {
         return pb_1.Message.getFieldWithDefault(this, 5, "") as string;
     }
-
     set age(value: string) {
         pb_1.Message.setField(this, 5, value);
     }
-
     static fromObject(data: {
         name?: string;
         title?: string;
@@ -1401,6 +1392,48 @@ export class CompanyOfficer extends pb_1.Message {
             message.age = data.age;
         }
         return message;
+    }
+    toObject() {
+        const data: {
+            name?: string;
+            title?: string;
+            totalPay?: string;
+            fiscalYear?: string;
+            age?: string;
+        } = {};
+        if (this.name != null) {
+            data.name = this.name;
+        }
+        if (this.title != null) {
+            data.title = this.title;
+        }
+        if (this.totalPay != null) {
+            data.totalPay = this.totalPay;
+        }
+        if (this.fiscalYear != null) {
+            data.fiscalYear = this.fiscalYear;
+        }
+        if (this.age != null) {
+            data.age = this.age;
+        }
+        return data;
+    }
+    serialize(): Uint8Array;
+    serialize(w: pb_1.BinaryWriter): void;
+    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
+        const writer = w || new pb_1.BinaryWriter();
+        if (this.name.length)
+            writer.writeString(1, this.name);
+        if (this.title.length)
+            writer.writeString(2, this.title);
+        if (this.totalPay.length)
+            writer.writeString(3, this.totalPay);
+        if (this.fiscalYear.length)
+            writer.writeString(4, this.fiscalYear);
+        if (this.age.length)
+            writer.writeString(5, this.age);
+        if (!w)
+            return writer.getResultBuffer();
     }
 
     static deserialize(bytes: Uint8Array | pb_1.BinaryReader): CompanyOfficer {
@@ -1434,52 +1467,6 @@ export class CompanyOfficer extends pb_1.Message {
 
     static deserializeBinary(bytes: Uint8Array): CompanyOfficer {
         return CompanyOfficer.deserialize(bytes);
-    }
-
-    toObject() {
-        const data: {
-            name?: string;
-            title?: string;
-            totalPay?: string;
-            fiscalYear?: string;
-            age?: string;
-        } = {};
-        if (this.name != null) {
-            data.name = this.name;
-        }
-        if (this.title != null) {
-            data.title = this.title;
-        }
-        if (this.totalPay != null) {
-            data.totalPay = this.totalPay;
-        }
-        if (this.fiscalYear != null) {
-            data.fiscalYear = this.fiscalYear;
-        }
-        if (this.age != null) {
-            data.age = this.age;
-        }
-        return data;
-    }
-
-    serialize(): Uint8Array;
-
-    serialize(w: pb_1.BinaryWriter): void;
-
-    serialize(w?: pb_1.BinaryWriter): Uint8Array | void {
-        const writer = w || new pb_1.BinaryWriter();
-        if (this.name.length)
-            writer.writeString(1, this.name);
-        if (this.title.length)
-            writer.writeString(2, this.title);
-        if (this.totalPay.length)
-            writer.writeString(3, this.totalPay);
-        if (this.fiscalYear.length)
-            writer.writeString(4, this.fiscalYear);
-        if (this.age.length)
-            writer.writeString(5, this.age);
-        if (!w)
-            return writer.getResultBuffer();
     }
 
     serializeBinary(): Uint8Array {

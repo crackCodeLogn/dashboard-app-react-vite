@@ -21,7 +21,7 @@ const KEY_IMNT_TYPE = "imnt-type";
 const KEY_NAME = "name";
 
 export enum MetadataSortIndex {
-  SYMBOL, NAME, SECTOR, TYPE, SIGNAL, MER, YIELD, CCY, ISSUE, ORIGIN, NOTES
+  SYMBOL, NAME, SECTOR, TYPE, SIGNAL, BETA, MER, YIELD, CCY, ISSUE, ORIGIN, NOTES
 }
 
 const SIGNALS = ['SIG_HOLD', 'SIG_BUY', 'SIG_STRONG_BUY', 'SIG_SELL', 'SIG_STRONG_SELL'];
@@ -78,6 +78,8 @@ const MarketMetaDataManager: React.FC = () => {
         return inst.notes || '';
       case MetadataSortIndex.TYPE:
         return inst.ticker?.type || '';
+      case MetadataSortIndex.BETA:
+        return inst.beta || 0;
       default:
         return '';
     }
@@ -171,6 +173,7 @@ const MarketMetaDataManager: React.FC = () => {
                   {label: 'Sector', key: MetadataSortIndex.SECTOR},
                   {label: 'Type', key: MetadataSortIndex.TYPE},
                   {label: 'Signal', key: MetadataSortIndex.SIGNAL},
+                  {label: 'β', key: MetadataSortIndex.BETA},
                   {label: 'MER%', key: MetadataSortIndex.MER},
                   {label: 'Yield%', key: MetadataSortIndex.YIELD},
                   {label: 'CCY', key: MetadataSortIndex.CCY},
@@ -201,6 +204,7 @@ const MarketMetaDataManager: React.FC = () => {
                             {SIGNALS[inst.signal ?? 0].replace('SIG_', '')}
                         </span>
                   </td>
+                  <td>{inst.beta?.toFixed(2)}</td>
                   <td>{inst.mer?.toFixed(2)}%</td>
                   <td>{inst.dividendYield?.toFixed(2)}%</td>
                   <td>{CURRENCIES[inst.ccy ?? 0]}</td>
