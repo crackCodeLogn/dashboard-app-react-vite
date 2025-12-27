@@ -1,7 +1,10 @@
 import {useEffect, useState} from 'react';
 import './PortfolioSectionNetOverviewMetrics.css';
 import {Utils} from "../../utils/Utils.tsx";
-import {fetchAccountNetMarketValuationOverviewMetricData, fetchNetMarketValuationOverviewMetricData} from "../../services/MarketPortfolioService.tsx";
+import {
+  fetchAccountNetMarketValuationOverviewMetricData,
+  fetchNetMarketValuationOverviewMetricData
+} from "../../services/MarketPortfolioService.tsx";
 import {DataPacket} from "../../assets/proto/generated/DataPacket.ts";
 import PortfolioSectionNetOverviewMetrics from "./PortfolioSectionNetOverviewMetricsComponent.tsx";
 
@@ -11,6 +14,7 @@ const KEY_PNL = "pnl";
 const KEY_CURRENT_VAL = "currentVal";
 const KEY_BOOK_VAL = "bookVal";
 const KEY_QTY = "qty";
+const KEY_WBETA = "beta-weighted";
 
 const PortfolioSectionNetOverview = (props: { accountType: string, useDividends: boolean }) => {
 
@@ -21,6 +25,7 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
   const [pnlPct, setPnlPct] = useState<string>('0.00%');
   const [totalDiv, setTotalDiv] = useState<number>(0.00);
   const [qty, setQty] = useState<number>(0.00);
+  const [wbeta, setWBeta] = useState<number>(-Infinity);
 
   useEffect(() => {
     fetchData();
@@ -55,6 +60,7 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
       setCurrentVal(metricValueMap.get(KEY_CURRENT_VAL) as number);
       setTotalDiv(metricValueMap.get(KEY_TOTAL_DIV) || 0.0);
       setQty(metricValueMap.get(KEY_QTY) || 0.0);
+      setWBeta(metricValueMap.get(KEY_WBETA) || -Infinity);
 
     } catch (err) {
       console.error(err);
@@ -69,7 +75,8 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
       pnlPct: pnlPct,
       pnl: pnl,
       totalDiv: totalDiv,
-      qty: qty
+      qty: qty,
+      wbeta: wbeta
     }}/>
   );
 };

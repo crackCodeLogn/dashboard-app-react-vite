@@ -11,11 +11,12 @@ interface PortfolioData {
   pnl: number;
   totalDiv: number;
   qty: number;
+  wbeta: number;
 }
 
 // 3. The Core Component
 const PortfolioSectionNetOverviewMetrics: React.FC<{ data: PortfolioData }> = ({data}) => {
-  const {totalInstruments, bookVal, currentVal, pnlPct, pnl, totalDiv, qty} = data;
+  const {totalInstruments, bookVal, currentVal, pnlPct, pnl, totalDiv, qty, wbeta} = data;
 
   // PnL color class determination
   const pnlColorClass: string = pnl >= 0 ? 'pnl-positive' : 'pnl-negative';
@@ -29,7 +30,7 @@ const PortfolioSectionNetOverviewMetrics: React.FC<{ data: PortfolioData }> = ({
   );
 
   return (
-    <div style={{padding: '20px', display: 'flex', flexDirection: 'column', gap: '40px'}}>
+    <div style={{padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px'}}>
       <div className="portfolio-metrics-container">
         {/* 1. Current Value (Often the most prominent) */}
         {renderMetric('Current Value', Utils.formatDollar(currentVal), false, true)}
@@ -51,6 +52,9 @@ const PortfolioSectionNetOverviewMetrics: React.FC<{ data: PortfolioData }> = ({
 
         {/* 7. Total Dividends */}
         {renderMetric('Dividends', Utils.formatDollar(totalDiv), false, true)}
+      </div>
+      <div className="portfolio-metrics-container">
+        {renderMetric('Beta', Utils.yValueFormat(wbeta), false, false)}
       </div>
     </div>
   );
