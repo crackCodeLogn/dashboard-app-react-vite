@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {
   deleteMetaDataForImnt,
   fetchEntireMetaData,
+  postManualEntireMetaData,
   postMetaDataForImnt
 } from './../../../services/MarketMetaDataService';
 import './MarketMetadataManager.css';
@@ -38,6 +39,7 @@ const MarketMetaDataManager: React.FC = () => {
   const [editData, setEditData] = useState<any>(null);
   const [isNewMode, setIsNewMode] = useState(false);
   const [deleteSymbol, setDeleteSymbol] = useState('');
+  const [bulkInput, setBulkInput] = useState('');
 
   useEffect(() => {
     loadAllMetadata();
@@ -146,6 +148,28 @@ const MarketMetaDataManager: React.FC = () => {
       handleNewInstrument();
     } catch (e) {
       alert("Persistence Error");
+    }
+  };
+
+  const handleBulkInsert = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bulkInput.trim()) return;
+
+    const lines = bulkInput.split(';').map(l => l.trim()).filter(l => l.length > 0);
+    if (confirm(`Pushing ${lines.length} lines for bulk metadata processing. Proceed?`)) {
+      const packet = new DataPacket();
+      for (const line of lines) {
+        packet.strings.push(line);
+      }
+      try {
+        await postManualEntireMetaData(packet);
+      } catch (err) {
+        console.error(`Bulk insert failed `, err);
+      }
+      setBulkInput('');
+
+      await loadAllMetadata();
+      alert("Bulk insertion complete.");
     }
   };
 
@@ -350,6 +374,27 @@ const MarketMetaDataManager: React.FC = () => {
               <input placeholder="SYMBOL" value={deleteSymbol}
                      onChange={e => setDeleteSymbol(e.target.value.toUpperCase())}/>
               <button type="submit" className="btn-delete">DELETE</button>
+            </form>
+          </div>
+
+          <div className="glass-card bulk-zone">
+            <div className="card-header">
+              <h3>BULK METADATA INSERT</h3>
+            </div>
+            <form className="form-content" onSubmit={handleBulkInsert}>
+              <div className="input-group">
+                <label>FORMAT: SYMBOL | KEY1=VAL1 | KEY2=VAL2</label>
+                <textarea
+                  rows={10}
+                  className="bulk-area"
+                  placeholder="VFV.TO|mer=0.09|type=ETF;CM.TO;"
+                  value={bulkInput}
+                  onChange={e => setBulkInput(e.target.value)}
+                />
+              </div>
+              <button type="submit" className="btn-save">
+                RUN BULK INGESTION
+              </button>
             </form>
           </div>
         </aside>

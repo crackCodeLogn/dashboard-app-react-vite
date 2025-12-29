@@ -4,7 +4,7 @@ import {DataPacket} from "../assets/proto/generated/DataPacket.ts";
 const HOST_URL: string = import.meta.env.VITE_HOST;
 const PORTFOLIO_DATA_BASE_URL: string = `http://${HOST_URL}:40037`;
 const PORTFOLIO_MARKET_METADATA: string = "/portfolio/market/metadata";
-const PORTFOLIO_MARKET_METADATA_MANUAL_UPDATE: string = "/portfolio/manual/market/metadata/";
+const PORTFOLIO_MARKET_METADATA_MANUAL_UPDATE: string = "/portfolio/manual/market/metadata";
 
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
@@ -91,7 +91,7 @@ export const deleteEntireMetaData = async (
 
 export const postManualEntireMetaData = async (
   dataPacket: DataPacket,
-  timeout: number = 30000,
+  timeout: number = 3600000,
   useProto: boolean = true) => {
   return post(dataPacket.serializeBinary(), timeout, useProto, PORTFOLIO_MARKET_METADATA_MANUAL_UPDATE);
 };

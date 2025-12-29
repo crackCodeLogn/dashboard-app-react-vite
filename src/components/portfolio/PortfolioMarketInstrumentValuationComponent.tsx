@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {fetchAccountMarketImntValuationData} from '../../services/MarketPortfolioService.tsx'; // Assumed path
 import {DataPacket} from '../../assets/proto/generated/DataPacket.ts'; // Assumed path
 import CustomError from '../error/CustomError.tsx';
@@ -91,7 +91,7 @@ const PortfolioMarketInstrumentValuationComponent = () => {
 
   const handleFetch = useCallback(async () => {
     if (!instrument) {
-      setErrorMsg('Please enter an instrument name (e.g., AAPL).');
+      setErrorMsg('Please enter an instrument name (e.g., CM.TO).');
       setData(null);
       return;
     }
@@ -124,7 +124,7 @@ const PortfolioMarketInstrumentValuationComponent = () => {
               combinedData.push(parseAndFormatData(dataPacket.stringStringMap));
             }
           } else {
-            console.error(`Error fetching data for ${ACCOUNT_TYPES[index]}:`, result.reason);
+            console.error(`Error fetching data for ${ACCOUNT_TYPES[index]}:`, result.status);
             failed = true;
           }
         });
@@ -289,7 +289,7 @@ const PortfolioMarketInstrumentValuationComponent = () => {
       <div className="control-panel valuation-controls">
         <input
           type="text"
-          placeholder="Enter Instrument (e.g., AAPL)"
+          placeholder="Enter Instrument (e.g., CM.TO)"
           value={instrument}
           onChange={(e) => setInstrument(e.target.value.toUpperCase())}
           onKeyDown={(e) => e.key === 'Enter' && handleFetch()}

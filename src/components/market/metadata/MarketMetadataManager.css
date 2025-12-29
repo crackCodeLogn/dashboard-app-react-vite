@@ -277,3 +277,52 @@
 .imnt-table td:nth-child(2) {
     text-align: left;
 }
+
+.bulk-zone {
+    margin-top: 1rem;
+}
+
+.bulk-area {
+    width: 100%;
+    background: #0f111a; /* Darker terminal background */
+    border: 1px solid var(--border);
+    color: var(--accent); /* High contrast for data entry */
+    padding: 1rem;
+    border-radius: 6px;
+    font-family: var(--font-data);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    resize: vertical;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.bulk-area:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.bulk-area::placeholder {
+    color: var(--border);
+    opacity: 0.7;
+}
+
+/* Ensure the sidebar stays manageable with a 50-row box */
+.right-sidebar {
+    position: sticky;
+    top: 2rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Custom scrollbar for the sidebar */
+.right-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.right-sidebar::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
