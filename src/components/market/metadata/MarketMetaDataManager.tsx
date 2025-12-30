@@ -32,6 +32,7 @@ const INST_TYPES = ['EQUITY', 'INDEX', 'ETF', 'MUTUALFUND', 'FUTURE', 'CURRENCY'
 
 const MarketMetaDataManager: React.FC = () => {
   const [instruments, setInstruments] = useState<Instrument[]>([]);
+  const [filterText, setFilterText] = useState('');
   const [sortConfig, setSortConfig] = useState<{ key: MetadataSortIndex; direction: 'asc' | 'desc' }>({
     key: MetadataSortIndex.SYMBOL,
     direction: 'asc'
@@ -87,8 +88,23 @@ const MarketMetaDataManager: React.FC = () => {
     }
   };
 
+  const filteredInstruments = useMemo(() => {
+    if (!filterText.trim()) return instruments;
+
+    // Split by comma and clean up terms
+    const terms = filterText.trim().split(',').map(t => t.trim().toUpperCase()).filter(t => t !== "");
+
+    return instruments.filter(inst => {
+      const symbol = (inst.ticker?.symbol || '').toUpperCase();
+      const sector = (inst.ticker?.sector || '').toUpperCase();
+
+      // Returns true if any term matches either the symbol OR the sector
+      return terms.some(term => symbol.includes(term) || sector.includes(term));
+    });
+  }, [instruments, filterText]);
+
   const sortedInstruments = useMemo(() => {
-    const items = [...instruments];
+    const items = [...filteredInstruments];
     items.sort((a, b) => {
       const aV = getValueToSort(a, sortConfig.key);
       const bV = getValueToSort(b, sortConfig.key);
@@ -97,7 +113,7 @@ const MarketMetaDataManager: React.FC = () => {
       return 0;
     });
     return items;
-  }, [instruments, sortConfig]);
+  }, [filteredInstruments, sortConfig]);
 
   const requestSort = (key: MetadataSortIndex) => {
     let direction: 'asc' | 'desc' = 'asc';
@@ -186,7 +202,21 @@ const MarketMetaDataManager: React.FC = () => {
 
       <main className="workshop-grid">
         {/* LEFT COLUMN: TABLE */}
-        <section className="glass-card table-section">
+        <section className="glass-card">
+          <div className="search-container">
+            <div className="search-wrapper">
+              <input
+                placeholder="Search Symbols or Sectors (comma separated)..."
+                value={filterText}
+                onChange={(e) => setFilterText(e.target.value)}
+                className="search-input"
+              />
+              {filterText && (
+                <button className="search-clear" onClick={() => setFilterText('')}>×</button>
+              )}
+            </div>
+          </div>
+
           <div className="scroll-area">
             <table className="imnt-table">
               <thead>

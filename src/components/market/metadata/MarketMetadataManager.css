@@ -66,8 +66,8 @@
 /* --- Layout Grid --- */
 .workshop-grid {
     display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 2rem;
+    grid-template-columns: 1fr 400px; /* Table takes remaining space, Sidebar fixed */
+    gap: 1.5rem;
     align-items: start;
 }
 
@@ -325,4 +325,76 @@
 .right-sidebar::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 10px;
+}
+
+/* --- Search Functionality --- */
+.search-container {
+    margin: 1rem;
+    justify-self: center;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 2.5rem 0.8rem 1rem; /* Extra right padding for the X */
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.search-clear {
+    position: absolute;
+    right: 0.8rem;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.search-clear:hover {
+    color: var(--danger);
+}
+
+/* Adjust header grid to accommodate search if needed */
+.workshop-header {
+    display: grid;
+    grid-template-columns: 150px 1fr 150px;
+    grid-template-rows: auto auto; /* Two rows: Title then Search */
+    align-items: center;
+    gap: 0;
+}
+
+.brand {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.search-container {
+    grid-row: 2;
+}
+
+.btn-add {
+    grid-row: 1;
+    grid-column: 3;
 }
