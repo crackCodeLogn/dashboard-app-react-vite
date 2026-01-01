@@ -19,12 +19,67 @@ import PortfolioSectionNetOverview from "../components/portfolio/PortfolioSectio
 import GicAggregatorComponent from "../components/gic/GicAggregatorComponent.tsx";
 import PortfolioHeatmapComponent from "../components/portfolio/PortfolioHeatmapComponent.tsx";
 import PortfolioNewsCorpActionsComponent from "../components/portfolio/PortfolioNewsCorpActionsComponent.tsx";
+import React, {useState} from "react";
+import {performRefresh} from "../services/MarketPortfolioService.tsx";
 
 
 const Portfolio = () => {
+  const [hardRefreshInProgress, setHardRefreshInProgress] = useState(false);
+  const [softRefreshInProgress, setSoftRefreshInProgress] = useState(false);
+
+
+  const refreshSoft = () => {
+    return refresh(false);
+  }
+  const refreshHard = () => {
+    return refresh(true);
+  }
+  const refresh = async (hard = false) => {
+    if (hardRefreshInProgress || softRefreshInProgress) {
+      alert("Cannot trigger another refresh whilst former is ongoing...");
+      return;
+    }
+
+    let refreshType: string = 'Soft';
+    try {
+      if (hard) {
+
+        setHardRefreshInProgress(true);
+      } else {
+        setSoftRefreshInProgress(true);
+        refreshType = 'Soft';
+      }
+      await performRefresh(hard);
+      console.log(`${refreshType} refresh completed`);
+
+      alert(`${refreshType} refresh complete, gonna reload the page now`);
+    } catch (e) {
+      console.log(`Failed to wait for ${refreshType} refresh completion`, e);
+    } finally {
+      setHardRefreshInProgress(false);
+      setSoftRefreshInProgress(false);
+    }
+
+    window.location.reload();
+  }
+
+  const getRefreshMessage = () => {
+    if (hardRefreshInProgress || softRefreshInProgress)
+      return ` [${hardRefreshInProgress ? "hard" : "soft"} refreshing...]`;
+    return "";
+  }
+
   return (
     <div className={'row'}>
-      <h1 className="market-breakdown-title">PORTFOLIO</h1>
+      <header className="workshop-header">
+        <div className="brand">
+          <h1>PORTFOLIO{getRefreshMessage()}</h1>
+        </div>
+        <div>
+          <button className="btn-add gap-around" onClick={refreshHard}>HARD REFRESH</button>
+          <button className="btn-add gap-around" onClick={refreshSoft}>SOFT REFRESH</button>
+        </div>
+      </header>
       <div className={'row'}>
         <div className={'record-space-around'}>
           {<PortfolioNetWorthComponent/>}

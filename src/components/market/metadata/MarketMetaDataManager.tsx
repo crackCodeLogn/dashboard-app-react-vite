@@ -6,7 +6,7 @@ import {
   postMetaDataForImnt
 } from './../../../services/MarketMetaDataService';
 import './MarketMetadataManager.css';
-import {Instrument, Portfolio} from "../../../assets/proto/generated/MarketData.ts";
+import {Instrument, Portfolio, Signal} from "../../../assets/proto/generated/MarketData.ts";
 import {DataPacket} from "../../../assets/proto/generated/DataPacket.ts";
 
 // Backend Keys
@@ -14,6 +14,7 @@ const KEY_CCY = "ccy";
 const KEY_MER = "mer";
 const KEY_NOTES = "notes";
 const KEY_SIGNAL = "signal";
+const KEY_ANALYST_SIGNAL = "averageAnalystRating";
 const KEY_ISSUE_COUNTRY = "issue-country";
 const KEY_ORIGIN_COUNTRY = "origin-country";
 const KEY_SECTOR = "sector";
@@ -22,7 +23,7 @@ const KEY_IMNT_TYPE = "imnt-type";
 const KEY_NAME = "name";
 
 export enum MetadataSortIndex {
-  SYMBOL, NAME, SECTOR, TYPE, SIGNAL, BETA, MER, YIELD, CCY, ISSUE, ORIGIN, NOTES
+  SYMBOL, NAME, SECTOR, TYPE, SIGNAL, ANALYST_SIGNAL, BETA, MER, YIELD, CCY, ISSUE, ORIGIN, NOTES
 }
 
 const SIGNALS = ['SIG_HOLD', 'SIG_BUY', 'SIG_STRONG_BUY', 'SIG_SELL', 'SIG_STRONG_SELL'];
@@ -41,6 +42,7 @@ const MarketMetaDataManager: React.FC = () => {
   const [isNewMode, setIsNewMode] = useState(false);
   const [deleteSymbol, setDeleteSymbol] = useState('');
   const [bulkInput, setBulkInput] = useState('');
+  const [isConnected, setConnected] = useState(false);
 
   useEffect(() => {
     loadAllMetadata();
@@ -52,10 +54,28 @@ const MarketMetaDataManager: React.FC = () => {
       const binaryData = new Uint8Array(data);
       const portfolio: Portfolio = Portfolio.deserializeBinary(binaryData);
       setInstruments(portfolio.instruments || []);
+      setConnected(true);
     } catch (e) {
       console.error("Load error:", e);
     }
   };
+
+  const getAnalystSignal = (inst: Instrument) => {
+    const val = inst.metaData.get(KEY_ANALYST_SIGNAL);
+    return val ? val.substring(val.indexOf("- ") + 2).replace(" ", "_").toUpperCase() : "";
+  }
+
+  const getAnalystSignalCode = (inst: Instrument) => {
+    const analystSignal = getAnalystSignal(inst);
+    if (analystSignal) {
+      if (analystSignal === 'BUY') return Signal.SIG_BUY;
+      else if (analystSignal === 'STRONG_BUY') return Signal.SIG_STRONG_BUY;
+      else if (analystSignal === 'SELL') return Signal.SIG_SELL;
+      else if (analystSignal === 'STRONG_SELL') return Signal.SIG_STRONG_SELL;
+      return Signal.SIG_HOLD;
+    }
+    return null;
+  }
 
   const getValueToSort = (inst: Instrument, key: MetadataSortIndex) => {
     switch (key) {
@@ -67,6 +87,8 @@ const MarketMetaDataManager: React.FC = () => {
         return inst.ticker?.sector || '';
       case MetadataSortIndex.SIGNAL:
         return inst.signal || 0;
+      case MetadataSortIndex.ANALYST_SIGNAL:
+        return getAnalystSignal(inst);
       case MetadataSortIndex.MER:
         return inst.mer || 0;
       case MetadataSortIndex.YIELD:
@@ -194,7 +216,9 @@ const MarketMetaDataManager: React.FC = () => {
       <header className="workshop-header">
         <div className="brand">
           <h1>MARKET METADATA</h1>
-          <span className="node-status">Live Protocol Connected</span>
+          {isConnected
+            ? <span className="node-status-connected">Live Protocol ONLINE</span>
+            : <span className="node-status-disconnected">Live Protocol OFFLINE</span>}
         </div>
         <button className="btn-add" onClick={handleNewInstrument}>+ NEW INSTRUMENT
         </button>
@@ -226,13 +250,14 @@ const MarketMetaDataManager: React.FC = () => {
                   {label: 'Name', key: MetadataSortIndex.NAME},
                   {label: 'Sector', key: MetadataSortIndex.SECTOR},
                   {label: 'Type', key: MetadataSortIndex.TYPE},
-                  {label: 'Signal', key: MetadataSortIndex.SIGNAL},
+                  {label: 'M-Sig', key: MetadataSortIndex.SIGNAL},
+                  {label: 'A-Sig', key: MetadataSortIndex.ANALYST_SIGNAL},
                   {label: 'β', key: MetadataSortIndex.BETA},
                   {label: 'MER%', key: MetadataSortIndex.MER},
                   {label: 'Yield%', key: MetadataSortIndex.YIELD},
-                  {label: 'CCY', key: MetadataSortIndex.CCY},
-                  {label: 'Issue', key: MetadataSortIndex.ISSUE},
-                  {label: 'Origin', key: MetadataSortIndex.ORIGIN},
+                  // {label: 'CCY', key: MetadataSortIndex.CCY},
+                  // {label: 'Issue', key: MetadataSortIndex.ISSUE},
+                  // {label: 'Origin', key: MetadataSortIndex.ORIGIN},
                   {label: 'Notes', key: MetadataSortIndex.NOTES},
                 ].map(col => (
                   <th key={col.key} onClick={() => requestSort(col.key)}>
@@ -258,12 +283,17 @@ const MarketMetaDataManager: React.FC = () => {
                             {SIGNALS[inst.signal ?? 0].replace('SIG_', '')}
                         </span>
                   </td>
+                  <td>
+                    <span className={`sig-badge s-${getAnalystSignalCode(inst)}`}>
+                            {getAnalystSignal(inst)}
+                        </span>
+                  </td>
                   <td>{inst.beta?.toFixed(2)}</td>
                   <td>{inst.mer?.toFixed(2)}%</td>
                   <td>{inst.dividendYield?.toFixed(2)}%</td>
-                  <td>{CURRENCIES[inst.ccy ?? 0]}</td>
-                  <td>{COUNTRIES[inst.issueCountry ?? 0]}</td>
-                  <td>{COUNTRIES[inst.originCountry ?? 0]}</td>
+                  {/*<td>{CURRENCIES[inst.ccy ?? 0]}</td>*/}
+                  {/*<td>{COUNTRIES[inst.issueCountry ?? 0]}</td>*/}
+                  {/*<td>{COUNTRIES[inst.originCountry ?? 0]}</td>*/}
                   <td>{inst.notes}</td>
                 </tr>
               ))}

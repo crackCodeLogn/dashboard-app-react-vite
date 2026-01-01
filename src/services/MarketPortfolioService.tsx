@@ -20,6 +20,7 @@ const PORTFOLIO_MARKET_CORRELATION_MATRIX_SECTORS: string = "/portfolio/market/s
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_TARGETED: string = "/portfolio/market/correlation/matrix";
 const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
 const PORTFOLIO_MARKET_NEWS_CORP_ACTIONS: string = "/portfolio/market/news/corp-actions";
+const PORTFOLIO_REFRESH: string = "/portfolio/reload/v2k";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
   return axios.create({
@@ -199,3 +200,13 @@ export const fetchNewsCorporateActions = async (
   useProto: boolean = true) => {
   return fetch(timeout, useProto, PORTFOLIO_MARKET_NEWS_CORP_ACTIONS);
 };
+
+export const performRefresh = async (
+  hardRefresh: boolean = false,
+  timeout: number = 300000,
+  useProto: boolean = false) => {
+
+  return fetch(timeout, useProto, PORTFOLIO_REFRESH, {
+    'hardRefresh': hardRefresh
+  });
+}

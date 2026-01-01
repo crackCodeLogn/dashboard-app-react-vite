@@ -217,6 +217,10 @@ textarea {
     justify-items: center;
 }
 
+.gap-around {
+    margin: .5rem;
+}
+
 .market-breakdown-title {
     /* Center the text */
     text-align: center;
