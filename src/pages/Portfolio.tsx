@@ -21,6 +21,7 @@ import PortfolioHeatmapComponent from "../components/portfolio/PortfolioHeatmapC
 import PortfolioNewsCorpActionsComponent from "../components/portfolio/PortfolioNewsCorpActionsComponent.tsx";
 import React, {useState} from "react";
 import {performRefresh} from "../services/MarketPortfolioService.tsx";
+import PortfolioHeadingAtAGlance from "../components/portfolio/PortfolioHeadingAtAGlance.tsx";
 
 
 const Portfolio = () => {
@@ -89,6 +90,7 @@ const Portfolio = () => {
         {<PortfolioGicValuationDataComponent/>}
         <h2 className="market-breakdown-title">Market</h2>
         {<PortfolioSectionNetOverview accountType={''} useDividends={true}/>}
+        {<PortfolioHeadingAtAGlance/>}
         {<PortfolioNetMarketValuationPlotDataComponent/>}
         {<PortfolioAggrMarketValuationDataComponent/>}
 
