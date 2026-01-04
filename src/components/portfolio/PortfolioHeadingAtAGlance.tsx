@@ -24,7 +24,8 @@ const PortfolioHeadingAtAGlance: React.FC = () => {
         const items = [
           {label: 'VIX Index', value: dataPacket.stringDoubleMap.get('^VIX'), subtext: 'Volatility'},
           {label: 'CAD / INR', value: dataPacket.stringDoubleMap.get('CADINR=X'), subtext: 'Forex'},
-          {label: 'USD / CAD', value: dataPacket.stringDoubleMap.get('USDCAD=X'), subtext: 'Forex'}
+          {label: 'USD / CAD', value: dataPacket.stringDoubleMap.get('USDCAD=X'), subtext: 'Forex'},
+          {label: 'USD / INR', value: dataPacket.stringDoubleMap.get('USDINR=X'), subtext: 'Forex'}
         ].filter(item => item.value !== undefined && item.value !== null);
         console.log(items);
 
@@ -43,15 +44,22 @@ const PortfolioHeadingAtAGlance: React.FC = () => {
 
   if (loading && summaryData.length === 0) return <div className="summary-loader">Loading Market Data...</div>;
 
+  const getVixColorClass = (value: number | string | undefined): string => {
+    if (typeof value !== 'number') return '';
+    if (value < 15) return 'vix-low';      // Stability (Green)
+    if (value <= 25) return 'vix-moderate'; // Caution (Orange)
+    return 'vix-high';                     // Panic (Red)
+  };
+
   return (
     <div className="market-summary-container">
       {summaryData.map((item, index) => (
         <div key={index} className="summary-card glass-card">
           <div className="summary-info">
             <span className="summary-label">{item.label}</span>
-            <span className="summary-value">
-              {typeof item.value === 'number' ? item.value.toFixed(2) : item.value}
-            </span>
+            <span className={`summary-value ${item.label === 'VIX Index' ? getVixColorClass(item.value) : ''}`}>
+  {typeof item.value === 'number' ? item.value.toFixed(2) : item.value}
+</span>
           </div>
           {item.subtext && <div className="summary-subtext">{item.subtext}</div>}
         </div>

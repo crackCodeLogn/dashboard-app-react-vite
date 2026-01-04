@@ -41,10 +41,9 @@ const Portfolio = () => {
       return;
     }
 
-    let refreshType: string = 'Soft';
+    let refreshType: string = 'Hard';
     try {
       if (hard) {
-
         setHardRefreshInProgress(true);
       } else {
         setSoftRefreshInProgress(true);

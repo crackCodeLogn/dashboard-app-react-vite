@@ -63,3 +63,36 @@
         flex-direction: column;
     }
 }
+
+/* VIX Specific Dynamic Colors */
+
+/* Low Fear - Stable Market */
+.vix-low {
+    color: #10b981;
+    text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+/* Moderate Fear - Caution */
+.vix-moderate {
+    color: #f59e0b; /* Amber/Orange */
+    text-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+/* High Fear - Panic */
+.vix-high {
+    color: #ef4444; /* Bright Red */
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+    animation: pulse-fear 2s infinite; /* Optional: Subtle pulse for high fear */
+}
+
+@keyframes pulse-fear {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
