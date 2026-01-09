@@ -63,7 +63,7 @@ export const fetchEntireMetaData = async (
 
 export const fetchMetaDataForImnt = async (
   imnt: string,
-  timeout: number = 3000,
+  timeout: number = 30000,
   useProto: boolean = true) => {
   return fetch(timeout, useProto, `${PORTFOLIO_MARKET_METADATA}/${imnt}`);
 };
@@ -71,20 +71,20 @@ export const fetchMetaDataForImnt = async (
 export const postMetaDataForImnt = async (
   imnt: string,
   dataPacket: DataPacket,
-  timeout: number = 3000,
+  timeout: number = 30000,
   useProto: boolean = true) => {
   return post(dataPacket.serializeBinary(), timeout, useProto, `${PORTFOLIO_MARKET_METADATA}/${imnt}`);
 };
 
 export const deleteMetaDataForImnt = async (
   imnt: string,
-  timeout: number = 3000,
+  timeout: number = 30000,
   useProto: boolean = true) => {
   return deleteOp(timeout, useProto, `${PORTFOLIO_MARKET_METADATA}/${imnt}`);
 };
 
 export const deleteEntireMetaData = async (
-  timeout: number = 3000,
+  timeout: number = 30000,
   useProto: boolean = true) => {
   return deleteOp(timeout, useProto, `${PORTFOLIO_MARKET_METADATA}`);
 };
