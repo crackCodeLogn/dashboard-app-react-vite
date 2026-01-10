@@ -2,6 +2,7 @@ import MarketDataAdhocComponent from "../components/market/adhoc/MarketDataAdhoc
 import PortfolioMarketInstrumentValuationComponent
   from "../components/market/adhoc/PortfolioMarketInstrumentValuationComponent.tsx";
 import {useEffect} from "react";
+import CorrelationAdhocComponent from "../components/market/adhoc/CorrelationAdhocComponent.tsx";
 
 const MarketDataAdhoc = () => {
   useEffect(() => {
@@ -13,6 +14,8 @@ const MarketDataAdhoc = () => {
       <h1>Market Adhoc Inquiry</h1>
       <hr/>
       {<PortfolioMarketInstrumentValuationComponent/>}
+      <hr/>
+      {<CorrelationAdhocComponent cellSizePx={40}/>}
       <hr/>
       <MarketDataAdhocComponent showTable={true}/>
     </div>

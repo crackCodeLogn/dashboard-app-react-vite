@@ -182,7 +182,7 @@ export const fetchCorrelationMatrixForSelectedInstruments = async (
   dataPacket: DataPacket,
   timeout: number = 30000,
   useProto: boolean = true) => {
-  return post(dataPacket, timeout, useProto, PORTFOLIO_MARKET_CORRELATION_ADHOC);
+  return post(dataPacket.serializeBinary(), timeout, useProto, PORTFOLIO_MARKET_CORRELATION_MATRIX_TARGETED);
 };
 
 export const fetchCorrelation = async (

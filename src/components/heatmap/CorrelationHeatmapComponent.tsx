@@ -72,7 +72,7 @@ export default function CorrelationHeatmap({
         <input
           type="range"
           min="10"
-          max="100"
+          max="150"
           value={cellSize}
           onChange={(e) => setCellSize(parseInt(e.target.value))}
         />
