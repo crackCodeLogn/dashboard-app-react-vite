@@ -1,7 +1,12 @@
 import ExpiryComponent from "../components/expiry/ExpiryComponent.tsx";
+import {useEffect} from "react";
 
 
 const Expiry = () => {
+  useEffect(() => {
+    document.title = 'V2K Expiry';
+  }, []);
+
   return (
     <div className={'row'}>
       <h1> Expiry Dashboard </h1>

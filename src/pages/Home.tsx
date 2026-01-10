@@ -1,5 +1,11 @@
+import {useEffect} from "react";
+
 const Home = () => {
-    return <h1> Hello </h1>;
+  useEffect(() => {
+    document.title = "Vivek's Dashboard";
+  }, []);
+
+  return <h1> Hello </h1>;
 }
 
 export default Home;

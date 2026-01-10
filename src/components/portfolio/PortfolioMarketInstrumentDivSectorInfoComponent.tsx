@@ -53,7 +53,9 @@ const sortData = (data: InstrumentMarketInfo[], key: SortKey, direction: SortDir
   return data; // Should not happen
 };
 
-
+/**
+ * @deprecated this component is not used anymore and is replaced with the market metadata page instead
+ */
 const PortfolioMarketInstrumentDivSectorInfoComponent = () => {
   const [marketInfoData, setMarketInfoData] = useState<InstrumentMarketInfo[] | null>(null);
   const [loading, setLoading] = useState(true);

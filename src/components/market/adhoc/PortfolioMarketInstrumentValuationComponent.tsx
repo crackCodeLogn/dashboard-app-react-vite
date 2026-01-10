@@ -1,8 +1,8 @@
 import {useCallback, useState} from 'react';
-import {fetchAccountMarketImntValuationData} from '../../services/MarketPortfolioService.tsx'; // Assumed path
-import {DataPacket} from '../../assets/proto/generated/DataPacket.ts'; // Assumed path
-import CustomError from '../error/CustomError.tsx';
-import {Utils} from '../../utils/Utils.tsx'; // For dollar formatting
+import {fetchAccountMarketImntValuationData} from '../../../services/MarketPortfolioService.tsx'; // Assumed path
+import {DataPacket} from '../../../assets/proto/generated/DataPacket.ts'; // Assumed path
+import CustomError from '../../error/CustomError.tsx';
+import {Utils} from '../../../utils/Utils.tsx'; // For dollar formatting
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner'; // For loading state
 import './PortfolioMarketInstrumentValuation.css'; // New CSS file
@@ -84,7 +84,7 @@ const parseAndFormatData = (rawData: Map<string, string>): InstrumentValuation =
 const PortfolioMarketInstrumentValuationComponent = () => {
   // Component State
   const [instrument, setInstrument] = useState('');
-  const [accountType, setAccountType] = useState('TFSA');
+  const [accountType, setAccountType] = useState('ALL');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [data, setData] = useState<InstrumentValuation[] | InstrumentValuation | null>(null);

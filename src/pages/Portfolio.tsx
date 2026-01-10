@@ -11,15 +11,13 @@ import PortfolioMarketAccountValuationSectorPieChartComponent
 import PortfolioMarketSectorImntBreakdownComponent
   from "../components/portfolio/PortfolioMarketSectorImntBreakdownComponent.tsx";
 import PortfolioMarketPerformersComponent from "../components/portfolio/PortfolioMarketPerformersComponent.tsx";
-import PortfolioMarketInstrumentValuationComponent
-  from "../components/portfolio/PortfolioMarketInstrumentValuationComponent.tsx";
 import PortfolioAggrMarketValuationDataComponent
   from "../components/portfolio/PortfolioAggrMarketValuationDataComponent.tsx";
 import PortfolioSectionNetOverview from "../components/portfolio/PortfolioSectionNetOverviewComponent.tsx";
 import GicAggregatorComponent from "../components/gic/GicAggregatorComponent.tsx";
 import PortfolioHeatmapComponent from "../components/portfolio/PortfolioHeatmapComponent.tsx";
 import PortfolioNewsCorpActionsComponent from "../components/portfolio/PortfolioNewsCorpActionsComponent.tsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {performRefresh} from "../services/MarketPortfolioService.tsx";
 import PortfolioHeadingAtAGlance from "../components/portfolio/PortfolioHeadingAtAGlance.tsx";
 
@@ -28,6 +26,9 @@ const Portfolio = () => {
   const [hardRefreshInProgress, setHardRefreshInProgress] = useState(false);
   const [softRefreshInProgress, setSoftRefreshInProgress] = useState(false);
 
+  useEffect(() => {
+    document.title = 'V2K Portfolio';
+  }, []);
 
   const refreshSoft = () => {
     return refresh(false);
@@ -97,8 +98,6 @@ const Portfolio = () => {
         {<PortfolioHeatmapComponent accountType={'SECTOR'} cellSizePx={65}/>}
         {<PortfolioHeatmapComponent accountType={'PORTFOLIO'} cellSizePx={35}/>}
 
-        {/*{<PortfolioMarketInstrumentDivSectorInfoComponent/>}*/}
-        {<PortfolioMarketInstrumentValuationComponent/>}
         <div>
           <h2 className="account-section-heading">TFSA</h2>
           {<PortfolioSectionNetOverview accountType={'TFSA'} useDividends={true}/>}

@@ -1,9 +1,14 @@
 import TutorSessionGeneratorComponent from "../components/tutor/TutorSessionGeneratorComponent.tsx";
 import TutorSessionSaveDataComponent from "../components/tutor/TutorSessionSaveDataComponent.tsx";
 import TutorSessionGetLatestDataComponent from "../components/tutor/TutorSessionGetLatestDataComponent.tsx";
+import {useEffect} from "react";
 
 
 const Tutor = () => {
+  useEffect(() => {
+    document.title = 'V2K Tutor';
+  }, []);
+
   return (
     <div>
       <h1> Tutor Dashboard </h1>
