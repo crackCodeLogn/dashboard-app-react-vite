@@ -5,6 +5,10 @@ export class Utils {
     return value.toFixed(2);
   }
 
+  static yValueFormatAsNumber(value: number): number {
+    return Number(this.yValueFormat(value));
+  }
+
   /* input in yyyyMMdd number format, output in 'yyyy-MM-dd' string format */
   static getDateInString(date: number): string {
     const dateStr = date.toString();
@@ -22,5 +26,10 @@ export class Utils {
   static getPercentage(mapValue: number | undefined, total: number | undefined): string {
     if (mapValue === undefined || total === undefined) return '0.00%';
     return `${Utils.yValueFormat(100 * (mapValue / total))}%`;
+  }
+
+  static getPercentageWithoutSign(mapValue: number | undefined, total: number | undefined): number {
+    const percentage = this.getPercentage(mapValue, total);
+    return Number(percentage.substring(0, percentage.length - 1));
   }
 }

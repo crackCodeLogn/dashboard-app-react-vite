@@ -15,6 +15,8 @@ const KEY_CURRENT_VAL = "currentVal";
 const KEY_BOOK_VAL = "bookVal";
 const KEY_QTY = "qty";
 const KEY_WBETA = "beta-weighted";
+const KEY_EXPECTED_YIELD = "expectedDivYieldPercent";
+const KEY_EXPECTED_RETURN = "expectedReturnPercent";
 
 const PortfolioSectionNetOverview = (props: { accountType: string, useDividends: boolean }) => {
 
@@ -22,10 +24,12 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
   const [bookVal, setBookVal] = useState<number>(0.00);
   const [currentVal, setCurrentVal] = useState<number>(0.00);
   const [pnl, setPnl] = useState<number>(0.00);
-  const [pnlPct, setPnlPct] = useState<string>('0.00%');
+  const [pnlPct, setPnlPct] = useState<number>(0.0);
   const [totalDiv, setTotalDiv] = useState<number>(0.00);
   const [qty, setQty] = useState<number>(0.00);
   const [wbeta, setWBeta] = useState<number>(-Infinity);
+  const [epr, setEpr] = useState<number>(0.0);
+  const [epy, setEpy] = useState<number>(0.0);
 
   useEffect(() => {
     fetchData();
@@ -55,12 +59,14 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
       if (metricValueMap.has(KEY_BOOK_VAL)) setBookVal(metricValueMap.get(KEY_BOOK_VAL) as number);
       if (metricValueMap.has(KEY_PNL)) {
         setPnl(metricValueMap.get(KEY_PNL) as number);
-        setPnlPct(Utils.getPercentage(metricValueMap.get(KEY_PNL), metricValueMap.get(KEY_BOOK_VAL)));
+        setPnlPct(Utils.getPercentageWithoutSign(metricValueMap.get(KEY_PNL), metricValueMap.get(KEY_BOOK_VAL)));
       }
       setCurrentVal(metricValueMap.get(KEY_CURRENT_VAL) as number);
       setTotalDiv(metricValueMap.get(KEY_TOTAL_DIV) || 0.0);
       setQty(metricValueMap.get(KEY_QTY) || 0.0);
       setWBeta(metricValueMap.get(KEY_WBETA) || -Infinity);
+      setEpr(Utils.yValueFormatAsNumber(metricValueMap.get(KEY_EXPECTED_RETURN) || 0.0));
+      setEpy(Utils.yValueFormatAsNumber(metricValueMap.get(KEY_EXPECTED_YIELD) || 0.0));
 
     } catch (err) {
       console.error(err);
@@ -76,7 +82,9 @@ const PortfolioSectionNetOverview = (props: { accountType: string, useDividends:
       pnl: pnl,
       totalDiv: totalDiv,
       qty: qty,
-      wbeta: wbeta
+      wbeta: wbeta,
+      epr: epr,
+      epy: epy
     }}/>
   );
 };

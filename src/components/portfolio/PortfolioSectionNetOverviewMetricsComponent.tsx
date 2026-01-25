@@ -7,22 +7,24 @@ interface PortfolioData {
   totalInstruments: number;
   bookVal: number;
   currentVal: number;
-  pnlPct: string;
+  pnlPct: number;
   pnl: number;
   totalDiv: number;
   qty: number;
   wbeta: number;
+  epr: number;
+  epy: number;
 }
 
 // 3. The Core Component
 const PortfolioSectionNetOverviewMetrics: React.FC<{ data: PortfolioData }> = ({data}) => {
-  const {totalInstruments, bookVal, currentVal, pnlPct, pnl, totalDiv, qty, wbeta} = data;
+  const {totalInstruments, bookVal, currentVal, pnlPct, pnl, totalDiv, qty, wbeta, epr, epy} = data;
 
   // PnL color class determination
   const pnlColorClass: string = pnl >= 0 ? 'pnl-positive' : 'pnl-negative';
 
   // Helper function to render an individual metric block
-  const renderMetric = (label: string, value: string, isPnl: boolean = false, isCurrency: boolean = true) => (
+  const renderMetric = (label: string, value: string | number, isPnl: boolean = false, isCurrency: boolean = true) => (
     <div className={`metric-block ${isPnl ? pnlColorClass : ''} ${isCurrency ? 'is-currency' : 'is-count'}`}>
       <span className="metric-label">{label}</span>
       <span className="metric-value">{value}</span>
@@ -55,6 +57,8 @@ const PortfolioSectionNetOverviewMetrics: React.FC<{ data: PortfolioData }> = ({
       </div>
       <div className="portfolio-metrics-container">
         {renderMetric('Beta', Utils.yValueFormat(wbeta), false, false)}
+        {renderMetric('EPR %', epr, true, false)}
+        {renderMetric('EPY %', epy, true, false)}
       </div>
     </div>
   );

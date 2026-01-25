@@ -96,7 +96,7 @@ const Portfolio = () => {
 
         {<PortfolioNewsCorpActionsComponent/>}
         {<PortfolioHeatmapComponent accountType={'SECTOR'} cellSizePx={65}/>}
-        {<PortfolioHeatmapComponent accountType={'PORTFOLIO'} cellSizePx={35}/>}
+        {<PortfolioHeatmapComponent accountType={'PORTFOLIO'} cellSizePx={31}/>}
 
         <div>
           <h2 className="account-section-heading">TFSA</h2>
@@ -132,7 +132,7 @@ const Portfolio = () => {
             {<PortfolioMarketAccountValuationSectorPieChartComponent accountType={'FHSA'} limit={5}/>}
             {<PortfolioMarketSectorImntBreakdownComponent accountType={'FHSA'}/>}
           </div>
-          {<PortfolioHeatmapComponent accountType={"FHSA"} cellSizePx={51}/>}
+          {<PortfolioHeatmapComponent accountType={"FHSA"} cellSizePx={55}/>}
         </div>
       </div>
     </div>
