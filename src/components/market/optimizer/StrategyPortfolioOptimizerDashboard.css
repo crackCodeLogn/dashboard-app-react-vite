@@ -1,0 +1,229 @@
+.optimizer-page {
+    background-color: #0f172a; /* Deep dark blue */
+    color: #f8fafc;
+    padding: 2rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem;
+    min-height: 100vh; /* Ensures the background covers the full screen */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Header */
+.optimizer-header-main {
+    margin-bottom: 2rem;
+}
+
+.optimizer-header-main h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    color: #3b82f6;
+}
+
+.optimizer-header-main p {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    margin-top: 0.5rem;
+}
+
+/* --- Inline Input Bar --- */
+.optimizer-top-bar {
+    background: #1e293b;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.inputs-inline-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-end;
+}
+
+.field-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 140px;
+}
+
+.field-box label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+.field-box input,
+.field-box select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    /* Centering logic */
+    text-align: center;
+    text-align-last: center; /* Specific for <select> elements */
+
+    appearance: textfield;
+}
+
+.inputs-second-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    /* Aligns the bottom of the button with the bottom of the input */
+    align-items: flex-end;
+    width: 100%;
+}
+
+.input-ignore-imnt {
+    width: 100% !important;
+}
+
+.ignore-field {
+    flex: 1;
+}
+
+.button-field {
+    flex: 1;
+}
+
+.execute-btn {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0 16px; /* Vertical padding handled by height */
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 1rem;
+    height: 46px; /* Matches the height of the input fields exactly */
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.execute-btn:hover {
+    background: #1d4ed8;
+}
+
+/* --- Strategy Metadata Cards --- */
+.strategy-meta-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 2rem;
+}
+
+.meta-card {
+    background: #1e293b;
+    padding: 16px;
+    border-radius: 8px;
+    border-bottom: 4px solid #3b82f6;
+}
+
+.meta-card span {
+    display: block;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.meta-card strong {
+    font-size: 1.3rem;
+    color: #38bdf8;
+}
+
+/* Non-optimal status style */
+.meta-card.status-critical {
+    border-bottom-color: #f43f5e;
+}
+
+.meta-card.status-critical strong {
+    color: #f43f5e;
+}
+
+/* --- Table Styles --- */
+.table-container {
+    background: #1e293b;
+    border-radius: 12px;
+    /* This allows the container to control the internal scroll */
+    max-height: 700px;
+    overflow-y: auto;
+    overflow-x: auto;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.optimizer-table {
+    width: 100%;
+    border-collapse: separate; /* Required for sticky borders to look right */
+    border-spacing: 0;
+    font-size: 1rem;
+}
+
+.optimizer-table th {
+    /* Sticky Header Logic */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #334155;
+
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    color: #f1f5f9;
+    border-bottom: 2px solid #1e293b;
+}
+
+.optimizer-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #0f172a;
+    text-align: center;
+}
+
+.optimizer-table tr:hover {
+    background: #2d3e50;
+}
+
+.sort-icon {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.action-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.action-badge.buy {
+    background: #064e3b;
+    color: #6ee7b7;
+}
+
+.action-badge.sell {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.text-pos {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.text-neg {
+    color: #f43f5e;
+    font-weight: 600;
+}

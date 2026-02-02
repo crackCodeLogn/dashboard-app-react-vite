@@ -22,6 +22,7 @@ const NavigationBar = () => {
         <Link to={"/"} onClick={handleClose}>Home</Link>
         <Link to={"/portfolio"} onClick={handleClose}>Portfolio</Link>
         <Link to={"/market/metadata"} onClick={handleClose}>Market-Metadata</Link>
+        <Link to={"/market/optimizer"} onClick={handleClose}>Market-Optimizer</Link>
         <Link to={"/market/adhoc"} onClick={handleClose}>Market-Adhoc</Link>
         <Link to={"/banking"} onClick={handleClose}>Banking</Link>
         <Link to={"/tutor"} onClick={handleClose}>Tutor</Link>

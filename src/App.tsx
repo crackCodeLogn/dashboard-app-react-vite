@@ -15,6 +15,7 @@ import LanguageFr from "./pages/LanguageFr.tsx";
 import ExpenseSim from "./pages/ExpenseSim.tsx";
 import ItemPricing from "./pages/ItemPricing.tsx";
 import MarketMetaData from "./pages/MarketMetaData.tsx";
+import MarketOptimizer from "./pages/MarketOptimizer.tsx";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path={"portfolio"} element={<Portfolio/>}/>
         <Route path={"market/metadata"} element={<MarketMetaData/>}/>
         <Route path={"market/adhoc"} element={<MarketDataAdhoc/>}/>
+        <Route path={"market/optimizer"} element={<MarketOptimizer/>}/>
         {/*<Route path={"market/chart2"} element={<TradingViewChart/>}/>*/}
         <Route path={"banking"} element={<Banking/>}/>
         <Route path={"tutor"} element={<Tutor/>}/>

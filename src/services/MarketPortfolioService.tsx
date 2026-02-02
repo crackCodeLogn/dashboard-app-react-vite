@@ -18,9 +18,10 @@ const PORTFOLIO_MARKET_CORRELATION_MATRIX_WHOLE: string = "/portfolio/market/cor
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_ACCOUNT_TYPE: string = "/portfolio/market/correlation/matrix/";
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_SECTORS: string = "/portfolio/market/sector/correlation/matrix";
 const PORTFOLIO_MARKET_CORRELATION_MATRIX_TARGETED: string = "/portfolio/market/correlation/matrix";
-const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
 const PORTFOLIO_MARKET_NEWS_CORP_ACTIONS: string = "/portfolio/market/news/corp-actions";
 const PORTFOLIO_MARKET_HEADING_GLANCE: string = "/portfolio/market/heading/glance";
+const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
+const PORTFOLIO_MARKET_OPTIMIZER_ADHOC: string = "/portfolio/market/optimizer";
 const PORTFOLIO_REFRESH: string = "/portfolio/reload/v2k";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
@@ -193,6 +194,34 @@ export const fetchCorrelation = async (
   return fetch(timeout, useProto, PORTFOLIO_MARKET_CORRELATION_ADHOC, {
     'imnt1': imnt1,
     'imnt2': imnt2
+  });
+};
+
+export const invokePortfolioOptimizer = async (
+  accountType: string,
+  targetBeta: number,
+  minYield: number,
+  maxPe: number,
+  maxVol: number,
+  newCash: number,
+  forceCash: number,
+  objectiveMode: string,
+  ignoreImnts: string,
+  forceImnts: string,
+  imntsScope: string,
+  timeout: number = 300000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, `${PORTFOLIO_MARKET_OPTIMIZER_ADHOC}/${accountType}`, {
+    'targetBeta': targetBeta,
+    'minYield': minYield,
+    'maxPe': maxPe,
+    'maxVol': maxVol,
+    'newCash': newCash,
+    'forceCash': forceCash,
+    'objectiveMode': objectiveMode,
+    'ignoreImnts': ignoreImnts,
+    'forceImnts': forceImnts,
+    'imntsScope': imntsScope
   });
 };
 
