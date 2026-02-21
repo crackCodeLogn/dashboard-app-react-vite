@@ -89,7 +89,7 @@ const StrategyPortfolioOptimizerDashboard: React.FC = () => {
     maxVol: 35.0,
     newCash: 0.0,
     forceCash: 0.0,
-    objectiveMode: 'MAX_RETURN',
+    objectiveMode: 'BALANCED',
     ignoreImnts: '',
     forceImnts: '',
     imntsScope: 'ACCOUNT_LEVEL'
