@@ -17,9 +17,10 @@ import PortfolioSectionNetOverview from "../components/portfolio/PortfolioSectio
 import GicAggregatorComponent from "../components/gic/GicAggregatorComponent.tsx";
 import PortfolioHeatmapComponent from "../components/portfolio/PortfolioHeatmapComponent.tsx";
 import PortfolioNewsCorpActionsComponent from "../components/portfolio/PortfolioNewsCorpActionsComponent.tsx";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {performRefresh} from "../services/MarketPortfolioService.tsx";
 import PortfolioHeadingAtAGlance from "../components/portfolio/PortfolioHeadingAtAGlance.tsx";
+import SellLedgerComponent from "../components/portfolio/SellLedgerComponent.tsx";
 
 
 const Portfolio = () => {
@@ -93,6 +94,7 @@ const Portfolio = () => {
         {<PortfolioHeadingAtAGlance/>}
         {<PortfolioNetMarketValuationPlotDataComponent/>}
         {<PortfolioAggrMarketValuationDataComponent/>}
+        {<SellLedgerComponent accountType={''}/>}
 
         {<PortfolioNewsCorpActionsComponent/>}
         {<PortfolioHeatmapComponent accountType={'SECTOR'} cellSizePx={65}/>}
@@ -102,6 +104,7 @@ const Portfolio = () => {
           <h2 className="account-section-heading">TFSA</h2>
           {<PortfolioSectionNetOverview accountType={'TFSA'} useDividends={true}/>}
           {<PortfolioMarketAccountValuationDataComponent accountType={'TFSA'}/>}
+          {<SellLedgerComponent accountType={'TFSA'}/>}
           {<PortfolioMarketPerformersComponent accountType={'TFSA'}/>}
           <div className={'record-space-around-3'}>
             {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'TFSA'} limit={16}/>}
@@ -114,6 +117,7 @@ const Portfolio = () => {
           <h2 className="account-section-heading">NR</h2>
           {<PortfolioSectionNetOverview accountType={'NR'} useDividends={true}/>}
           {<PortfolioMarketAccountValuationDataComponent accountType={'NR'}/>}
+          {<SellLedgerComponent accountType={'NR'}/>}
           {<PortfolioMarketPerformersComponent accountType={'NR'}/>}
           <div className={'record-space-around-3'}>
             {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'NR'} limit={16}/>}
@@ -126,6 +130,7 @@ const Portfolio = () => {
           <h2 className="account-section-heading">FHSA</h2>
           {<PortfolioSectionNetOverview accountType={'FHSA'} useDividends={true}/>}
           {<PortfolioMarketAccountValuationDataComponent accountType={'FHSA'}/>}
+          {<SellLedgerComponent accountType={'FHSA'}/>}
           {<PortfolioMarketPerformersComponent accountType={'FHSA'}/>}
           <div className={'record-space-around-3'}>
             {<PortfolioMarketAccountDividendsValuationDataComponent accountType={'FHSA'} limit={16}/>}

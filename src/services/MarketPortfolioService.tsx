@@ -22,6 +22,7 @@ const PORTFOLIO_MARKET_NEWS_CORP_ACTIONS: string = "/portfolio/market/news/corp-
 const PORTFOLIO_MARKET_HEADING_GLANCE: string = "/portfolio/market/heading/glance";
 const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
 const PORTFOLIO_MARKET_OPTIMIZER_ADHOC: string = "/portfolio/market/optimizer";
+const PORTFOLIO_MARKET_SELL_PNL: string = "/portfolio/market/sell/pnl";
 const PORTFOLIO_REFRESH: string = "/portfolio/reload/v2k";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
@@ -224,6 +225,18 @@ export const invokePortfolioOptimizer = async (
     'imntsScope': imntsScope
   });
 };
+
+
+export const fetchSellPnl = async (
+  accountType: string,
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto,
+    accountType.length === 0
+      ? PORTFOLIO_MARKET_SELL_PNL
+      : `${PORTFOLIO_MARKET_SELL_PNL}/${accountType}`);
+};
+
 
 export const fetchNewsCorporateActions = async (
   timeout: number = 10000,
