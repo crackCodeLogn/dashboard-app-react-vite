@@ -13,11 +13,10 @@ const MarketDataAdhoc = () => {
     <div>
       <h1>Market Adhoc Inquiry</h1>
       <hr/>
+      <MarketDataAdhocComponent showTable={true}/>
       {<PortfolioMarketInstrumentValuationComponent/>}
       <hr/>
       {<CorrelationAdhocComponent cellSizePx={40}/>}
-      <hr/>
-      <MarketDataAdhocComponent showTable={true}/>
     </div>
   )
 }
