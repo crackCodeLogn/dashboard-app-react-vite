@@ -21,13 +21,13 @@ export interface Performer {
 type SortKey = 'pnl' | 'pnlPercent' | 'instrument' | 'none';
 type SortDirection = 'asc' | 'desc';
 
-const N_STEPS = [10, 15, 25, 50, 75];
+const N_STEPS = [10, 15, 25, 50, 75, 100];
 
 const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
   const {accountType} = props;
 
   // UI State
-  const [n, setN] = useState<number>(15); // Default to showing best/worst 15
+  const [n, setN] = useState<number>(50); // Default to showing best/worst 50
   const [useDividends, setUseDividends] = useState<boolean>(false);
 
   // Sorting States (one for each table, default to PnL% sort)
@@ -293,12 +293,12 @@ const PortfolioMarketPerformersComponent = (props: { accountType: string }) => {
       {performers && performers.length > 0 ? (
         <div className="performers-flex-container">
           <PerformerTable
-            title={`Best ${n} Performers`}
+            title={`Best Performers [${sortedBestPerformers.length}]`}
             data={sortedBestPerformers}
             listType="best"
           />
           <PerformerTable
-            title={`Worst ${n} Performers`}
+            title={`Worst Performers [${sortedWorstPerformers.length}]`}
             data={sortedWorstPerformers}
             listType="worst"
           />
