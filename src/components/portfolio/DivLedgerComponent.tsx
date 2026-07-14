@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import {AccountType, Instrument, Portfolio} from "../../assets/proto/generated/MarketData.ts"; //[cite: 2]
+import {AccountType, Instrument, Portfolio} from "../../assets/proto/generated/MarketData.ts";
 import DivLedger, {DividendRecord} from "./DivLedger.tsx";
-import {fetchAllDividends} from "../../services/MarketPortfolioService.tsx"; //[cite: 4]
+import {fetchAllDividends} from "../../services/MarketPortfolioService.tsx";
 
 /**
  * Parses the deserialized Protocol Buffer instruments into a clean local format
@@ -12,7 +12,7 @@ const parseDividendRecords = (instruments: Instrument[]): DividendRecord[] => {
 
   for (const imnt of instruments) {
     // Resolve the account type name from the generated proto Enum, defaulting to string if matching fails
-    const resolvedAccountType = AccountType[imnt.accountType] || "UNKNOWN"; //[cite: 2]
+    const resolvedAccountType = AccountType[imnt.accountType] || "UNKNOWN"; 
 
     records.push({
       symbol: imnt.ticker.symbol,
@@ -31,7 +31,7 @@ const DivLedgerComponent = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchAllDividends() //[cite: 4]
+    fetchAllDividends() 
       .then(result => {
         if (!result) {
           throw new Error(`No dividend record data found`);

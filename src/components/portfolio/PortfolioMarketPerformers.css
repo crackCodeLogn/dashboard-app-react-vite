@@ -143,3 +143,99 @@
     color: #999;
     padding: 20px;
 }
+
+
+/* Container Spacing Rules */
+.heatmap-collapsible-wrapper {
+    width: 100%;
+    margin-bottom: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Elegant Click Header Bar Layout */
+.heatmap-trigger-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: #f8fafc;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.heatmap-trigger-bar:hover {
+    background: #f1f5f9;
+}
+
+.heatmap-trigger-bar.active {
+    background: #edf2f7;
+    border-bottom-color: #e2e8f0;
+}
+
+/* Typography elements */
+.trigger-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.trigger-icon {
+    font-size: 0.75rem;
+    color: #64748b;
+    width: 12px;
+}
+
+.trigger-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1e293b;
+    letter-spacing: 0.02em;
+}
+
+.trigger-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid #bfdbfe;
+}
+
+/* Smooth Panel Containment Transitions */
+.heatmap-content-panel {
+    width: 100%;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.heatmap-content-panel.collapsed {
+    max-height: 0px;
+    opacity: 0;
+}
+
+.heatmap-content-panel.expanded {
+    max-height: 2000px; /* High max boundary safely allowing chart expansions */
+    opacity: 1;
+}
+
+.heatmap-render-container {
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heatmap-loading-placeholder {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-style: italic;
+    padding: 20px;
+}

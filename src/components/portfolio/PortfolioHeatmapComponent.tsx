@@ -9,9 +9,12 @@ import {CorrelationMatrix} from "../../assets/proto/generated/MarketData.ts";
 import CorrelationHeatmap, {CorrelationEntry} from "../heatmap/CorrelationHeatmapComponent.tsx";
 import CustomError from "../error/CustomError.tsx";
 
-
 const PortfolioHeatmapComponent = (props: { accountType: string, cellSizePx: number }) => {
   const {accountType, cellSizePx} = props;
+
+  // Interactive toggle states
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [hasLoadedOnce, setHasLoadedOnce] = useState<boolean>(false);
 
   const [correlationEntries, setCorrelationEntries] = useState<CorrelationEntry[]>([]);
   const [errorMsg, setErrorMsg] = useState('');
@@ -44,10 +47,10 @@ const PortfolioHeatmapComponent = (props: { accountType: string, cellSizePx: num
         throw new Error(`No correlation matrix data found for ${accountType}`);
       }
 
-      // 1. Protobuf Deserialization
       const binaryData = new Uint8Array(result);
       const correlationMatrix: CorrelationMatrix = CorrelationMatrix.deserializeBinary(binaryData);
       setCorrelationEntries(parseCorrelationEntries(correlationMatrix));
+      setHasLoadedOnce(true);
 
     } catch (err) {
       console.error(err);
@@ -55,15 +58,43 @@ const PortfolioHeatmapComponent = (props: { accountType: string, cellSizePx: num
     }
   }, [accountType]);
 
+  // Lazy execution: Trigger data fetch only when the drawer is initially opened
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (isExpanded && !hasLoadedOnce) {
+      fetchData();
+    }
+  }, [isExpanded, hasLoadedOnce, fetchData]);
 
   return (
-    <div className={"centerLine"}>
-      {errorMsg
-        ? <CustomError errorMsg={errorMsg}/>
-        : <CorrelationHeatmap title={accountType} data={correlationEntries} cellSizePx={cellSizePx}/>}
+    <div className="centerLine heatmap-collapsible-wrapper">
+      {/* Interactive Accordion Trigger Header */}
+      <div
+        className={`heatmap-trigger-bar ${isExpanded ? 'active' : ''}`}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="trigger-title-group">
+          <span className="trigger-icon">{isExpanded ? '▼' : '▶'}</span>
+          <span className="trigger-title">{accountType} Correlation Matrix Matrix Heatmap</span>
+        </div>
+        <span className="trigger-badge">
+          {isExpanded ? 'Click to Collapse' : 'Click to Expand'}
+        </span>
+      </div>
+
+      {/* Content Body Container */}
+      <div className={`heatmap-content-panel ${isExpanded ? 'expanded' : 'collapsed'}`}>
+        {isExpanded && (
+          <div className="heatmap-render-container">
+            {errorMsg ? (
+              <CustomError errorMsg={errorMsg}/>
+            ) : !hasLoadedOnce ? (
+              <div className="heatmap-loading-placeholder">Loading matrix telemetry channels...</div>
+            ) : (
+              <CorrelationHeatmap title={accountType} data={correlationEntries} cellSizePx={cellSizePx}/>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
