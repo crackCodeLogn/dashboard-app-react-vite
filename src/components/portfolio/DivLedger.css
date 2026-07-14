@@ -1,0 +1,114 @@
+:root {
+    --primary-text: #1e293b;
+    --secondary-text: #64748b;
+    --border-color: #e2e8f0;
+    --row-hover: #f8fafc;
+    --gain: #059669;
+    --active-blue: #2563eb;
+}
+
+/* Aggregator Control Panel UI */
+.aggregator-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #f1f5f9;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.control-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--secondary-text);
+    letter-spacing: 0.05em;
+    margin-right: 4px;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary-text);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+/* Hide Native Checkbox */
+.checkbox-wrapper input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Custom Checkbox Design */
+.custom-checkbox {
+    height: 16px;
+    width: 16px;
+    background-color: #fff;
+    border: 2px solid #cbd5e1;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.checkbox-wrapper input:checked ~ .custom-checkbox {
+    background-color: var(--active-blue);
+    border-color: var(--active-blue);
+}
+
+.custom-checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-wrapper input:checked ~ .custom-checkbox:after {
+    display: block;
+}
+
+/* Checkmark Tick */
+.checkbox-wrapper .custom-checkbox:after {
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Tickers Chips */
+.symbol-pill-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+}
+
+.symbol-pill {
+    background: #eff6ff;
+    color: var(--active-blue);
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    border: 1px solid #bfdbfe;
+}
+
+.group-label-text {
+    color: #475569;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}

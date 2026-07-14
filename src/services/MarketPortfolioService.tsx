@@ -23,6 +23,7 @@ const PORTFOLIO_MARKET_HEADING_GLANCE: string = "/portfolio/market/heading/glanc
 const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlation/adhoc";
 const PORTFOLIO_MARKET_OPTIMIZER_ADHOC: string = "/portfolio/market/optimizer";
 const PORTFOLIO_MARKET_SELL_PNL: string = "/portfolio/market/sell/pnl";
+const PORTFOLIO_MARKET_ALL_DIVIDENDS_RX: string = "/portfolio/market/dividends/all";
 const PORTFOLIO_REFRESH: string = "/portfolio/reload/v2k";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
@@ -259,3 +260,10 @@ export const performRefresh = async (
     'hardRefresh': hardRefresh
   });
 }
+
+export const fetchAllDividends = async (
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto,
+    PORTFOLIO_MARKET_ALL_DIVIDENDS_RX);
+};

@@ -21,6 +21,7 @@ import {useEffect, useState} from "react";
 import {performRefresh} from "../services/MarketPortfolioService.tsx";
 import PortfolioHeadingAtAGlance from "../components/portfolio/PortfolioHeadingAtAGlance.tsx";
 import SellLedgerComponent from "../components/portfolio/SellLedgerComponent.tsx";
+import DivLedgerComponent from "../components/portfolio/DivLedgerComponent.tsx";
 
 
 const Portfolio = () => {
@@ -97,6 +98,7 @@ const Portfolio = () => {
         {<SellLedgerComponent accountType={''}/>}
 
         {<PortfolioNewsCorpActionsComponent/>}
+        {<DivLedgerComponent/>}
         {<PortfolioHeatmapComponent accountType={'SECTOR'} cellSizePx={65}/>}
         {<PortfolioHeatmapComponent accountType={'PORTFOLIO'} cellSizePx={31}/>}
 
