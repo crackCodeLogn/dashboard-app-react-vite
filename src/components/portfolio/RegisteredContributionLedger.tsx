@@ -193,7 +193,7 @@ const RegisteredContributionLedger = ({ accountType, contributions, maxLimit }: 
         </div>
 
         <div className="header-text-center">
-          <h2>{accountType} Space Audit Ledger</h2>
+          <h2>Audit Ledger</h2>
           <p>Registration allocation history and room calculation tracker</p>
         </div>
 
@@ -233,7 +233,7 @@ const RegisteredContributionLedger = ({ accountType, contributions, maxLimit }: 
               {groupByMonth && <th>Month</th>}
               <th style={{ textAlign: 'right' }}>Contributed Amount</th>
               <th>Transaction Count</th>
-              <th style={{ textAlign: 'left', paddingLeft: '24px' }}>Child Transactions</th>
+              <th style={{ textAlign: 'center', paddingLeft: '24px' }}>Transactions</th>
             </tr>
           </thead>
           <tbody>
@@ -272,7 +272,7 @@ const RegisteredContributionLedger = ({ accountType, contributions, maxLimit }: 
           <tfoot className="ledger-footer">
             <tr>
               <td colSpan={1 + (groupByYear ? 1 : 0) + (groupByMonth ? 1 : 0)} className="footer-label">
-                TOTAL DEPOSITED (FILTERED)
+                TOTAL DEPOSITED
               </td>
               <td style={{ textAlign: 'right' }} className="footer-value text-pos">
                 ${totalContributedFiltered.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
