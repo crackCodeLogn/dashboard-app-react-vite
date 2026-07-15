@@ -102,11 +102,12 @@ const Portfolio = () => {
         {<PortfolioSectionNetOverview accountType={''} useDividends={true}/>}
         {<PortfolioHeadingAtAGlance/>}
         {<PortfolioNetMarketValuationPlotDataComponent/>}
+        {<PortfolioNewsCorpActionsComponent/>}
+
+        {<DivLedgerComponent/>}
         {<PortfolioAggrMarketValuationDataComponent/>}
         {<SellLedgerComponent accountType={''}/>}
 
-        {<PortfolioNewsCorpActionsComponent/>}
-        {<DivLedgerComponent/>}
         {<PortfolioHeatmapComponent accountType={'SECTOR'} cellSizePx={65}/>}
         {<PortfolioHeatmapComponent accountType={'PORTFOLIO'} cellSizePx={31}/>}
 
