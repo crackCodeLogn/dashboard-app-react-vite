@@ -24,6 +24,7 @@ const PORTFOLIO_MARKET_CORRELATION_ADHOC: string = "/portfolio/market/correlatio
 const PORTFOLIO_MARKET_OPTIMIZER_ADHOC: string = "/portfolio/market/optimizer";
 const PORTFOLIO_MARKET_SELL_PNL: string = "/portfolio/market/sell/pnl";
 const PORTFOLIO_MARKET_ALL_DIVIDENDS_RX: string = "/portfolio/market/dividends/all";
+const PORTFOLIO_REGISTERED_ALL_CONTRIBUTIONS: string = "/portfolio/registered/usage/";
 const PORTFOLIO_REFRESH: string = "/portfolio/reload/v2k";
 
 function generateApi(timeout: number, useProto: boolean): AxiosInstance {
@@ -266,4 +267,11 @@ export const fetchAllDividends = async (
   useProto: boolean = true) => {
   return fetch(timeout, useProto,
     PORTFOLIO_MARKET_ALL_DIVIDENDS_RX);
+};
+
+export const fetchAllRegisteredContributions = async (
+  accountType: string,
+  timeout: number = 30000,
+  useProto: boolean = true) => {
+  return fetch(timeout, useProto, PORTFOLIO_REGISTERED_ALL_CONTRIBUTIONS + accountType);
 };

@@ -22,6 +22,7 @@ import {performRefresh} from "../services/MarketPortfolioService.tsx";
 import PortfolioHeadingAtAGlance from "../components/portfolio/PortfolioHeadingAtAGlance.tsx";
 import SellLedgerComponent from "../components/portfolio/SellLedgerComponent.tsx";
 import DivLedgerComponent from "../components/portfolio/DivLedgerComponent.tsx";
+import RegisteredContributionLedgerComponent from "../components/portfolio/RegisteredContributionLedgerComponent.tsx";
 
 
 const Portfolio = () => {
@@ -90,6 +91,13 @@ const Portfolio = () => {
           {<GicAggregatorComponent/>}
         </div>
         {<PortfolioGicValuationDataComponent/>}
+
+        <h2 className="market-breakdown-title">Registered Accounts</h2>
+        <h2 className="account-section-heading">TFSA</h2>
+        <RegisteredContributionLedgerComponent accountType={'TFSA'}/>
+        <h2 className="account-section-heading">FHSA</h2>
+        <RegisteredContributionLedgerComponent accountType={'FHSA'}/>
+
         <h2 className="market-breakdown-title">Market</h2>
         {<PortfolioSectionNetOverview accountType={''} useDividends={true}/>}
         {<PortfolioHeadingAtAGlance/>}
